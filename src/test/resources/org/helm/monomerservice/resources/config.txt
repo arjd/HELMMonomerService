@@ -1,0 +1,3 @@
+#LibrariesLoader
+loader.rules=org.helm.monomerservice.RuleLibrarySQLite
+loader.monomers=org.helm.monomerservice.MonomerLibrarySQLite
