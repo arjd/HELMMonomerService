@@ -30,6 +30,6 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class Application extends ResourceConfig {
 
 	public Application() {
-	    packages("org.helm.helm2monomerservice");
+	    packages("org.helm.monomerservice");
 	  }
 }
