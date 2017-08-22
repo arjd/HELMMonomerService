@@ -24,6 +24,7 @@ package org.helm.monomerservice;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -318,12 +319,16 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			}
 
 			String sql = "INSERT INTO MONOMERS (SYMBOL, MONOMERTYPE, NAME, NATURALANALOG, MOLFILE, POLYMERTYPE, SMILES, CREATEDATE, AUTHOR) "
-					+ "VALUES('" + monomer.getSymbol() + "','" + monomer.getMonomerType() + "','" + monomer.getName()
-					+ "','" + monomer.getNaturalAnalog() + "','" + monomer.getMolfile() + "','"
+					+ "VALUES('" + monomer.getSymbol() + "','" + monomer.getMonomerType() + "',?"
+					+ ",'" + monomer.getNaturalAnalog() + "','" + monomer.getMolfile() + "','"
 					+ monomer.getPolymerType() + "','" + monomer.getSmiles() + "','" + monomer.getCreateDate() + "','"
 					+ monomer.getAuthor() + "')";
-			stmt.execute(sql);
-			rs = stmt.getGeneratedKeys();
+			PreparedStatement preparedStatement = c.prepareStatement(sql);
+			preparedStatement.setString(1, monomer.getName());
+			preparedStatement.execute();
+			rs = preparedStatement.getGeneratedKeys();
+			//stmt.execute(sql);
+			//rs = stmt.getGeneratedKeys();
 			rs.next();
 			id = rs.getInt(1);
 
@@ -377,12 +382,17 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			rs.next();
 			int id = rs.getInt(1);
 
-			stmt.execute("UPDATE MONOMERS set  MONOMERTYPE = \'"
-					+ monomer.getMonomerType() + "\', NAME = \'" + monomer.getName() + "\', NATURALANALOG = \'"
+			
+			String sql = "UPDATE MONOMERS set  MONOMERTYPE = \'"
+					+ monomer.getMonomerType() + "\', NAME = ?, NATURALANALOG = \'"
 					+ monomer.getNaturalAnalog() + "\', MOLFILE = \'" + monomer.getMolfile() + "\', POLYMERTYPE = \'"
 					+ monomer.getPolymerType() + "\', SMILES = \'" + monomer.getSmiles() + "\', CREATEDATE = \'"
-					+ monomer.getCreateDate() + "\', AUTHOR = \'" + monomer.getAuthor() + "\' where ID = " + id);
-
+					+ monomer.getCreateDate() + "\', AUTHOR = \'" + monomer.getAuthor() + "\' where ID = " + id;
+			PreparedStatement preparedStatement = c.prepareStatement(sql);
+			preparedStatement.setString(1, monomer.getName());
+			preparedStatement.executeUpdate();
+			
+			
 			stmt.executeUpdate("DELETE from MONOMER_ATTACHMENT where MONOMER_ID = " + id);
 
 			List<Attachment> list = monomer.getRgroups();

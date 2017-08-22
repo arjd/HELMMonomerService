@@ -140,6 +140,21 @@ public class RestMonomerTest extends StandaloneServer{
 		
 	}
 
+	@Test
+	public void testUpdateMonomerName() {
+		Client client = createClient();
+		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
+		builder.path("library").path("monomer").path("CHEM").path("A6OH");
+		URI uri = builder.build();
+		Response response = client.target(uri).request().get();
+		String retMonomer = response.readEntity(String.class);
+		retMonomer = retMonomer.replace("6-amino-hexanol", "6'amino-hexanol");
+		System.out.print(retMonomer);
+		response = client.target(uri).request().put(Entity.entity(retMonomer, MediaType.APPLICATION_JSON), Response.class);
+		retMonomer = response.readEntity(String.class);
+		Assert.assertEquals(response.getStatus(), 200);
+		
+	}	
 	
 	@Test
 	public void testInserOrUpdateMonomer() {
@@ -150,14 +165,16 @@ public class RestMonomerTest extends StandaloneServer{
 		Response response = client.target(uri).request().get();
 		String retMonomer = response.readEntity(String.class);
 		
-		retMonomer = retMonomer.replace("A6OH", "test1");
-		retMonomer = retMonomer.replace("[H:1]OCCCCCCN[H:2]", "[H:1]OCCCCN[H:2]");
-		retMonomer = retMonomer.replace("11290920372", "123");
+		retMonomer = retMonomer.replace("A6OH", "test3");
+		retMonomer = retMonomer.replace("[H:1]OCCCCCCN[H:2]", "[H:1]OCCCCCCCN[H:2]");
+		retMonomer = retMonomer.replace("11290920372", "126");
+		retMonomer = retMonomer.replace("6-amino-hexanol", "7'amino-hexanol");
+		retMonomer = retMonomer.replace("Undefined", "Backbone");
 		
 		UriBuilder builder2 = UriBuilder.fromUri(BASE_URI);
-		builder2.path("library").path("monomer").path("CHEM").path("test1");
+		builder2.path("library").path("monomer").path("CHEM").path("test3");
 		URI uri2 = builder2.build();
-		
+		System.out.print(retMonomer);
 		Response response2 = client.target(uri2).request().put(Entity.entity(retMonomer, MediaType.APPLICATION_JSON), Response.class);
 		String retMonomer2 = response2.readEntity(String.class);
 		Assert.assertEquals(response2.getStatus(), 200);
