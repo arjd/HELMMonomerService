@@ -102,14 +102,14 @@ public class RestMonomer{
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Get all monomers sorted by type", httpMethod = "GET", response = Response.class)
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Monomers were successfully listed"), @ApiResponse(code = 400, message = "Monomers can not be listed")})
-	public Response showMonomerList(@PathParam("polymertype") String polymerType, @QueryParam("filter") String filter, @QueryParam("limit") int limit, @QueryParam("offset") int offset) {
+	public Response showMonomerList(@PathParam("polymertype") String polymerType, @QueryParam("monomertype") String monomerType, @QueryParam("filter") String filter, @QueryParam("limit") int limit, @QueryParam("offset") int offset) {
 		List<LWMonomer> monomerList;
 		try {
 			IMonomerLibrary monomerLibrary = LibraryManager.getInstance().getMonomerLibrary();
 			/*if (limit <= 0) {
 				limit = 10;
 			}*/
-			monomerList = monomerLibrary.showMonomerList(polymerType, filter, offset, limit);
+			monomerList = monomerLibrary.showMonomerList(polymerType, monomerType, filter, offset, limit);
 			int total = monomerLibrary.getTotalCount();
 			return Response.status(Response.Status.OK).entity(wrapMonomerList(monomerList,offset,limit,total)).build();
 		}

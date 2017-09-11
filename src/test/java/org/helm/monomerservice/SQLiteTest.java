@@ -141,7 +141,7 @@ public void insertOrUpdateMonomer() throws Exception {
   public void testFilterMonomers() throws Exception {
 	List<LWMonomer> monomerList;
 	IMonomerLibrary MyLoaderLibrary = MyLibrary.getMonomerLibrary();
-	monomerList = MyLoaderLibrary.showMonomerList("CHEM", "A", 0, 10);
+	monomerList = MyLoaderLibrary.showMonomerList("CHEM","Undefined", "A", 0, 10);
 	System.out.println(monomerList.size());
 }
   

@@ -81,6 +81,18 @@ public class RestMonomerTest extends StandaloneServer{
 		Assert.assertTrue(retMonomerList.contains("Alexa") && retMonomerList.contains("SMCC"));
 	}
 
+	@Test
+	public void testShowAllMonomersByMonomerType() {
+		Client client = createClient();
+		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
+		builder.path("library").path("monomer").path("RNA");
+		builder.queryParam("monomertype", "Branch");
+		URI uri = builder.build();
+		Response response = client.target(uri).request().get();
+		String retMonomerList = response.readEntity(String.class);
+		System.out.println(retMonomerList);
+		Assert.assertTrue(retMonomerList.contains("5fU"));
+	}
 	
 	@Test
 	public void testShowFilteredMonomers() {

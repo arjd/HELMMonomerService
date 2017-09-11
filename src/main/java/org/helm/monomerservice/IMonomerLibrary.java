@@ -44,7 +44,7 @@ public interface IMonomerLibrary {
 	   * @param polymerType
 	   * 			Type of monomer: RNA, PEPTIDE, CHEM, ALL
 	   */
-	public List<LWMonomer>  showMonomerList(String polymerType, String filter, int offset, int limit) throws Exception;
+	public List<LWMonomer>  showMonomerList(String polymerType, String monomerType, String filter, int offset, int limit) throws Exception;
 	
 	
 	/**

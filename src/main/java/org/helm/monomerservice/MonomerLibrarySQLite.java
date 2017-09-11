@@ -92,7 +92,7 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 	}
 
 
-	public List<LWMonomer> showMonomerList(String polymerType, String filter, int offset, int limit) throws Exception {
+	public List<LWMonomer> showMonomerList(String polymerType, String monomerType, String filter, int offset, int limit) throws Exception {
 		Connection c = null;
 		Statement stmt = null;
 		LWMonomer monomer = null;
@@ -108,6 +108,11 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 				whereClause = " where polymertype is not null";
 			} else {
 				whereClause = " where polymertype = \'"  + polymerType + "\'";
+			}
+			
+			//monomerType
+			if (monomerType != null && !monomerType.isEmpty()) {
+				whereClause = whereClause + " and monomertype = \'" + monomerType + "\' ";
 			}
 			
 			//filter clause

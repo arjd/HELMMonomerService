@@ -5,9 +5,20 @@
     <classes>
       <class name="org.helm.monomerservice.RestMonomerTest">
         <methods>
-          <include name="testInserOrUpdateMonomer"/>
+          <include name="testShowAllMonomersByMonomerType"/>
         </methods>
       </class> <!-- org.helm.monomerservice.RestMonomerTest -->
     </classes>
   </test> <!-- Default test -->
+  <test name="Default test(failed)">
+    <classes>
+      <class name="org.helm.monomerservice.RestMonomerTest">
+        <methods>
+          <include name="testShowAllMonomersByMonomerType"/>
+          <include name="startServer"/>
+          <include name="stopServer"/>
+        </methods>
+      </class> <!-- org.helm.monomerservice.RestMonomerTest -->
+    </classes>
+  </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
