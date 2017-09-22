@@ -40,18 +40,24 @@ import org.slf4j.LoggerFactory;
 public final class LibraryManager {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(LibraryManager.class);
-
 	private static final String CONFIG_FILE_PATH = LibraryManager.class.getResource("resources/config.txt").toString();
-
-	private static final String RULES = "rules";
-
-	private static final String MONOMERS = "monomers";
+	private static final String RULES = "loader.rules";
+	private static final String MONOMERS = "loader.monomers";
+	private static final String HOSTNAME = "loader.hostname";
+	private static final String PORT = "loader.port";
+	private static final String DATABASE = "loader.database";
 
 	@SuppressWarnings("unused")
 	private static String rules;
-
 	@SuppressWarnings("unused")
 	private static String monomers;
+	@SuppressWarnings("unused")
+	private static String hostname;
+	@SuppressWarnings("unused")
+	private static String port;
+	@SuppressWarnings("unused")
+	private static String database;
+
 
 	private IRuleLibrary rulesLibrary;
 
@@ -73,8 +79,13 @@ public final class LibraryManager {
 
 		try {
 			PropertiesConfiguration conf = new PropertiesConfiguration(CONFIG_FILE_PATH);
+			conf.load();
 			monomers = conf.getString(MONOMERS);
 			rules = conf.getString(RULES);
+			hostname = conf.getString(HOSTNAME);
+			port = conf.getString(PORT);
+			database = conf.getString(DATABASE);
+			
 		} catch (ConfigurationException e) {
 			setDefaultSetting();
 		}
@@ -82,14 +93,14 @@ public final class LibraryManager {
 		// set IConfigLoaderMonomerLibrary
 		Class<?> clazz;
 		try {
-			clazz = Class.forName("org.helm.monomerservice.MonomerLibrarySQLite");
+			clazz = Class.forName(monomers);
 			monomerLibrary = (IMonomerLibrary) clazz.getConstructor().newInstance();
 		} catch (Exception e) {
 			throw e;
 		}
 		// set IConfigLoaderRulesLibrary
 		try {
-			clazz = Class.forName("org.helm.monomerservice.RuleLibrarySQLite");
+			clazz = Class.forName(rules);
 			rulesLibrary = (IRuleLibrary) clazz.getConstructor().newInstance();
 		} catch (Exception e) {
 			throw e;
@@ -144,5 +155,17 @@ public final class LibraryManager {
 				}
 			}
 		}
+	}
+
+	public static String getHostname() {
+		return hostname;
+	}
+
+	public static String getPort() {
+		return port;
+	}
+
+	public static String getDatabase() {
+		return database;
 	}
 }

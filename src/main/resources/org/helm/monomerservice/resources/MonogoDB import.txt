@@ -1,0 +1,1 @@
+mongoimport --db local --collection monomers --file Monomers.json --jsonArray

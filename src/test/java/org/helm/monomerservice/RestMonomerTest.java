@@ -131,6 +131,7 @@ public class RestMonomerTest extends StandaloneServer{
 		URI uri = builder.build();
 		Response response = client.target(uri).request().get();
 		String retMonomerList = response.readEntity(String.class);
+		System.out.println(retMonomerList);
 		Assert.assertEquals(response.getStatus(),200);
 	}
 	
