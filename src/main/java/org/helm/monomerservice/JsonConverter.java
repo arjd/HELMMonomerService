@@ -68,7 +68,7 @@ public class JsonConverter {
 		ObjectMapper mapper = new ObjectMapper();
 
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		mapper.registerSubtypes(Attachment.class);
+		//mapper.registerSubtypes(Attachment.class);
 
 		// JSON from file to Object
 		Rule list = mapper.readValue(s, Rule.class);

@@ -1,0 +1,24 @@
+[{
+	"id": 1,
+	"category": "Demo",
+	"name": "Replace base A with U",
+	"description": "null",
+	"script": "function(plugin){var n = plugin.replaceMonomer(org.helm.webeditor.HELM.BASE, 'A','U');return n>0;}",
+	"author": "Nobody"
+},
+{
+	"id": 2,
+	"category": "Demo",
+	"name": "Replace base A with G",
+	"description": "null",
+	"script": "function(plugin){var n = plugin.replaceMonomer(org.helm.webeditor.HELM.BASE, 'A','G');return n>0;}",
+	"author": "Nobody"
+},
+{
+	"id": 3,
+	"category": "Test",
+	"name": "Replace base A with T",
+	"description": "null",
+	"script": "function(plugin){var n = plugin.replaceMonomer(org.helm.webeditor.HELM.BASE, 'A','T');return n>0;}",
+	"author": "Nobody"
+}]

@@ -85,7 +85,7 @@ public class RuleLibrarySQLite implements IRuleLibrary {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM RULES WHERE ID = " + id);
 				
 			rule = new Rule(id, rs.getString("CATEGORY"), rs.getString("NAME"), rs.getString("DESCRIPTION"), rs.getString("SCRIPT"), rs.getString("AUTHOR"));
-			rule.set_id(rs.getString("_ID"));
+			//rule.set_id(rs.getString("_ID"));
 
 			LOG.info("Rule with ID: " + id + " shown");
 
@@ -122,7 +122,7 @@ public class RuleLibrarySQLite implements IRuleLibrary {
 				int id = rs.getInt("ID");
 				
 				rule = new Rule(id, rs.getString("CATEGORY"), rs.getString("NAME"), rs.getString("DESCRIPTION"), rs.getString("SCRIPT"), rs.getString("AUTHOR"));
-				rule.set_id(rs.getString("_ID"));
+				//rule.set_id(rs.getString("_ID"));
 				
 				list.add(rule);
 				
@@ -162,8 +162,8 @@ public class RuleLibrarySQLite implements IRuleLibrary {
 				stmt.execute(sql);
 			} else {
 
-				sql = "INSERT INTO RULES (CATEGORY,NAME,AUTHOR,DESCRIPTION,SCRIPT,_ID) " + "VALUES('" + rule.getCategory()
-				+ "','" + rule.getName() + "','" + rule.getAuthor() + "','" + rule.getDescription() + "','" + rule.getScript() + "','" + rule.get_id() +"')";
+				sql = "INSERT INTO RULES (CATEGORY,NAME,AUTHOR,DESCRIPTION,SCRIPT,ID) " + "VALUES('" + rule.getCategory()
+				+ "','" + rule.getName() + "','" + rule.getAuthor() + "','" + rule.getDescription() + "','" + rule.getScript() + "','" + rule.getId() +"')";
 				stmt.execute(sql);
 				rs = stmt.getGeneratedKeys();
 				rs.next();

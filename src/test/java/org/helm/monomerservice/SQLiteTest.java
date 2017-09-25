@@ -25,6 +25,7 @@ package org.helm.monomerservice;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.helm.monomerservice.IMonomerLibrary;
@@ -88,6 +89,18 @@ public class SQLiteTest {
 	rule.setName("Foo");
 	IRuleLibrary MyLoaderLibrary = MyLibrary.getRulesLibrary();
 	MyLoaderLibrary.insertOrUpdateRule(rule);
+}
+
+@Test
+public void testShowRules() throws Exception {
+	ArrayList<Rule> list = new ArrayList<Rule>();
+	JsonConverter converter = new JsonConverter();
+	
+	IRuleLibrary MyLoaderLibrary = MyLibrary.getRulesLibrary();
+	list = MyLoaderLibrary.showAllRules();
+	for (int i = 0;i<list.size();i++) {
+		System.out.println(converter.encodeRule(list.get(i)));
+	}
 }
 
 @Test

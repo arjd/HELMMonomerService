@@ -1,5 +1,5 @@
 #LibrariesLoader
-loader.rules=org.helm.monomerservice.RuleLibrarySQLite
+loader.rules=org.helm.monomerservice.RuleLibraryMongoDB
 loader.monomers=org.helm.monomerservice.MonomerLibraryMongoDB
 loader.hostname=localhost
 loader.port=27017

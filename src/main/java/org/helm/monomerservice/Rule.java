@@ -25,16 +25,15 @@ package org.helm.monomerservice;
 public class Rule {
 	
 	private Integer id;
-	private String category, name, description, script, author, _id;
+	private String category, name, description, script, author;
 	
 	/**
 	 * Just for testing
 	 * Creates a new rule with some random initialized attributes
 	 */
 	public Rule() {
-		_id = null;
 		id = 0;
-		category = "atomatic";
+		category = "automatic";
 		name = "TestIt";
 		description = "automatically generated";
 		script = "no script given";
@@ -48,7 +47,6 @@ public class Rule {
 		this.description = description;
 		this.script = script;
 		this.author = author;
-		this._id = null;
 	}
 	
 	public String getCategory() {
@@ -71,10 +69,7 @@ public class Rule {
 		return id;
 	}
 	
-	public String get_id() {
-		return _id;
-	}
-	
+
 	public String getAuthor() {
 		return author;
 	}
@@ -83,9 +78,6 @@ public class Rule {
 		this.id = id;
 	}
 	
-	public void set_id(String _id) {
-		this._id = _id;
-	}
 	
 	public void setCategory(String category) {
 		this.category = category;

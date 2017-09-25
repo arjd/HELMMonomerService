@@ -1,1 +1,3 @@
 mongoimport --db local --collection monomers --file Monomers.json --jsonArray
+
+mongoimport --db local --collection rules --file Rules.json --jsonArray
