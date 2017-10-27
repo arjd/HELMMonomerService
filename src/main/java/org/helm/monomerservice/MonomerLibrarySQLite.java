@@ -92,7 +92,7 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 	}
 
 
-	public List<LWMonomer> showMonomerList(String polymerType, String monomerType, String filter, int offset, int limit) throws Exception {
+	public List<LWMonomer> showMonomerList(String polymerType, String monomerType, String filter,String filterField, int offset, int limit) throws Exception {
 		Connection c = null;
 		Statement stmt = null;
 		LWMonomer monomer = null;
@@ -117,7 +117,11 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			
 			//filter clause
 			if (filter != null && !filter.isEmpty()) {
-				whereClause = whereClause + " and symbol like \'" + filter + "%\' ";
+				if (filterField != null && !filterField.isEmpty()) {
+				whereClause = whereClause + " and " + filterField + " like \'%" + filter + "%\' ";
+				} else {
+					whereClause = whereClause + " and (symbol like \'%" + filter + "%\' or name like \'%" + filter + "%\') ";
+				}
 			}
 			
 			//total count

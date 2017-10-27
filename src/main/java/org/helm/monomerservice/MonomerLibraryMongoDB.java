@@ -30,6 +30,7 @@ import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -71,7 +72,7 @@ public class MonomerLibraryMongoDB implements IMonomerLibrary {
 	}
 
 	@Override
-	public List<LWMonomer> showMonomerList(String polymerType, String monomerType, String filter, int offset, int limit)
+	public List<LWMonomer> showMonomerList(String polymerType, String monomerType, String filter,String filterField, int offset, int limit)
 			throws Exception {
 		LWMonomer monomer = null;
 		ArrayList<LWMonomer> list = new ArrayList<LWMonomer>();
@@ -91,10 +92,19 @@ public class MonomerLibraryMongoDB implements IMonomerLibrary {
 				mQuery = mQuery.append("polymerType", polymerType);
 			}
 
-			// symbol filter
+			// filter
 			if (filter != null && !filter.isEmpty()) {
 				Pattern j = Pattern.compile(filter, Pattern.CASE_INSENSITIVE);
-				mQuery = mQuery.append("symbol", j);
+				if (filterField != null && !filterField.isEmpty()) {
+					mQuery = mQuery.append(filterField, j);
+				} else {
+					BasicDBObject clause1 = new BasicDBObject("symbol", j);  
+					BasicDBObject clause2 = new BasicDBObject("name", j);   
+					BasicDBList or = new BasicDBList();
+					or.add(clause1);
+					or.add(clause2);
+					mQuery = mQuery.append("$or", or);
+				}
 			}
 
 			// monomerType
@@ -132,7 +142,7 @@ public class MonomerLibraryMongoDB implements IMonomerLibrary {
 	@Override
 	public List<LWMonomer> showAllMonomers() throws Exception {
 
-		return showMonomerList("ALL", "", "", 0, 0);
+		return showMonomerList("ALL", "", "", "", 0, 0);
 	}
 
 	@Override

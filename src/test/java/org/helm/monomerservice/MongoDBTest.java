@@ -55,7 +55,7 @@ public class MongoDBTest {
 		  List<LWMonomer> monomerList;
 		  	  
 			  IMonomerLibrary MyLoaderLibrary = MyLibrary.getMonomerLibrary();
-			  monomerList = MyLoaderLibrary.showMonomerList("RNA","Branch", "", 0, 0);
+			  monomerList = MyLoaderLibrary.showMonomerList("RNA","Backbone", "6-amino", "name", 0, 0);
 			  System.out.println(monomerList.size());
 			  assertEquals((monomerList.size() > 1), true);
 	  }

@@ -30,7 +30,7 @@ public interface IMonomerLibrary {
 	   * method to delete monomer selected by polymerType and symbol
 	   * 
 	   * @param polymerType
-	   * 			Type of monomer which should be deleted
+	   * 			Type of polymer which should be deleted
 	   * 
 	   * @param symbol
 	   * 			Symbol of monomer which should be deleted
@@ -42,9 +42,19 @@ public interface IMonomerLibrary {
 	   * method to show a list of monomers
 	   * 
 	   * @param polymerType
-	   * 			Type of monomer: RNA, PEPTIDE, CHEM, ALL
+	   * 			Type of polmyer: RNA, PEPTIDE, CHEM, ALL
+	   * @param monomerType
+	   * 			Type of monomer: Backbone, Branch
+	   * @param filter
+	   * 			Filter criteria. Performs a "contains" search
+	   * @param filterField
+	   * 			Field to search: name, symbol. If empty, search in both fields.
+	   * @param offset
+	   * 			Offset of results for pagination.
+	   * @param limit
+	   * 			Limit of results for pagination.
 	   */
-	public List<LWMonomer>  showMonomerList(String polymerType, String monomerType, String filter, int offset, int limit) throws Exception;
+	public List<LWMonomer>  showMonomerList(String polymerType, String monomerType, String filter, String filterField, int offset, int limit) throws Exception;
 	
 	
 	/**

@@ -98,13 +98,14 @@ public class RestMonomerTest extends StandaloneServer{
 	public void testShowFilteredMonomers() {
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("library").path("monomer").path("CHEM");
-		builder.queryParam("filter", "A");
+		builder.path("library").path("monomer").path("RNA");
+		builder.queryParam("filter", "ddR");
+		//builder.queryParam("filterField", "symbol");
 		URI uri = builder.build();
 		Response response = client.target(uri).request().get();
 		String retMonomerList = response.readEntity(String.class);
 		System.out.println(retMonomerList);
-		Assert.assertTrue(retMonomerList.contains("A6OH") && !retMonomerList.contains("SMCC"));
+		Assert.assertTrue(retMonomerList.contains("name"));
 	}	
 
 	@Test

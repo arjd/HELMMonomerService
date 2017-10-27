@@ -1,73 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="5" passed="5">
+<testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="1706" started-at="2017-09-25T14:17:51Z" finished-at="2017-09-25T14:17:53Z">
+  <suite name="Default suite" duration-ms="1313" started-at="2017-10-27T13:54:29Z" finished-at="2017-10-27T13:54:30Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="1706" started-at="2017-09-25T14:17:51Z" finished-at="2017-09-25T14:17:53Z">
-      <class name="org.helm.monomerservice.RestRuleTest">
-        <test-method status="PASS" signature="startServer()[pri:0, instance:org.helm.monomerservice.RestRuleTest@e5394c]" name="startServer" is-config="true" duration-ms="519" started-at="2017-09-25T16:17:51Z" finished-at="2017-09-25T16:17:51Z">
+    <test name="Default test" duration-ms="1313" started-at="2017-10-27T13:54:29Z" finished-at="2017-10-27T13:54:30Z">
+      <class name="org.helm.monomerservice.RestMonomerTest">
+        <test-method status="PASS" signature="startServer()[pri:0, instance:org.helm.monomerservice.RestMonomerTest@19005c4]" name="startServer" is-config="true" duration-ms="550" started-at="2017-10-27T15:54:29Z" finished-at="2017-10-27T15:54:29Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- startServer -->
-        <test-method status="PASS" signature="testAddRule()[pri:0, instance:org.helm.monomerservice.RestRuleTest@e5394c]" name="testAddRule" duration-ms="732" started-at="2017-09-25T16:17:51Z" finished-at="2017-09-25T16:17:52Z">
+        <test-method status="PASS" signature="testShowFilteredMonomers()[pri:0, instance:org.helm.monomerservice.RestMonomerTest@19005c4]" name="testShowFilteredMonomers" duration-ms="745" started-at="2017-10-27T15:54:29Z" finished-at="2017-10-27T15:54:30Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testAddRule -->
-        <test-method status="PASS" signature="stopServer()[pri:0, instance:org.helm.monomerservice.RestRuleTest@e5394c]" name="stopServer" is-config="true" duration-ms="6" started-at="2017-09-25T16:17:52Z" finished-at="2017-09-25T16:17:52Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- stopServer -->
-        <test-method status="PASS" signature="startServer()[pri:0, instance:org.helm.monomerservice.RestRuleTest@e5394c]" name="startServer" is-config="true" duration-ms="74" started-at="2017-09-25T16:17:52Z" finished-at="2017-09-25T16:17:52Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- startServer -->
-        <test-method status="PASS" signature="testDeleteRule()[pri:0, instance:org.helm.monomerservice.RestRuleTest@e5394c]" name="testDeleteRule" duration-ms="20" started-at="2017-09-25T16:17:52Z" finished-at="2017-09-25T16:17:52Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- testDeleteRule -->
-        <test-method status="PASS" signature="stopServer()[pri:0, instance:org.helm.monomerservice.RestRuleTest@e5394c]" name="stopServer" is-config="true" duration-ms="2" started-at="2017-09-25T16:17:52Z" finished-at="2017-09-25T16:17:52Z">
+        </test-method> <!-- testShowFilteredMonomers -->
+        <test-method status="PASS" signature="stopServer()[pri:0, instance:org.helm.monomerservice.RestMonomerTest@19005c4]" name="stopServer" is-config="true" duration-ms="8" started-at="2017-10-27T15:54:30Z" finished-at="2017-10-27T15:54:30Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- stopServer -->
-        <test-method status="PASS" signature="startServer()[pri:0, instance:org.helm.monomerservice.RestRuleTest@e5394c]" name="startServer" is-config="true" duration-ms="62" started-at="2017-09-25T16:17:52Z" finished-at="2017-09-25T16:17:52Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- startServer -->
-        <test-method status="PASS" signature="testShowAllRules()[pri:0, instance:org.helm.monomerservice.RestRuleTest@e5394c]" name="testShowAllRules" duration-ms="88" started-at="2017-09-25T16:17:52Z" finished-at="2017-09-25T16:17:52Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- testShowAllRules -->
-        <test-method status="PASS" signature="stopServer()[pri:0, instance:org.helm.monomerservice.RestRuleTest@e5394c]" name="stopServer" is-config="true" duration-ms="2" started-at="2017-09-25T16:17:52Z" finished-at="2017-09-25T16:17:52Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- stopServer -->
-        <test-method status="PASS" signature="startServer()[pri:0, instance:org.helm.monomerservice.RestRuleTest@e5394c]" name="startServer" is-config="true" duration-ms="56" started-at="2017-09-25T16:17:52Z" finished-at="2017-09-25T16:17:53Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- startServer -->
-        <test-method status="PASS" signature="testShowRule()[pri:0, instance:org.helm.monomerservice.RestRuleTest@e5394c]" name="testShowRule" duration-ms="31" started-at="2017-09-25T16:17:53Z" finished-at="2017-09-25T16:17:53Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- testShowRule -->
-        <test-method status="PASS" signature="stopServer()[pri:0, instance:org.helm.monomerservice.RestRuleTest@e5394c]" name="stopServer" is-config="true" duration-ms="1" started-at="2017-09-25T16:17:53Z" finished-at="2017-09-25T16:17:53Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- stopServer -->
-        <test-method status="PASS" signature="startServer()[pri:0, instance:org.helm.monomerservice.RestRuleTest@e5394c]" name="startServer" is-config="true" duration-ms="55" started-at="2017-09-25T16:17:53Z" finished-at="2017-09-25T16:17:53Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- startServer -->
-        <test-method status="PASS" signature="testUpdateRule()[pri:0, instance:org.helm.monomerservice.RestRuleTest@e5394c]" name="testUpdateRule" duration-ms="40" started-at="2017-09-25T16:17:53Z" finished-at="2017-09-25T16:17:53Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- testUpdateRule -->
-        <test-method status="PASS" signature="stopServer()[pri:0, instance:org.helm.monomerservice.RestRuleTest@e5394c]" name="stopServer" is-config="true" duration-ms="2" started-at="2017-09-25T16:17:53Z" finished-at="2017-09-25T16:17:53Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- stopServer -->
-      </class> <!-- org.helm.monomerservice.RestRuleTest -->
+      </class> <!-- org.helm.monomerservice.RestMonomerTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
