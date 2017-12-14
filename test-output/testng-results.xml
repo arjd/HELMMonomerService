@@ -1,25 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="1" passed="1">
+<testng-results skipped="0" failed="0" total="10" passed="10">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="1313" started-at="2017-10-27T13:54:29Z" finished-at="2017-10-27T13:54:30Z">
+  <suite name="Default suite" duration-ms="545" started-at="2017-12-14T14:24:20Z" finished-at="2017-12-14T14:24:21Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="1313" started-at="2017-10-27T13:54:29Z" finished-at="2017-10-27T13:54:30Z">
-      <class name="org.helm.monomerservice.RestMonomerTest">
-        <test-method status="PASS" signature="startServer()[pri:0, instance:org.helm.monomerservice.RestMonomerTest@19005c4]" name="startServer" is-config="true" duration-ms="550" started-at="2017-10-27T15:54:29Z" finished-at="2017-10-27T15:54:29Z">
+    <test name="Default test" duration-ms="545" started-at="2017-12-14T14:24:20Z" finished-at="2017-12-14T14:24:21Z">
+      <class name="org.helm.monomerservice.SQLiteTest">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:org.helm.monomerservice.SQLiteTest@2ac273d3]" name="setUp" is-config="true" duration-ms="71" started-at="2017-12-14T15:24:20Z" finished-at="2017-12-14T15:24:20Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- startServer -->
-        <test-method status="PASS" signature="testShowFilteredMonomers()[pri:0, instance:org.helm.monomerservice.RestMonomerTest@19005c4]" name="testShowFilteredMonomers" duration-ms="745" started-at="2017-10-27T15:54:29Z" finished-at="2017-10-27T15:54:30Z">
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="insertOrUpdateMonomer()[pri:0, instance:org.helm.monomerservice.SQLiteTest@2ac273d3]" name="insertOrUpdateMonomer" duration-ms="249" started-at="2017-12-14T15:24:20Z" finished-at="2017-12-14T15:24:21Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testShowFilteredMonomers -->
-        <test-method status="PASS" signature="stopServer()[pri:0, instance:org.helm.monomerservice.RestMonomerTest@19005c4]" name="stopServer" is-config="true" duration-ms="8" started-at="2017-10-27T15:54:30Z" finished-at="2017-10-27T15:54:30Z">
+        </test-method> <!-- insertOrUpdateMonomer -->
+        <test-method status="PASS" signature="testDeleteMonomer()[pri:0, instance:org.helm.monomerservice.SQLiteTest@2ac273d3]" name="testDeleteMonomer" duration-ms="1" started-at="2017-12-14T15:24:21Z" finished-at="2017-12-14T15:24:21Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- stopServer -->
-      </class> <!-- org.helm.monomerservice.RestMonomerTest -->
+        </test-method> <!-- testDeleteMonomer -->
+        <test-method status="PASS" signature="testFilterMonomers()[pri:0, instance:org.helm.monomerservice.SQLiteTest@2ac273d3]" name="testFilterMonomers" duration-ms="2" started-at="2017-12-14T15:24:21Z" finished-at="2017-12-14T15:24:21Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testFilterMonomers -->
+        <test-method status="PASS" signature="testGetMonomer()[pri:0, instance:org.helm.monomerservice.SQLiteTest@2ac273d3]" name="testGetMonomer" duration-ms="3" started-at="2017-12-14T15:24:21Z" finished-at="2017-12-14T15:24:21Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetMonomer -->
+        <test-method status="PASS" signature="testInsertMonomer()[pri:0, instance:org.helm.monomerservice.SQLiteTest@2ac273d3]" name="testInsertMonomer" duration-ms="57" started-at="2017-12-14T15:24:21Z" finished-at="2017-12-14T15:24:21Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testInsertMonomer -->
+        <test-method status="PASS" signature="testInsertRule()[pri:0, instance:org.helm.monomerservice.SQLiteTest@2ac273d3]" name="testInsertRule" duration-ms="16" started-at="2017-12-14T15:24:21Z" finished-at="2017-12-14T15:24:21Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testInsertRule -->
+        <test-method status="PASS" signature="testShowAllMonomersByType()[pri:0, instance:org.helm.monomerservice.SQLiteTest@2ac273d3]" name="testShowAllMonomersByType" duration-ms="57" started-at="2017-12-14T15:24:21Z" finished-at="2017-12-14T15:24:21Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testShowAllMonomersByType -->
+        <test-method status="PASS" signature="testShowRules()[pri:0, instance:org.helm.monomerservice.SQLiteTest@2ac273d3]" name="testShowRules" duration-ms="5" started-at="2017-12-14T15:24:21Z" finished-at="2017-12-14T15:24:21Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testShowRules -->
+        <test-method status="PASS" signature="testUpdateMonomer()[pri:0, instance:org.helm.monomerservice.SQLiteTest@2ac273d3]" name="testUpdateMonomer" duration-ms="55" started-at="2017-12-14T15:24:21Z" finished-at="2017-12-14T15:24:21Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testUpdateMonomer -->
+        <test-method status="PASS" signature="testUpdateRule()[pri:0, instance:org.helm.monomerservice.SQLiteTest@2ac273d3]" name="testUpdateRule" duration-ms="14" started-at="2017-12-14T15:24:21Z" finished-at="2017-12-14T15:24:21Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testUpdateRule -->
+      </class> <!-- org.helm.monomerservice.SQLiteTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
