@@ -31,8 +31,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
-import org.helm.monomerservice.RestRule;
-import org.helm.monomerservice.Rule;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

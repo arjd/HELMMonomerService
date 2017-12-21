@@ -4,14 +4,22 @@
 <th>Method name</th>
 <th>Groups</th>
 </tr><tr>
-<td>org.helm.monomerservice.SQLiteTest</td>
+<td>org.helm.monomerservice.RestMonomerTest</td>
 <td>&nbsp;</td><td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
 <tr>
 <td>&nbsp;</td>
-<td>testInsertRule</td>
+<td>testMonomerPagination</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>testShowAllMonomersByMonomerType</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>testInserOrUpdateMonomer</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
@@ -19,15 +27,11 @@
 <td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
-<td>testGetMonomer</td>
+<td>testMonomerDetail</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
-<td>testInsertMonomer</td>
-<td>&nbsp;</td></tr>
-<tr>
-<td>&nbsp;</td>
-<td>testShowRules</td>
+<td>testShowAllMonomers</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
@@ -35,15 +39,11 @@
 <td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
-<td>testUpdateRule</td>
+<td>testUpdateMonomerName</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
-<td>testFilterMonomers</td>
-<td>&nbsp;</td></tr>
-<tr>
-<td>&nbsp;</td>
-<td>insertOrUpdateMonomer</td>
+<td>testShowFilteredMonomers</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
@@ -53,15 +53,19 @@
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
-<td>&nbsp;</td>
-<td>setUp</td>
-<td>&nbsp;</td></tr>
-<tr>
 <td align='center' colspan='3'>@BeforeMethod</td>
 </tr>
 <tr>
+<td>&nbsp;</td>
+<td>startServer</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@AfterMethod</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>stopServer</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@AfterClass</td>
 </tr>
