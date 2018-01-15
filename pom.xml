@@ -22,7 +22,7 @@
 
 		<swagger.context.root>/rest</swagger.context.root>
 		<swagger.context.root.noslash>rest</swagger.context.root.noslash>
-
+		<skipTests>true</skipTests>
 		
 
 	</properties>
