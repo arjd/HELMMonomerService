@@ -31,3 +31,7 @@ mongoimport --db local --collection monomers --file Monomers.json --jsonArray
 mongoimport --db local --collection rules --file Rules.json --jsonArray
 ```
 
+## Swagger API description
+There is a Swagger API description available for the API methods:
+http://localhost:8080/HELM2MonomerService/
+Change hostname and port in accordance to your local setup.
