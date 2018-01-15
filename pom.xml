@@ -6,29 +6,35 @@
 	<version>1.0.0</version>
 	<packaging>war</packaging>
 
-	<name>helm2-monomerservice</name>
+	<name>HELM2MonomerService</name>
 
 	<properties>
-		<warName>helm2-monomerservice</warName>
+		<warName>HELM2MonomerService</warName>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jboss.bom.version>1.0.7.CR8</jboss.bom.version>
 
+		<!-- Please configure to point to checked-out WebUI Directory -->
+		<swagger.directory>../Docu</swagger.directory>
+		<swagger.release>${swagger.directory}/dist</swagger.release>
+		<swagger.docbasepath>/HELM2MonomerService/</swagger.docbasepath>
 
+		<swagger.context.root>/rest</swagger.context.root>
+		<swagger.context.root.noslash>rest</swagger.context.root.noslash>
 
-
+		
 
 	</properties>
 
 	<build>
-		<finalName>helm2-monomerservice</finalName>
+		<finalName>HELM2MonomerService</finalName>
 		<resources>
 			<resource>
 				<directory>src/test/resources</directory>
 			</resource>
 		</resources>
-		<pluginManagement>
+
 
 			<plugins>
 				<plugin>
@@ -40,14 +46,7 @@
 						<target>1.7</target>
 					</configuration>
 				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.20.1</version>
-					<configuration>
-						<skip>true</skip>
-					</configuration>
-				</plugin>
+
 
 
 				<plugin>
@@ -69,44 +68,71 @@
 							</resource>
 
 
+						<!-- Additionally, we might even include the WEB-UI directly in this 
+							war -->
+						<resource>
+							<directory>${swagger.release}</directory>
+							<!-- Make resources accessible to the ClassLoader by putting them 
+								to the other resources. -->
+							<targetPath></targetPath>
+							<filtering>false</filtering>
+							<includes>
+								<include>**</include>
+							</includes>
+						</resource>
+						<resource>
+							<directory>${swagger.release}/apidocs</directory>
+							<!-- Include swagger jsons in root dir -->
+					
+							<targetPath></targetPath>
+							<filtering>false</filtering>
+							<includes>
+								<include>**</include>
+							</includes>
+						</resource>
 
 						</webResources>
 					</configuration>
 				</plugin>
 
-				<plugin>
-					<groupId>com.github.kongchen</groupId>
-					<artifactId>swagger-maven-plugin</artifactId>
-					<version>3.1.5</version>
-					<configuration>
-						<apiSources>
-							<apiSource>
-								<locations>org.helm.monomerservice.RestMonomer</locations>
-								<schemes>http</schemes>
- 								<host>localhost:8080</host>
- 								<basePath>/api</basePath>
-								<info>
-									<title>${project.name}</title>
-									<version>${project.version}</version>
-								</info>
-								<swaggerDirectory>${project.build.directory}/swagger</swaggerDirectory>
-								<outputFormats>json</outputFormats>
-							</apiSource>
-						</apiSources>
-					</configuration>
-					<executions>
-						<execution>
-							<phase>compile</phase>
-							<goals>
-								<goal>generate</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>generate-service-docs</id>
+						<phase>generate-resources</phase>
+						<configuration>
+							<doclet>com.carma.swagger.doclet.ServiceDoclet</doclet>
+							<docletArtifact>
+								<groupId>com.carma</groupId>
+								<artifactId>swagger-doclet</artifactId>
+								<version>1.0.5</version>
+							</docletArtifact>
+							<reportOutputDirectory>${swagger.release}</reportOutputDirectory>
+							<useStandardDocletOptions>false</useStandardDocletOptions>
+							<!-- See http://fromage.github.io/jax-doclets/docs/0.10.0/html/index.html#d0e463 
+								for annotations -->
+							<additionalparam>-apiVersion 2 -docBasePath
+								${swagger.docbasepath} -apiBasePath ${swagger.docbasepath}rest
+								-swaggerUiZipPath none -disableCopySwaggerUi</additionalparam>
+						</configuration>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			
+			</plugins>
+
+		<pluginManagement>
+			<plugins>
 				<!--This plugin's configuration is used to store Eclipse m2e settings 
 					only. It has no influence on the Maven build itself. -->
-
-
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -133,13 +159,6 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
-		<plugins>
-            <plugin>
-                <groupId>com.github.kongchen</groupId>
-                <artifactId>swagger-maven-plugin</artifactId>
-            </plugin>
-            
-        </plugins>
 	</build>
 
 
@@ -183,11 +202,7 @@
 		</dependency>
 
 
-		<dependency>
-			<groupId>io.swagger</groupId>
-			<artifactId>swagger-jersey2-jaxrs</artifactId>
-			<version>1.5.15</version>
-		</dependency>
+
 
 
 		<dependency>
@@ -209,11 +224,6 @@
 		</dependency>
 
 
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20140107</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
@@ -255,7 +265,15 @@
 			<groupId>io.github.robwin</groupId>
 			<artifactId>swagger2markup</artifactId>
 			<version>0.9.2</version>
-		</dependency>
+</dependency>
+
+<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20140107</version>
+</dependency>
+
 	</dependencies>
+
 
 </project>

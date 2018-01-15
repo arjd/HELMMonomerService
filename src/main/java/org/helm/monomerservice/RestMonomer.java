@@ -45,7 +45,7 @@ import org.json.JSONObject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import io.swagger.annotations.Api;
+
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -57,7 +57,6 @@ import io.swagger.annotations.ApiResponses;
  */
 
 @Path("/library")
-@Api(value="/library")
 public class RestMonomer {
 
 	@Path("monomer/{polymertype}/{symbol}")
