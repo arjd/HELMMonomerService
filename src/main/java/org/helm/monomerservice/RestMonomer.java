@@ -57,10 +57,10 @@ import io.swagger.annotations.ApiResponses;
 public class RestMonomer {
 
 	/**
-	 * Delete a monomer
+	 * Delete an existing monomer defined by polymertype and symbol
 	 * <p>
-	 * This will delete an existing monomer
-	 * @param polymerType
+	 * bla
+	 * @param polymerType Polymertype: RNA,PEPTIDE,CHEM,ALL
 	 * @param symbol
 	 * @return
 	 */
