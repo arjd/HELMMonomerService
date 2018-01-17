@@ -45,11 +45,11 @@ import io.swagger.annotations.ApiResponses;
  * path = HELM2MonomerService/webService/service/....
  */
 
-@Path ("/library")
+@Path ("/rule")
 public class RestRule {
 
 	
-	@Path("/delete/{id}")
+	@Path("{id}")
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Delete rule", httpMethod = "DELETE", response = Response.class)
@@ -64,7 +64,7 @@ public class RestRule {
 		}
 	}
 	
-	@Path("/rule/{id}")
+	@Path("{id}")
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -80,7 +80,7 @@ public class RestRule {
 		}
 	}
 	
-	@Path("/rules")
+	@Path("")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Show all rules", httpMethod = "GET", response = Response.class)
@@ -96,7 +96,7 @@ public class RestRule {
 		}
 	}
 	
-	@Path("/rule")
+	@Path("")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)

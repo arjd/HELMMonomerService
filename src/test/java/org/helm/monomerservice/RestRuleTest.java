@@ -40,25 +40,16 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class RestRuleTest extends StandaloneServer {
 
-	@Test
-	public void testDeleteRule() {
-		Client client = createClient();
-		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path(RestRule.class).path(RestRule.class, "deleteRule");
-		URI uri = builder.build("3");
-		Response response = client.target(uri).request().delete();
-		System.out.println(response.readEntity(String.class));
-		Assert.assertEquals(response.getStatus(), 200);
-	}
 	
 	@Test
 	public void testShowRule() {
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("library").path("rule").path("1");
+		builder.path("rule").path("1");
 		URI uri = builder.build();
 		Response response = client.target(uri).request().get();
 		String retRule = response.readEntity(String.class);
+		System.out.println(retRule);
 		Assert.assertEquals(response.getStatus(),Response.Status.OK.getStatusCode());
 	}
 	
@@ -66,10 +57,11 @@ public class RestRuleTest extends StandaloneServer {
 	public void testShowAllRules() {
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("library").path("rules");
+		builder.path("rule");
 		URI uri = builder.build();
 		Response response = client.target(uri).request().get();
 		String retRule = response.readEntity(String.class);
+		System.out.println(retRule);
 		Assert.assertEquals(response.getStatus(),Response.Status.OK.getStatusCode());
 	}
 	
@@ -79,7 +71,7 @@ public class RestRuleTest extends StandaloneServer {
 		JsonConverter converter = new JsonConverter();
 		
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("library").path("rule").path("1");
+		builder.path("rule").path("1");
 		URI uri = builder.build();
 		Response response = client.target(uri).request().get();
 		String retRule = response.readEntity(String.class);
@@ -87,7 +79,7 @@ public class RestRuleTest extends StandaloneServer {
 		ruleObj.setName("Replace base A with X");
 		retRule = converter.encodeRule(ruleObj);
 		UriBuilder builder2 = UriBuilder.fromUri(BASE_URI);
-		builder2.path("library").path("rule");
+		builder2.path("rule");
 		URI uri2 = builder2.build();
 		
 		Response response2 = client.target(uri2).request().put(Entity.entity(retRule, MediaType.APPLICATION_JSON), Response.class);
@@ -100,15 +92,16 @@ public class RestRuleTest extends StandaloneServer {
 		///testAddRule + DeleteNewRule
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-	    builder.path(RestRule.class).path(RestRule.class, "addRule");
+	    builder.path("rule");
 	    URI uri = builder.build();
 	    Rule rule = new Rule();
 	    Response response = client.target(uri).request().put(Entity.entity(rule,MediaType.APPLICATION_JSON), Response.class);
 	    String retRule = response.readEntity(String.class);
 		Assert.assertTrue(retRule.contains(rule.getName()) && retRule.contains(rule.getCategory()));
+		
 		builder = UriBuilder.fromUri(BASE_URI);
-		builder.path(RestRule.class).path(RestRule.class, "deleteRule");
-		uri = builder.build(rule.getId());
+		builder.path("rule").path("0");
+		uri = builder.build();
 		response = client.target(uri).request().delete();
 		Assert.assertEquals(response.getStatus(), 200);
 		

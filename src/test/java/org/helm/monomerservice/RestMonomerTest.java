@@ -47,11 +47,11 @@ public class RestMonomerTest extends StandaloneServer{
 		Client client = createClient();
 		
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("library").path("monomer").path("CHEM").path("xxx");
+		builder.path("monomer").path("PEPTIDE").path("Cap");
 		URI uri = builder.build();
 		Response response = client.target(uri).request().delete();
 		System.out.println(response.readEntity(String.class));
-		Assert.assertEquals(response.getStatus(), 204);
+		Assert.assertEquals(response.getStatus(), 200);
 		
 	}
 	
@@ -59,7 +59,7 @@ public class RestMonomerTest extends StandaloneServer{
 	public void testMonomerDetail() {
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("library").path("monomer").path("PEPTIDE").path("D");
+		builder.path("monomer").path("PEPTIDE").path("D");
 		URI uri = builder.build();
 		Response response = client.target(uri).request().get();
 		String retMonomer = response.readEntity(String.class);
@@ -73,7 +73,7 @@ public class RestMonomerTest extends StandaloneServer{
 	public void testShowAllMonomersByType() {
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("library").path("monomer").path("CHEM");
+		builder.path("monomer").path("CHEM");
 		URI uri = builder.build();
 		Response response = client.target(uri).request().get();
 		String retMonomerList = response.readEntity(String.class);
@@ -85,7 +85,7 @@ public class RestMonomerTest extends StandaloneServer{
 	public void testShowAllMonomersByMonomerType() {
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("library").path("monomer").path("RNA");
+		builder.path("monomer").path("RNA");
 		builder.queryParam("monomertype", "Branch");
 		URI uri = builder.build();
 		Response response = client.target(uri).request().get();
@@ -98,7 +98,7 @@ public class RestMonomerTest extends StandaloneServer{
 	public void testShowFilteredMonomers() {
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("library").path("monomer").path("RNA");
+		builder.path("monomer").path("RNA");
 		builder.queryParam("filter", "ddR");
 		//builder.queryParam("filterField", "symbol");
 		URI uri = builder.build();
@@ -112,7 +112,7 @@ public class RestMonomerTest extends StandaloneServer{
 	public void testMonomerPagination() {
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("library").path("monomer").path("ALL");
+		builder.path("monomer").path("ALL");
 		builder.queryParam("limit", "3");
 		builder.queryParam("offset", "3");
 		URI uri = builder.build();
@@ -128,7 +128,7 @@ public class RestMonomerTest extends StandaloneServer{
 	public void testShowAllMonomers() {
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("library").path("monomer").path("ALL");
+		builder.path("monomer").path("ALL");
 		URI uri = builder.build();
 		Response response = client.target(uri).request().get();
 		String retMonomerList = response.readEntity(String.class);
@@ -142,7 +142,7 @@ public class RestMonomerTest extends StandaloneServer{
 	public void testUpdateMonomer() {
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("library").path("monomer").path("PEPTIDE").path("Aze");
+		builder.path("monomer").path("PEPTIDE").path("Aze");
 		URI uri = builder.build();
 		Response response = client.target(uri).request().get();
 		String retMonomer = response.readEntity(String.class);
@@ -158,7 +158,7 @@ public class RestMonomerTest extends StandaloneServer{
 	public void testUpdateMonomerName() {
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("library").path("monomer").path("CHEM").path("A6OH");
+		builder.path("monomer").path("CHEM").path("A6OH");
 		URI uri = builder.build();
 		Response response = client.target(uri).request().get();
 		String retMonomer = response.readEntity(String.class);
@@ -174,7 +174,7 @@ public class RestMonomerTest extends StandaloneServer{
 	public void testInserOrUpdateMonomer() {
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("library").path("monomer").path("CHEM").path("A6OH");
+		builder.path("monomer").path("CHEM").path("A6OH");
 		URI uri = builder.build();
 		Response response = client.target(uri).request().get();
 		String retMonomer = response.readEntity(String.class);
@@ -186,7 +186,7 @@ public class RestMonomerTest extends StandaloneServer{
 		retMonomer = retMonomer.replace("Undefined", "Backbone");
 		
 		UriBuilder builder2 = UriBuilder.fromUri(BASE_URI);
-		builder2.path("library").path("monomer").path("CHEM").path("test3");
+		builder2.path("monomer").path("CHEM").path("test3");
 		URI uri2 = builder2.build();
 		System.out.print(retMonomer);
 		Response response2 = client.target(uri2).request().put(Entity.entity(retMonomer, MediaType.APPLICATION_JSON), Response.class);

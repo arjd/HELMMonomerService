@@ -22,13 +22,11 @@
 
 package org.helm.monomerservice;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -37,15 +35,13 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.helm.notation2.exception.MonomerException;
-import org.jdom2.JDOMException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -53,16 +49,25 @@ import io.swagger.annotations.ApiResponses;
 /**
  * Provides REST-methods for monomers
  * 
- * path = HELM2MonomerService/webService/service/....
+ * path = HELM2MonomerService/monomer/...
  */
 
-@Path("/library")
+@Path("/monomer")
+@Api(value="/monomer")
 public class RestMonomer {
 
-	@Path("monomer/{polymertype}/{symbol}")
+	/**
+	 * Delete a monomer
+	 * <p>
+	 * This will delete an existing monomer
+	 * @param polymerType
+	 * @param symbol
+	 * @return
+	 */
+	@Path("{polymertype}/{symbol}")
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Delete a Monomer", httpMethod = "DELETE", response = Response.class)
+	@ApiOperation(value = "Delete a Monomer", notes = "Delete a Monomer",response = Response.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Monomer successfully deleted"),
 			@ApiResponse(code = 400, message = "Monomer was not deleted") })
 	public Response deleteMonomer(@PathParam("polymertype") String polymerType, @PathParam("symbol") String symbol) {
@@ -78,7 +83,7 @@ public class RestMonomer {
 		}
 	}
 
-	@Path("monomer/{polymertype}/{symbol}")
+	@Path("{polymertype}/{symbol}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -95,11 +100,11 @@ public class RestMonomer {
 		}
 	}
 
-	@Path("/monomer/{polymertype}")
+	@Path("{polymertype}")
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Get all monomers sorted by type", httpMethod = "GET", response = Response.class)
+	@ApiOperation(value = "Get all monomers sorted by type", notes = "List all monomers of a type", httpMethod = "GET", response = Response.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Monomers were successfully listed"),
 			@ApiResponse(code = 400, message = "Monomers can not be listed") })
 	public Response showMonomerList(@PathParam("polymertype") String polymerType,
@@ -122,7 +127,7 @@ public class RestMonomer {
 
 	}
 
-	@Path("/monomer/{polymertype}/{Symbol}")
+	@Path("{polymertype}/{Symbol}")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -143,47 +148,7 @@ public class RestMonomer {
 		}
 	}
 
-	@Path("/insertMonomer")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Insert new monomer", httpMethod = "POST", response = Response.class)
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Monomer successfully inserted"),
-			@ApiResponse(code = 400, message = "Error input") })
-	public Response insertMonomer(String monomerString) throws JDOMException, IOException, MonomerException {
-		JsonConverter converter = new JsonConverter();
-		try {
-			LWMonomer monomer = converter.decodeMonomer(monomerString);
-			int id = LibraryManager.getInstance().getMonomerLibrary().insertMonomer(monomer);
-			if (id > 0) {
-				return Response.status(Response.Status.OK).entity(wrapMonomer(monomer)).build();
-			} else {
-				return Response.status(Response.Status.BAD_REQUEST).entity(wrapMonomer(monomer)).build();
-			}
-		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-		}
-	}
 
-	@Path("/updateMonomer/{polymertype}/{Symbol}")
-	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Update monomer", httpMethod = "PUT", response = Response.class)
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Monomer successesfully updated"),
-			@ApiResponse(code = 400, message = "Error input") })
-	public Response updateMonomer(@PathParam("polymertype") String polymerType, @PathParam("Symbol") String symbol,
-			String monomerString) {
-		JsonConverter converter = new JsonConverter();
-		try {
-			LWMonomer monomer = converter.decodeMonomer(monomerString);
-			LWMonomer retMonomer = LibraryManager.getInstance().getMonomerLibrary().updateMonomer(polymerType, symbol,
-					monomer);
-			return Response.status(Response.Status.OK).entity(wrapMonomer(retMonomer)).build();
-		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-		}
-	}
 
 	private String wrapMonomer(LWMonomer monomer) throws JsonProcessingException {
 		JsonConverter converter = new JsonConverter();

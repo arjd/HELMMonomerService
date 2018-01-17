@@ -3,11 +3,11 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test verbose="2" name="Default test">
     <classes>
-      <class name="org.helm.monomerservice.RestMonomerTest">
+      <class name="org.helm.monomerservice.RestRuleTest">
         <methods>
-          <include name="testShowAllMonomersByMonomerType"/>
+          <include name="testAddRule"/>
         </methods>
-      </class> <!-- org.helm.monomerservice.RestMonomerTest -->
+      </class> <!-- org.helm.monomerservice.RestRuleTest -->
     </classes>
   </test> <!-- Default test -->
 </suite> <!-- Failed suite [Default suite] -->
