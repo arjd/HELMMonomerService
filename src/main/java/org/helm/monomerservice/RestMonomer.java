@@ -26,6 +26,7 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -56,14 +57,7 @@ import io.swagger.annotations.ApiResponses;
 @Api(value="/monomer")
 public class RestMonomer {
 
-	/**
-	 * Delete an existing monomer defined by polymertype and symbol
-	 * <p>
-	 * bla
-	 * @param polymerType Polymertype: RNA,PEPTIDE,CHEM,ALL
-	 * @param symbol
-	 * @return
-	 */
+	
 	@Path("{polymertype}/{symbol}")
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -104,7 +98,7 @@ public class RestMonomer {
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Get all monomers sorted by type", notes = "List all monomers of a type", httpMethod = "GET", response = Response.class)
+	@ApiOperation(value = "Get all monomers sorted by type", notes = "Polymertype can be RNA, PEPTIDE, CHEM or ALL", httpMethod = "GET", response = Response.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Monomers were successfully listed"),
 			@ApiResponse(code = 400, message = "Monomers can not be listed") })
 	public Response showMonomerList(@PathParam("polymertype") String polymerType,

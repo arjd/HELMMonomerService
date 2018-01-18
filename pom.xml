@@ -7,154 +7,96 @@
 	<packaging>war</packaging>
 
 	<name>HELM2MonomerService</name>
-
+	
 	<properties>
 		<warName>HELM2MonomerService</warName>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jboss.bom.version>1.0.7.CR8</jboss.bom.version>
-
-		<!-- Please configure to point to checked-out WebUI Directory -->
-		<swagger.directory>../Docu</swagger.directory>
-		<swagger.release>${swagger.directory}/dist</swagger.release>
-		<swagger.docbasepath>/HELM2MonomerService/</swagger.docbasepath>
-
-		<swagger.context.root>/rest</swagger.context.root>
-		<swagger.context.root.noslash>rest</swagger.context.root.noslash>
+		<jersey.version>2.26</jersey.version>
+        <jackson.version>2.9.3</jackson.version>
+        <log4j.version>2.10.0</log4j.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<skipTests>true</skipTests>
-		
-
 	</properties>
 
 	<build>
 		<finalName>HELM2MonomerService</finalName>
-		<resources>
-			<resource>
-				<directory>src/test/resources</directory>
-			</resource>
-		</resources>
 
 
 			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.1</version>
-					<configuration>
-						<source>1.7</source>
-						<target>1.7</target>
-					</configuration>
-				</plugin>
-
-
-
-				<plugin>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>2.4</version>
-					<configuration>
-						<failOnMissingWebXml>false</failOnMissingWebXml>
-						<webResources>
-							<resource>
-								<directory>src/main/webapp</directory>
-								<filtering>true</filtering>
-								<includes>
-									<include>*.html</include>
-									<include>lib/*.jar</include>
-								</includes>
-								<excludes>
-									<exclude>WEB-INF/*</exclude>
-								</excludes>
-							</resource>
-
-
-						<!-- Additionally, we might even include the WEB-UI directly in this 
-							war -->
-						<resource>
-							<directory>${swagger.release}</directory>
-							<!-- Make resources accessible to the ClassLoader by putting them 
-								to the other resources. -->
-							<targetPath></targetPath>
-							<filtering>false</filtering>
-							<includes>
-								<include>**</include>
-							</includes>
-						</resource>
-						<resource>
-							<directory>${swagger.release}/apidocs</directory>
-							<!-- Include swagger jsons in root dir -->
-					
-							<targetPath></targetPath>
-							<filtering>false</filtering>
-							<includes>
-								<include>**</include>
-							</includes>
-						</resource>
-
-						</webResources>
-					</configuration>
-				</plugin>
-
-			
-			<plugin>
+            <!-- compiler plugin, essentially the parameters for the Java compiler javac -->
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <!-- test plugin, automatically detects JUnit or TestNG, depending on library dependencies -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.20.1</version>
+            </plugin>
+            <!-- War packaging plugin, automatically referenced by the war-packaging -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <webResources>
+                        <!-- includes generated swagger.json into the war -->
+                        <resource>
+                            <directory>${project.build.directory}/generated/swagger-ui</directory>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+            <!-- a third party plugin to convert Swagger Core annotations into an API description -->
+            <plugin>
+                <groupId>com.github.kongchen</groupId>
+                <artifactId>swagger-maven-plugin</artifactId>
+                <version>3.1.6</version>
+                <configuration>
+                    <apiSources>
+                        <apiSource>
+                            <springmvc>false</springmvc>
+                            <locations>org.helm.monomerservice</locations>
+                            <schemes>http</schemes>
+                            <host>localhost:8080</host>
+                            <basePath>/HELM2MonomerService/rest</basePath>
+                            <info>
+                                <title>JAX-RS 2.0 sample application</title>
+                                <version>v1</version>
+                                <description>JAX-RS 2.0 sample application</description>
+                            </info>
+                            <swaggerDirectory>${project.build.directory}/generated/swagger-ui</swaggerDirectory>
+                            <attachSwaggerArtifact>true</attachSwaggerArtifact>
+                        </apiSource>
+                    </apiSources>
+                </configuration>
+                <!-- plugs the Swagger plugin into the compile phase -->
                 <executions>
                     <execution>
-                        <id>generate-service-docs</id>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <doclet>com.tenxerconsulting.swagger.doclet.ServiceDoclet</doclet>
-                            <docletArtifact>
-                                <groupId>com.tenxerconsulting</groupId>
-								<artifactId>swagger-doclet</artifactId>
-        						<version>1.0.7</version>
-        					</docletArtifact>
-                            <reportOutputDirectory>${project.build.outputDirectory}</reportOutputDirectory>
-                            <useStandardDocletOptions>false</useStandardDocletOptions>
-                            <additionalparam>-apiVersion 1 -docBasePath http://myapi -apiBasePath http://myapi</additionalparam>
-                        </configuration>
+                        <phase>compile</phase>
                         <goals>
-                            <goal>javadoc</goal>
+                            <goal>generate</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
+            <!-- javadoc generation, triggered by mvn javadoc:javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <nohelp>true</nohelp>
+                    <show>private</show>
+                </configuration>
+            </plugin>
 
-			
 			</plugins>
-
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.apache.maven.plugins</groupId>
-										<artifactId>maven-javadoc-plugin</artifactId>
-										<versionRange>[2.9.1,)</versionRange>
-										<goals>
-											<goal>javadoc</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
 
