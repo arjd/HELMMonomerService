@@ -63,7 +63,7 @@
                             <springmvc>false</springmvc>
                             <locations>org.helm.monomerservice</locations>
                             <schemes>http</schemes>
-                            <host>localhost:8080</host>
+                            <host></host>
                             <basePath>/HELM2MonomerService/rest</basePath>
                             <info>
                                 <title>JAX-RS 2.0 sample application</title>
