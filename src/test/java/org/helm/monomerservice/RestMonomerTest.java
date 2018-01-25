@@ -33,6 +33,8 @@ import javax.ws.rs.core.UriBuilder;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 
 public class RestMonomerTest extends StandaloneServer{
 
@@ -59,12 +61,12 @@ public class RestMonomerTest extends StandaloneServer{
 	public void testMonomerDetail() {
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("monomer").path("PEPTIDE").path("D");
+		builder.path("monomer").path("CHEM").path("Az");
 		URI uri = builder.build();
 		Response response = client.target(uri).request().get();
 		String retMonomer = response.readEntity(String.class);
 		System.out.println(retMonomer);
-		Assert.assertTrue(retMonomer.contains("PEPTIDE") && retMonomer.contains("D"));
+		Assert.assertTrue(retMonomer.contains("CHEM") && retMonomer.contains("Az"));
 	}	
 	
 	
@@ -158,40 +160,56 @@ public class RestMonomerTest extends StandaloneServer{
 	public void testUpdateMonomerName() {
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("monomer").path("CHEM").path("A6OH");
+		builder.path("monomer").path("CHEM").path("Az");
 		URI uri = builder.build();
 		Response response = client.target(uri).request().get();
 		String retMonomer = response.readEntity(String.class);
-		retMonomer = retMonomer.replace("6-amino-hexanol", "6'amino-hexanol");
-		System.out.print(retMonomer);
+		retMonomer = retMonomer.replace("Azide", "AzideTest");
+		
 		response = client.target(uri).request().put(Entity.entity(retMonomer, MediaType.APPLICATION_JSON), Response.class);
 		retMonomer = response.readEntity(String.class);
+		System.out.print(retMonomer);
 		Assert.assertEquals(response.getStatus(), 200);
 		
 	}	
 	
 	@Test
 	public void testInserOrUpdateMonomer() {
+		
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("monomer").path("CHEM").path("A6OH");
+		builder.path("monomer").path("CHEM").path("Az");
 		URI uri = builder.build();
 		Response response = client.target(uri).request().get();
 		String retMonomer = response.readEntity(String.class);
+		//System.out.println(retMonomer);
+		Assert.assertTrue(retMonomer.contains("CHEM") && retMonomer.contains("Az"));
 		
-		retMonomer = retMonomer.replace("A6OH", "test3");
-		retMonomer = retMonomer.replace("[H:1]OCCCCCCN[H:2]", "[H:1]OCCCCCCCN[H:2]");
-		retMonomer = retMonomer.replace("11290920372", "126");
-		retMonomer = retMonomer.replace("6-amino-hexanol", "7'amino-hexanol");
-		retMonomer = retMonomer.replace("Undefined", "Backbone");
+		LWMonomer monomer = new LWMonomer();
+		monomer.setSymbol("Foo");
+		monomer.setMonomerType("Undefinded");
+		monomer.setName("Bar");
+		monomer.setNaturalAnalog("X");
+		monomer.setMolfile("xxx");
+		monomer.setPolymerType("CHEM");
+		monomer.setSmiles("cccccc");
+		JsonConverter converter = new JsonConverter();
+		try {
+			retMonomer = converter.encodeMonomer(monomer);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.print(retMonomer);
 		
 		UriBuilder builder2 = UriBuilder.fromUri(BASE_URI);
-		builder2.path("monomer").path("CHEM").path("test3");
+		builder2.path("monomer").path("CHEM").path("Foo");
 		URI uri2 = builder2.build();
+		
+		response = client.target(uri2).request().put(Entity.entity(retMonomer, MediaType.APPLICATION_JSON), Response.class);
+		retMonomer = response.readEntity(String.class);
 		System.out.print(retMonomer);
-		Response response2 = client.target(uri2).request().put(Entity.entity(retMonomer, MediaType.APPLICATION_JSON), Response.class);
-		String retMonomer2 = response2.readEntity(String.class);
-		Assert.assertEquals(response2.getStatus(), 200);
+		Assert.assertEquals(response.getStatus(), 200);
 	}
 	
 

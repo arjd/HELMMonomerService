@@ -35,7 +35,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
@@ -46,6 +48,7 @@ import io.swagger.annotations.ApiResponses;
  */
 
 @Path ("/rule")
+@Api(value="/rule")
 public class RestRule {
 
 	
@@ -102,7 +105,7 @@ public class RestRule {
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Add rule", httpMethod = "PUT", response = Response.class)
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Rule successesfully added"), @ApiResponse(code = 400, message = "Error input")})
-	public Response addRule(String ruleString) {
+	public Response addRule( @ApiParam(value = "Rule", required = true) String ruleString) {
 		JsonConverter converter = new JsonConverter();
 		try {
 			Rule rule = converter.decodeRule(ruleString);

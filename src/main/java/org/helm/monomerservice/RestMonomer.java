@@ -26,7 +26,6 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -44,6 +43,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
@@ -129,7 +129,7 @@ public class RestMonomer {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Monomer successfully inserted/updated"),
 			@ApiResponse(code = 400, message = "Error input") })
 	public Response insertOrUpdateMonomer(@PathParam("polymertype") String polymerType,
-			@PathParam("Symbol") String symbol, String monomerString) {
+			@PathParam("Symbol") String symbol, @ApiParam(value = "Monomer", required = true) String monomerString) {
 		JsonConverter converter = new JsonConverter();
 		try {
 			LWMonomer monomer = converter.decodeMonomer(monomerString);
