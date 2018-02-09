@@ -553,9 +553,9 @@
 		"polymerType": "CHEM",
 		"rgroups": [{
 			"id": 0,
-			"alternateId": "R1-X",
+			"alternateId": "R1-H",
 			"capGroupSMILES": "null",
-			"capGroupName": "X",
+			"capGroupName": "H",
 			"label": "R1"
 		}],
 		"smiles": "null",
