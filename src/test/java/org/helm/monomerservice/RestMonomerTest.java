@@ -190,9 +190,28 @@ public class RestMonomerTest extends StandaloneServer{
 		monomer.setMonomerType("Undefinded");
 		monomer.setName("Bar");
 		monomer.setNaturalAnalog("X");
-		monomer.setMolfile("xxx");
+		monomer.setMolfile("\r\n" + 
+				"  Mrv1541302141809162D          \r\n" + 
+				"\r\n" + 
+				"  7  6  0  0  0  0            999 V2000\r\n" + 
+				"   -3.7054    0.9598    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n" + 
+				"   -2.9909    0.5473    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n" + 
+				"   -2.2764    0.9598    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n" + 
+				"   -1.5619    0.5473    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n" + 
+				"   -0.8475    0.9598    0.0000 R#  0  0  0  0  0  0  0  0  0  0  0  0\r\n" + 
+				"   -3.4034   -0.1671    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n" + 
+				"   -2.9909   -0.8816    0.0000 R#  0  0  0  0  0  0  0  0  0  0  0  0\r\n" + 
+				"  1  2  1  0  0  0  0\r\n" + 
+				"  2  3  1  0  0  0  0\r\n" + 
+				"  3  4  1  0  0  0  0\r\n" + 
+				"  4  5  1  0  0  0  0\r\n" + 
+				"  6  7  1  0  0  0  0\r\n" + 
+				"  2  6  1  0  0  0  0\r\n" + 
+				"M  RGP  2   5   1   7   2\r\n" + 
+				"M  END\r\n" + 
+				"");
 		monomer.setPolymerType("CHEM");
-		monomer.setSmiles("cccccc");
+		monomer.setSmiles("");
 		JsonConverter converter = new JsonConverter();
 		try {
 			retMonomer = converter.encodeMonomer(monomer);

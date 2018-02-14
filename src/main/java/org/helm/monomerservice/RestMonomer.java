@@ -47,6 +47,9 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+import org.helm.chemtoolkit.AbstractChemistryManipulator;
+import org.helm.notation2.Chemistry;
+
 /**
  * Provides REST-methods for monomers
  * 
@@ -133,6 +136,12 @@ public class RestMonomer {
 		JsonConverter converter = new JsonConverter();
 		try {
 			LWMonomer monomer = converter.decodeMonomer(monomerString);
+			String SMILESStr = monomer.getSmiles();
+			if(SMILESStr == null || SMILESStr.isEmpty()) {
+				SMILESStr = Chemistry.getInstance().getManipulator().convertMolIntoSmilesWithAtomMapping(monomer.getMolfile());
+				monomer.setSmiles(SMILESStr);
+			}
+				
 			LWMonomer retMonomer = LibraryManager.getInstance().getMonomerLibrary().insertOrUpdateMonomer(polymerType,
 					symbol, monomer);
 
