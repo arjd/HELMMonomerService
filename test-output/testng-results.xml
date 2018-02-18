@@ -2,20 +2,20 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="2233" started-at="2018-02-18T19:32:10Z" finished-at="2018-02-18T19:32:12Z">
+  <suite name="Default suite" duration-ms="1812" started-at="2018-02-18T21:49:55Z" finished-at="2018-02-18T21:49:57Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="2233" started-at="2018-02-18T19:32:10Z" finished-at="2018-02-18T19:32:12Z">
+    <test name="Default test" duration-ms="1812" started-at="2018-02-18T21:49:55Z" finished-at="2018-02-18T21:49:57Z">
       <class name="org.helm.monomerservice.RestMonomerTest">
-        <test-method status="PASS" signature="startServer()[pri:0, instance:org.helm.monomerservice.RestMonomerTest@78e94dcf]" name="startServer" is-config="true" duration-ms="856" started-at="2018-02-18T20:32:10Z" finished-at="2018-02-18T20:32:11Z">
+        <test-method status="PASS" signature="startServer()[pri:0, instance:org.helm.monomerservice.RestMonomerTest@78e94dcf]" name="startServer" is-config="true" duration-ms="660" started-at="2018-02-18T22:49:55Z" finished-at="2018-02-18T22:49:55Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- startServer -->
-        <test-method status="PASS" signature="testJSON()[pri:0, instance:org.helm.monomerservice.RestMonomerTest@78e94dcf]" name="testJSON" duration-ms="1347" started-at="2018-02-18T20:32:11Z" finished-at="2018-02-18T20:32:12Z">
+        <test-method status="PASS" signature="testInserOrUpdateMonomer()[pri:0, instance:org.helm.monomerservice.RestMonomerTest@78e94dcf]" name="testInserOrUpdateMonomer" duration-ms="1127" started-at="2018-02-18T22:49:55Z" finished-at="2018-02-18T22:49:57Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testJSON -->
-        <test-method status="PASS" signature="stopServer()[pri:0, instance:org.helm.monomerservice.RestMonomerTest@78e94dcf]" name="stopServer" is-config="true" duration-ms="13" started-at="2018-02-18T20:32:12Z" finished-at="2018-02-18T20:32:12Z">
+        </test-method> <!-- testInserOrUpdateMonomer -->
+        <test-method status="PASS" signature="stopServer()[pri:0, instance:org.helm.monomerservice.RestMonomerTest@78e94dcf]" name="stopServer" is-config="true" duration-ms="8" started-at="2018-02-18T22:49:57Z" finished-at="2018-02-18T22:49:57Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- stopServer -->

@@ -98,8 +98,8 @@ public class MongoDBTest {
 		IMonomerLibrary MyLoaderLibrary = MyLibrary.getMonomerLibrary();
 		LWMonomer existingMonomer = MyLoaderLibrary.monomerDetail("RNA", "5A6");
 		existingMonomer.setAuthor("John Doe");
-		existingMonomer = MyLoaderLibrary.insertOrUpdateMonomer("RNA","5A6",existingMonomer);
-		assertEquals((existingMonomer != null), true);
+		int id = MyLoaderLibrary.insertOrUpdateMonomer("RNA","5A6",existingMonomer);
+		assertEquals((id > 0), true);
 	}
 	
 	
@@ -107,14 +107,14 @@ public class MongoDBTest {
 	public void testUpdateMonomer() throws Exception {
 		IMonomerLibrary MyLoaderLibrary = MyLibrary.getMonomerLibrary();
 		LWMonomer existingMonomer = MyLoaderLibrary.monomerDetail("RNA", "5A6");
-		existingMonomer = MyLoaderLibrary.updateMonomer("RNA","12345",existingMonomer);
-		assertEquals((existingMonomer == null), true);
+		int id = MyLoaderLibrary.updateMonomer("RNA","12345",existingMonomer);
+		assertEquals(id < 0, true);
 		
 		existingMonomer = MyLoaderLibrary.monomerDetail("RNA", "5A6");
 		existingMonomer.setAuthor("Max");
 		
-		existingMonomer = MyLoaderLibrary.updateMonomer("RNA","5A6",existingMonomer);
-		assertEquals((existingMonomer != null), true);
+		id = MyLoaderLibrary.updateMonomer("RNA","5A6",existingMonomer);
+		assertEquals((id > 0), true);
 	}
 	
 	@Test

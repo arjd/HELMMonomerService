@@ -241,6 +241,26 @@ public class RestMonomerTest extends StandaloneServer{
 		retMonomer = response.readEntity(String.class);
 		System.out.print(retMonomer);
 		Assert.assertEquals(response.getStatus(), 200);
+		
+		//check duplicate SMILES register
+		monomer.setSymbol("Foo2");
+		monomer.setSmiles("");
+		try {
+			retMonomer = converter.encodeMonomer(monomer);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.print(retMonomer);
+		
+		UriBuilder builder3 = UriBuilder.fromUri(BASE_URI);
+		builder3.path("monomer").path("CHEM").path("Foo2");
+		URI uri3 = builder3.build();
+		
+		response = client.target(uri3).request().put(Entity.entity(retMonomer, MediaType.APPLICATION_JSON), Response.class);
+		System.out.println(response.readEntity(String.class));
+		Assert.assertEquals(response.getStatus(), 409);
+		
 	}
 	
 

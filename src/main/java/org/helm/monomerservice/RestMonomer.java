@@ -132,7 +132,7 @@ public class RestMonomer {
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Insert new monomer or update monomer", httpMethod = "PUT", response = Response.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Monomer successfully inserted/updated"),
-			@ApiResponse(code = 400, message = "Error input") })
+			@ApiResponse(code = 409, message = "Error input") })
 	public Response insertOrUpdateMonomer(@PathParam("polymertype") String polymerType,
 			@PathParam("Symbol") String symbol, @ApiParam(value = "Monomer", required = true) String monomerString) {
 		JsonConverter converter = new JsonConverter();
@@ -144,10 +144,17 @@ public class RestMonomer {
 				monomer.setSmiles(SMILESStr);
 			}
 				
-			LWMonomer retMonomer = LibraryManager.getInstance().getMonomerLibrary().insertOrUpdateMonomer(polymerType,
+			
+			int id = LibraryManager.getInstance().getMonomerLibrary().insertOrUpdateMonomer(polymerType,
 					symbol, monomer);
+			if (id == -1000) {
+				return Response.status(Response.Status.CONFLICT).entity("Monomer with this structure is already registered: " + monomer.getSmiles()).build();	
+			}
+			if (id == -2000) {
+				return Response.status(Response.Status.CONFLICT).entity("Monomer with this symbol is already registered: " + monomer.getSymbol()).build();	
+			}
 
-			return Response.status(Response.Status.OK).entity(wrapMonomer(retMonomer)).build();
+			return Response.status(Response.Status.OK).entity(wrapMonomer(monomer)).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		}

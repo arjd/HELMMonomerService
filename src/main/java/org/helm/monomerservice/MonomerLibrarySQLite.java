@@ -260,7 +260,7 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 	
 
 
-	public LWMonomer insertOrUpdateMonomer(String polymerType, String symbol, LWMonomer monomer) throws Exception {
+	public int insertOrUpdateMonomer(String polymerType, String symbol, LWMonomer monomer) throws Exception {
 		Connection c = null;
 		Statement stmt = null;
 		boolean inDatabase = false;
@@ -292,12 +292,12 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 		}
 
 		if (inDatabase) {
-			monomer = updateMonomer(polymerType, symbol, monomer);
+			return updateMonomer(polymerType, symbol, monomer);
 		} else {
-			insertMonomer(monomer);
+			int id = insertMonomer(monomer);
 			monomer = monomerDetail(polymerType, symbol);
+			return id;
 		}
-		return monomer;
 	}
 
 	public int insertMonomer(LWMonomer monomer) throws Exception {
@@ -315,7 +315,7 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 
 			if (rs.next()) {
 				LOG.info("Monomer with this structure isalready registered with ID: " + rs.getString("SYMBOL"));
-				return -1;
+				return -1000;
 			}
 			
 			//check if symbol is already used
@@ -324,7 +324,7 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 
 			if (rs.next()) {
 				LOG.info("Monomer with this id is already registered");
-				return -1;
+				return -2000;
 			}
 
 			String sql = "INSERT INTO MONOMERS (SYMBOL, MONOMERTYPE, NAME, NATURALANALOG, MOLFILE, POLYMERTYPE, SMILES, CREATEDATE, AUTHOR) "
@@ -378,9 +378,10 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 		return id;
 	}
 
-	public LWMonomer updateMonomer(String polymerType, String symbol, LWMonomer monomer) throws Exception {
+	public int updateMonomer(String polymerType, String symbol, LWMonomer monomer) throws Exception {
 		Connection c = null;
 		Statement stmt = null;
+		int id = -1;
 
 		try {
 			c = getConnection();
@@ -389,7 +390,7 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			ResultSet rs = stmt.executeQuery("SELECT * from MONOMERS where POLYMERTYPE = \'" + polymerType
 					+ "\'and SYMBOL = \'" + symbol + "\';");
 			rs.next();
-			int id = rs.getInt(1);
+			id = rs.getInt(1);
 
 			
 			String sql = "UPDATE MONOMERS set  MONOMERTYPE = \'"
@@ -438,7 +439,7 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			c.close();
 			LOG.info("Closed database ..");
 		}
-		return monomer;
+		return id;
 	}
 
 	private int insertAttachment(Attachment attachment) throws Exception {

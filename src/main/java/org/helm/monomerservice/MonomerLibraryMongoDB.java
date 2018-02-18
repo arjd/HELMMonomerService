@@ -176,7 +176,7 @@ public class MonomerLibraryMongoDB implements IMonomerLibrary {
 	}
 
 	@Override
-	public LWMonomer insertOrUpdateMonomer(String polymerType, String symbol, LWMonomer monomer) throws Exception {
+	public int insertOrUpdateMonomer(String polymerType, String symbol, LWMonomer monomer) throws Exception {
 		MongoClient mongoClient = new MongoClient(LibraryManager.getHostname(),
 				Integer.parseInt(LibraryManager.getPort()));
 		MongoDatabase database = mongoClient.getDatabase(LibraryManager.getDatabase());
@@ -188,16 +188,17 @@ public class MonomerLibraryMongoDB implements IMonomerLibrary {
 		if (monomerDetail(monomer.getPolymerType(), monomer.getSymbol()) == null) {
 			LOG.info("Monomer with this symbol is already registered");
 			System.out.println("Monomer with this symbol is already registered");
-			insertMonomer(monomer);
+			int id = insertMonomer(monomer);
 			monomer = monomerDetail(polymerType, symbol);
+			return id;
 		} else {
 			Document newDoc = Document.parse(converter.encodeMonomer(monomer));
 			BasicDBObject mQuery = new BasicDBObject();
 			mQuery = mQuery.append("polymerType", monomer.getPolymerType());
 			mQuery = mQuery.append("symbol", monomer.getSymbol());
 			collection.replaceOne(mQuery, newDoc);
+			return monomer.getId();
 		}
-		return monomer;
 		} catch (Exception e) {
 			LOG.error("Insert or update of monomer failed.");
 			throw e;
@@ -225,7 +226,7 @@ public class MonomerLibraryMongoDB implements IMonomerLibrary {
 				Document doc = cur.next();
 				existingMonomer = converter.decodeMonomer(doc.toJson());
 				LOG.info("Monomer with this structure is already registered with ID: " + existingMonomer.getSymbol());
-				return -1;
+				return -1000;
 			}
 		}
 
@@ -233,7 +234,7 @@ public class MonomerLibraryMongoDB implements IMonomerLibrary {
 		if (monomerDetail(monomer.getPolymerType(), monomer.getSymbol()) != null) {
 			LOG.info("Monomer with this symbol is already registered");
 			System.out.println("Monomer with this symbol is already registered");
-			return -1;
+			return -2000;
 		}
 
 		// new id
@@ -262,8 +263,8 @@ public class MonomerLibraryMongoDB implements IMonomerLibrary {
 	}
 
 	@Override
-	public LWMonomer updateMonomer(String polymerType, String symbol, LWMonomer monomer) throws Exception {
-		// return null if monomer is not already registered
+	public int updateMonomer(String polymerType, String symbol, LWMonomer monomer) throws Exception {
+		// return -1 if monomer is not already registered
 		MongoClient mongoClient = new MongoClient(LibraryManager.getHostname(),
 				Integer.parseInt(LibraryManager.getPort()));
 		MongoDatabase database = mongoClient.getDatabase(LibraryManager.getDatabase());
@@ -276,7 +277,7 @@ public class MonomerLibraryMongoDB implements IMonomerLibrary {
 
 		try (MongoCursor<Document> cur = collection.find(mQuery).iterator()) {
 			if (!cur.hasNext()) {
-				return null;
+				return -1;
 			}
 		}
 		return insertOrUpdateMonomer(polymerType, symbol, monomer);

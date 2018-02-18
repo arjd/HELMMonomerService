@@ -79,7 +79,7 @@ public interface IMonomerLibrary {
 	/**
 	   *method to insert one monomer 
 	   *or 
-	   *methed to update one monomer selected by polymerType and symbol
+	   *method to update one monomer selected by polymerType and symbol
 	   * 
 	   * @param polymerType
 	   * 			Type of monomer which should be updated or inserted
@@ -90,7 +90,7 @@ public interface IMonomerLibrary {
 	   * @param monomer
 	   * 			monomer which should be inserted
 	   */
-	public LWMonomer insertOrUpdateMonomer(String polymerType, String symbol, LWMonomer monomer) throws Exception;
+	public int insertOrUpdateMonomer(String polymerType, String symbol, LWMonomer monomer) throws Exception;
 	
 	
 	/**
@@ -120,7 +120,7 @@ public interface IMonomerLibrary {
 	   * @param monomer
 	   * 			monomer which should be updated
 	   */
-	public LWMonomer updateMonomer(String polymerType, String symbol, LWMonomer monomer) throws Exception;
+	public int updateMonomer(String polymerType, String symbol, LWMonomer monomer) throws Exception;
 	
 	
 	/**
