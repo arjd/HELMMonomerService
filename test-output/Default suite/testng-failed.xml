@@ -5,7 +5,7 @@
     <classes>
       <class name="org.helm.monomerservice.RestMonomerTest">
         <methods>
-          <include name="testInserOrUpdateMonomer"/>
+          <include name="testJSON"/>
         </methods>
       </class> <!-- org.helm.monomerservice.RestMonomerTest -->
     </classes>

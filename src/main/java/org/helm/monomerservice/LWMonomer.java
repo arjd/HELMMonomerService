@@ -44,18 +44,18 @@ public class LWMonomer {
 	 * Creates a new LWMonomer with some random initialized attributes
 	 */
 	public LWMonomer() {
-		this.symbol = System.currentTimeMillis() + "";
-		this.polymertype = "RNA";
-		this.name = "testIt";
-		this.naturalanalog = "A";
-		this.molfile = System.currentTimeMillis() + "";
-		this.canSmiles = "[H:1]N1CC[C@H]1C([OH:2])=O";
-		this.monomertype = "Undefined";
-		this.author  = "UnknownAuthor";
+		this.symbol = "";
+		this.polymertype = "";
+		this.name = "";
+		this.naturalanalog = "";
+		this.molfile = "";
+		this.canSmiles = "";
+		this.monomertype = "";
+		this.author  = "";
 		Date date = new Date();
 		createdate = date.toString();
 		rgroups = new ArrayList<Attachment>();
-		rgroups.add(new Attachment("R3", "X"));
+		//rgroups.add(new Attachment("R3", "X"));
 		
 	}
 	

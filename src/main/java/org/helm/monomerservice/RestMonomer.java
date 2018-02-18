@@ -64,19 +64,21 @@ public class RestMonomer {
 	@Path("{polymertype}/{symbol}")
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Delete a Monomer", notes = "Delete a Monomer",response = Response.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Monomer successfully deleted"),
-			@ApiResponse(code = 400, message = "Monomer was not deleted") })
+			@ApiResponse(code = 404, message = "Monomer was not deleted") })
 	public Response deleteMonomer(@PathParam("polymertype") String polymerType, @PathParam("symbol") String symbol) {
 		try {
 			int i = LibraryManager.getInstance().getMonomerLibrary().deleteMonomer(polymerType, symbol);
 			if (i < 0) {
-				return Response.noContent().build();
+				return Response.status(Response.Status.NOT_FOUND).entity("Monomer not found in database: " + symbol).build();
+				//return Response.noContent().build();
 			} else {
 				return Response.ok().build();
 			}
 		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
 		}
 	}
 

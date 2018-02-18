@@ -54,6 +54,18 @@ public class RestMonomerTest extends StandaloneServer{
 		Response response = client.target(uri).request().delete();
 		System.out.println(response.readEntity(String.class));
 		Assert.assertEquals(response.getStatus(), 200);
+	}
+		
+		@Test
+		public void testDeleteNonExistingMonomer() {
+			Client client = createClient();
+			
+			UriBuilder builder = UriBuilder.fromUri(BASE_URI);
+			builder.path("monomer").path("PEPTIDE").path("Non-Exist");
+			URI uri = builder.build();
+			Response response = client.target(uri).request().delete();
+			System.out.println(response.readEntity(String.class));
+			Assert.assertEquals(response.getStatus(), 404);	
 		
 	}
 	
@@ -232,4 +244,43 @@ public class RestMonomerTest extends StandaloneServer{
 	}
 	
 
+	@Test
+	public void testJSON() {
+		Client client = createClient();
+		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
+		builder.path("monomer").path("CHEM").path("Az");
+		URI uri = builder.build();
+		Response response = client.target(uri).request().get();
+		String retMonomer = response.readEntity(String.class);
+		//System.out.println(retMonomer);
+		Assert.assertTrue(retMonomer.contains("CHEM") && retMonomer.contains("Az"));
+		
+		retMonomer = "{\r\n" + 
+				"	\"symbol\": \"A1234Test\",\r\n" + 
+				"	\"name\": \"A1234Test\",\r\n" + 
+				"	\"polymertype\": \"CHEM\",\r\n" + 
+				"	\"monomertype\": \"Backbone\",\r\n" + 
+				"	\"r1\": \"H\",\r\n" + 
+				"	\"doc\": \"<data>\\n<i n='symbol'>A1234Test</i>\\n<i n='name'>A1234Test</i>\\n<i n='polymertype'>CHEM</i>\\n<i n='monomertype'>Backbone</i>\\n<i n='r1'>H</i>\\n</data>\",\r\n" + 
+				"	\"molfile\": \"\\n   JSDraw202181820112D\\n\\n  7  6  0  0  0  0              0 V2000\\n   14.5080   -3.1200    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\\n   15.8590   -2.3400    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\\n   14.5080   -4.6800    0.0000 R#  0  0  0  0  0  0  0  0  0  0  0  0\\n   13.1570   -2.3400    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\\n   11.8060   -3.1200    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\\n   11.8060   -4.6800    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\\n   13.1570   -5.4600    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\\n  1  2  1  0  0  0  0\\n  1  3  1  0  0  0  0\\n  1  4  1  0  0  0  0\\n  4  5  1  0  0  0  0\\n  5  6  1  0  0  0  0\\n  6  7  1  0  0  0  0\\nA    3\\nR1\\nM  RGP  1   3   1\\nM  END\\n\",\r\n" + 
+				"	\"polymerType\": \"CHEM\",\r\n" + 
+				"	\"monomerType\": \"Backbone\",\r\n" + 
+				"	\"rgroups\": [{\r\n" + 
+				"		\"label\": \"R1\",\r\n" + 
+				"		\"capGroupName\": \"H\"\r\n" + 
+				"	}]\r\n" + 
+				"}";
+		
+		
+		
+		UriBuilder builder2 = UriBuilder.fromUri(BASE_URI);
+		builder2.path("monomer").path("CHEM").path("A1234Test");
+		URI uri2 = builder2.build();
+		
+		response = client.target(uri2).request().put(Entity.entity(retMonomer, MediaType.APPLICATION_JSON), Response.class);
+		retMonomer = response.readEntity(String.class);
+		System.out.print(retMonomer);
+		Assert.assertEquals(response.getStatus(), 200);
+	}
+	
 }
