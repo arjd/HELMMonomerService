@@ -1,24 +1,24 @@
 [{
 	"id": 1,
-	"category": "Demo",
+	"category": "General",
 	"name": "Replace base A with U",
-	"description": "null",
+	"description": "Replace base A with U",
 	"script": "function(plugin){var n = plugin.replaceMonomer(org.helm.webeditor.HELM.BASE, 'A','U');return n>0;}",
-	"author": "Nobody"
+	"author": "Pistoia Alliance"
 },
 {
 	"id": 2,
-	"category": "Demo",
+	"category": "General",
 	"name": "Replace base A with G",
-	"description": "null",
+	"description": "Replace base A with G",
 	"script": "function(plugin){var n = plugin.replaceMonomer(org.helm.webeditor.HELM.BASE, 'A','G');return n>0;}",
-	"author": "Nobody"
+	"author": "Pistoia Alliance"
 },
 {
 	"id": 3,
-	"category": "Test",
+	"category": "General",
 	"name": "Replace base A with T",
-	"description": "null",
+	"description": "Replace base A with T",
 	"script": "function(plugin){var n = plugin.replaceMonomer(org.helm.webeditor.HELM.BASE, 'A','T');return n>0;}",
-	"author": "Nobody"
+	"author": "Pistoia Alliance"
 }]

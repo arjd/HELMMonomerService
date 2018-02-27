@@ -1,6 +1,6 @@
 [{
 		"id": 131,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "12ddR",
 		"naturalAnalog": "R",
 		"name": "1',2'-Di-Deoxy-Ribose",
@@ -26,7 +26,7 @@
 	},
 	{
 		"id": 132,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "25R",
 		"naturalAnalog": "R",
 		"name": "2,5-Ribose",
@@ -59,7 +59,7 @@
 	},
 	{
 		"id": 133,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "3A6",
 		"naturalAnalog": "R",
 		"name": "6-amino-hexanol (42 end)",
@@ -92,7 +92,7 @@
 	},
 	{
 		"id": 134,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "3FAM",
 		"naturalAnalog": "R",
 		"name": "3-FAM",
@@ -118,7 +118,7 @@
 	},
 	{
 		"id": 135,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "3SS6",
 		"naturalAnalog": "R",
 		"name": "3'-Thiol-Modifier 6 S-S from Glen Research",
@@ -144,7 +144,7 @@
 	},
 	{
 		"id": 136,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "4sR",
 		"naturalAnalog": "R",
 		"name": "4-Thio-Ribose",
@@ -177,7 +177,7 @@
 	},
 	{
 		"id": 137,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "5A6",
 		"naturalAnalog": "R",
 		"name": "6-amino-hexanol (5' end)",
@@ -210,7 +210,7 @@
 	},
 	{
 		"id": 140,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "5FAM",
 		"naturalAnalog": "R",
 		"name": "5'-6FAM (6-carboxyfluorescein)",
@@ -229,7 +229,7 @@
 	},
 	{
 		"id": 141,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "5FBC6",
 		"naturalAnalog": "R",
 		"name": "4-Formylbenzamidehexanol (5' end)",
@@ -248,7 +248,7 @@
 	},
 	{
 		"id": 138,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "5cGT",
 		"naturalAnalog": "R",
 		"name": "2-(methylamino)acetamide (GeneTools 5'-cap for PMO)",
@@ -267,7 +267,7 @@
 	},
 	{
 		"id": 139,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "5eU",
 		"naturalAnalog": "U",
 		"name": "5-ethynyl-uracil",
@@ -286,7 +286,7 @@
 	},
 	{
 		"id": 142,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "5fU",
 		"naturalAnalog": "U",
 		"name": "5-fluoro-uracil",
@@ -305,7 +305,7 @@
 	},
 	{
 		"id": 143,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "5iU",
 		"naturalAnalog": "U",
 		"name": "5-iodo-uracil",
@@ -324,7 +324,7 @@
 	},
 	{
 		"id": 144,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "5meC",
 		"naturalAnalog": "C",
 		"name": "5-methyl-cytidine",
@@ -343,7 +343,7 @@
 	},
 	{
 		"id": 145,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "5tpU",
 		"naturalAnalog": "U",
 		"name": "5-tris-propynyl-uracil",
@@ -362,7 +362,7 @@
 	},
 	{
 		"id": 12,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "A",
 		"naturalAnalog": "A",
 		"name": "Alanine",
@@ -388,7 +388,7 @@
 	},
 	{
 		"id": 146,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "A",
 		"naturalAnalog": "A",
 		"name": "Adenine",
@@ -407,7 +407,7 @@
 	},
 	{
 		"id": 1,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "A6OH",
 		"naturalAnalog": "null",
 		"name": "6'amino-hexanol",
@@ -433,7 +433,7 @@
 	},
 	{
 		"id": 13,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Aad",
 		"naturalAnalog": "X",
 		"name": "2-aminoadipic acid",
@@ -466,7 +466,7 @@
 	},
 	{
 		"id": 14,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Abu",
 		"naturalAnalog": "X",
 		"name": "2-aminobutanoic acid",
@@ -492,7 +492,7 @@
 	},
 	{
 		"id": 16,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Aca",
 		"naturalAnalog": "X",
 		"name": "2-aminocapric acid",
@@ -518,7 +518,7 @@
 	},
 	{
 		"id": 17,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Aib",
 		"naturalAnalog": "X",
 		"name": "alpha-aminoisobutyric acid (2-aminoalanine)",
@@ -544,7 +544,7 @@
 	},
 	{
 		"id": 2,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Alexa",
 		"naturalAnalog": "null",
 		"name": "Alexa Fluor 488",
@@ -563,7 +563,7 @@
 	},
 	{
 		"id": 19,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Apm",
 		"naturalAnalog": "X",
 		"name": "2-aminopimelic acid",
@@ -596,7 +596,7 @@
 	},
 	{
 		"id": 20,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "App",
 		"naturalAnalog": "X",
 		"name": "gamma-amino-beta-hydroxybenzenepentanoic acid",
@@ -622,7 +622,7 @@
 	},
 	{
 		"id": 21,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Asu",
 		"naturalAnalog": "X",
 		"name": "2-aminosuberic acid",
@@ -655,7 +655,7 @@
 	},
 	{
 		"id": 3,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Az",
 		"naturalAnalog": "null",
 		"name": "Azide",
@@ -674,7 +674,7 @@
 	},
 	{
 		"id": 22,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Aze",
 		"naturalAnalog": "X",
 		"name": "2-carboxyazetidine-Test",
@@ -700,7 +700,7 @@
 	},
 	{
 		"id": 23,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Bal",
 		"naturalAnalog": "A",
 		"name": "beta-Alanine",
@@ -726,7 +726,7 @@
 	},
 	{
 		"id": 24,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Bua",
 		"naturalAnalog": "X",
 		"name": "butanoic acid",
@@ -745,7 +745,7 @@
 	},
 	{
 		"id": 25,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Bux",
 		"naturalAnalog": "X",
 		"name": "4-amino-3-hydroxybutanoic acid",
@@ -771,7 +771,7 @@
 	},
 	{
 		"id": 26,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "C",
 		"naturalAnalog": "C",
 		"name": "Cysteine",
@@ -804,7 +804,7 @@
 	},
 	{
 		"id": 153,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "C",
 		"naturalAnalog": "C",
 		"name": "Cytosine",
@@ -823,7 +823,7 @@
 	},
 	{
 		"id": 27,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Cap",
 		"naturalAnalog": "X",
 		"name": "gamma-amino-beta-hydroxycyclohexanepentanoic acid",
@@ -849,7 +849,7 @@
 	},
 	{
 		"id": 28,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Cha",
 		"naturalAnalog": "A",
 		"name": "3-cyclohexylalanine",
@@ -875,7 +875,7 @@
 	},
 	{
 		"id": 29,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Cit",
 		"naturalAnalog": "X",
 		"name": "citrullin",
@@ -901,7 +901,7 @@
 	},
 	{
 		"id": 30,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Cya",
 		"naturalAnalog": "A",
 		"name": "3-sulfoalanine",
@@ -927,7 +927,7 @@
 	},
 	{
 		"id": 31,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "D",
 		"naturalAnalog": "D",
 		"name": "Aspartic acid",
@@ -960,7 +960,7 @@
 	},
 	{
 		"id": 33,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Dab",
 		"naturalAnalog": "X",
 		"name": "2,4-diaminobutanoic acid",
@@ -993,7 +993,7 @@
 	},
 	{
 		"id": 44,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Dpm",
 		"naturalAnalog": "X",
 		"name": "diaminopimelic acid",
@@ -1019,7 +1019,7 @@
 	},
 	{
 		"id": 45,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Dpr",
 		"naturalAnalog": "X",
 		"name": "2,3-diaminopropanoic acid",
@@ -1052,7 +1052,7 @@
 	},
 	{
 		"id": 49,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Dsu",
 		"naturalAnalog": "X",
 		"name": "2,7-diaminosuberic acid (2,7-diaminooctanedioic acid)",
@@ -1078,7 +1078,7 @@
 	},
 	{
 		"id": 53,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "E",
 		"naturalAnalog": "E",
 		"name": "Glutamic acid",
@@ -1111,7 +1111,7 @@
 	},
 	{
 		"id": 4,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "EG",
 		"naturalAnalog": "null",
 		"name": "Ethylene Glycol",
@@ -1137,7 +1137,7 @@
 	},
 	{
 		"id": 54,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Edc",
 		"naturalAnalog": "C",
 		"name": "S-ethylthiocysteine",
@@ -1163,7 +1163,7 @@
 	},
 	{
 		"id": 55,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "F",
 		"naturalAnalog": "F",
 		"name": "Phenylalanine",
@@ -1189,7 +1189,7 @@
 	},
 	{
 		"id": 166,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "FMOE",
 		"naturalAnalog": "R",
 		"name": "2'-O-Tris-trifluoromethoxyethyl ribose",
@@ -1222,7 +1222,7 @@
 	},
 	{
 		"id": 192,
-		"author": "UnknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Foo",
 		"naturalAnalog": "X",
 		"name": "Bar",
@@ -1241,7 +1241,7 @@
 	},
 	{
 		"id": 57,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "G",
 		"naturalAnalog": "G",
 		"name": "Glycine",
@@ -1267,7 +1267,7 @@
 	},
 	{
 		"id": 168,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "G",
 		"naturalAnalog": "G",
 		"name": "Guanine",
@@ -1286,7 +1286,7 @@
 	},
 	{
 		"id": 58,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Ggu",
 		"naturalAnalog": "E",
 		"name": "gamma-glutamic acid",
@@ -1319,7 +1319,7 @@
 	},
 	{
 		"id": 59,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Gla",
 		"naturalAnalog": "E",
 		"name": "gamma-carboxyglutamic acid",
@@ -1352,7 +1352,7 @@
 	},
 	{
 		"id": 60,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Glc",
 		"naturalAnalog": "X",
 		"name": "glycolic acid",
@@ -1371,7 +1371,7 @@
 	},
 	{
 		"id": 61,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Glp",
 		"naturalAnalog": "E",
 		"name": "pyroglutamic acid",
@@ -1390,7 +1390,7 @@
 	},
 	{
 		"id": 62,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "H",
 		"naturalAnalog": "H",
 		"name": "Histidine",
@@ -1416,7 +1416,7 @@
 	},
 	{
 		"id": 63,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Har",
 		"naturalAnalog": "R",
 		"name": "homoarginine",
@@ -1442,7 +1442,7 @@
 	},
 	{
 		"id": 64,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Hcy",
 		"naturalAnalog": "C",
 		"name": "homocysteine",
@@ -1475,7 +1475,7 @@
 	},
 	{
 		"id": 65,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Hhs",
 		"naturalAnalog": "H",
 		"name": "homohistidine",
@@ -1501,7 +1501,7 @@
 	},
 	{
 		"id": 66,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Hiv",
 		"naturalAnalog": "X",
 		"name": "2-hydroxyisovaleric acid",
@@ -1520,7 +1520,7 @@
 	},
 	{
 		"id": 67,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Hse",
 		"naturalAnalog": "S",
 		"name": "homoserine",
@@ -1546,7 +1546,7 @@
 	},
 	{
 		"id": 68,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Hva",
 		"naturalAnalog": "X",
 		"name": "2-hydroxypentanoic acid",
@@ -1565,7 +1565,7 @@
 	},
 	{
 		"id": 69,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Hyl",
 		"naturalAnalog": "K",
 		"name": "5-hydroxylysine",
@@ -1598,7 +1598,7 @@
 	},
 	{
 		"id": 70,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Hyp",
 		"naturalAnalog": "P",
 		"name": "4-hydroxyproline",
@@ -1624,7 +1624,7 @@
 	},
 	{
 		"id": 71,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "I",
 		"naturalAnalog": "I",
 		"name": "Isoleucine",
@@ -1650,7 +1650,7 @@
 	},
 	{
 		"id": 170,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "In",
 		"naturalAnalog": "X",
 		"name": "Inosine",
@@ -1669,7 +1669,7 @@
 	},
 	{
 		"id": 72,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Iva",
 		"naturalAnalog": "V",
 		"name": "isovaline",
@@ -1695,7 +1695,7 @@
 	},
 	{
 		"id": 73,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "K",
 		"naturalAnalog": "K",
 		"name": "Lysine",
@@ -1728,7 +1728,7 @@
 	},
 	{
 		"id": 74,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "L",
 		"naturalAnalog": "L",
 		"name": "Leucine",
@@ -1754,7 +1754,7 @@
 	},
 	{
 		"id": 75,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Lac",
 		"naturalAnalog": "X",
 		"name": "lactic acid",
@@ -1773,7 +1773,7 @@
 	},
 	{
 		"id": 76,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "M",
 		"naturalAnalog": "M",
 		"name": "Methionine",
@@ -1799,7 +1799,7 @@
 	},
 	{
 		"id": 6,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "MCC",
 		"naturalAnalog": "null",
 		"name": "4-(N-maleimidomethyl)cyclohexane-1-carboxylate",
@@ -1818,7 +1818,7 @@
 	},
 	{
 		"id": 174,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "MOE",
 		"naturalAnalog": "R",
 		"name": "2'-O-Methoxyethyl ribose",
@@ -1851,7 +1851,7 @@
 	},
 	{
 		"id": 77,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Maa",
 		"naturalAnalog": "X",
 		"name": "mercaptoacetic acid",
@@ -1877,7 +1877,7 @@
 	},
 	{
 		"id": 78,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Mba",
 		"naturalAnalog": "X",
 		"name": "mercaptobutanoic acid (GMBA)",
@@ -1903,7 +1903,7 @@
 	},
 	{
 		"id": 97,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Mhp",
 		"naturalAnalog": "P",
 		"name": "4-methyl-3-hydroxyproline",
@@ -1929,7 +1929,7 @@
 	},
 	{
 		"id": 98,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Mpa",
 		"naturalAnalog": "X",
 		"name": "mercaptopropanoic acid",
@@ -1955,7 +1955,7 @@
 	},
 	{
 		"id": 99,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "N",
 		"naturalAnalog": "N",
 		"name": "Asparagine",
@@ -1981,7 +1981,7 @@
 	},
 	{
 		"id": 100,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Nal",
 		"naturalAnalog": "A",
 		"name": "3-naphthylalanine",
@@ -2007,7 +2007,7 @@
 	},
 	{
 		"id": 101,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Nle",
 		"naturalAnalog": "L",
 		"name": "norleucine",
@@ -2033,7 +2033,7 @@
 	},
 	{
 		"id": 102,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Nty",
 		"naturalAnalog": "Y",
 		"name": "nitrotyrosine",
@@ -2059,7 +2059,7 @@
 	},
 	{
 		"id": 103,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Nva",
 		"naturalAnalog": "V",
 		"name": "norvaline",
@@ -2085,7 +2085,7 @@
 	},
 	{
 		"id": 104,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Oic",
 		"naturalAnalog": "X",
 		"name": "2-carboxyocthydroindole",
@@ -2111,7 +2111,7 @@
 	},
 	{
 		"id": 105,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Orn",
 		"naturalAnalog": "K",
 		"name": "L-ornithine",
@@ -2144,7 +2144,7 @@
 	},
 	{
 		"id": 106,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "P",
 		"naturalAnalog": "P",
 		"name": "Proline",
@@ -2170,7 +2170,7 @@
 	},
 	{
 		"id": 177,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "P",
 		"naturalAnalog": "P",
 		"name": "Phosphate",
@@ -2196,7 +2196,7 @@
 	},
 	{
 		"id": 7,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "PEG2",
 		"naturalAnalog": "null",
 		"name": "Diethylene Glycol",
@@ -2222,7 +2222,7 @@
 	},
 	{
 		"id": 178,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "PONA",
 		"naturalAnalog": "R",
 		"name": "2-(methylamino)ethanol (PHONA sugar)",
@@ -2255,7 +2255,7 @@
 	},
 	{
 		"id": 107,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Pen",
 		"naturalAnalog": "V",
 		"name": "penicillamine (3-mercaptovaline)",
@@ -2288,7 +2288,7 @@
 	},
 	{
 		"id": 108,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Phg",
 		"naturalAnalog": "G",
 		"name": "2-phenylglycine",
@@ -2314,7 +2314,7 @@
 	},
 	{
 		"id": 113,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Pqa",
 		"naturalAnalog": "X",
 		"name": "Piperazine quinazolinone acetic acid, 2-(4-oxo-6-piperazin-1-yl-quinazolin-3-yl)acetic acid",
@@ -2340,7 +2340,7 @@
 	},
 	{
 		"id": 114,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Q",
 		"naturalAnalog": "Q",
 		"name": "Glutamine",
@@ -2366,7 +2366,7 @@
 	},
 	{
 		"id": 115,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "R",
 		"naturalAnalog": "R",
 		"name": "Arginine",
@@ -2392,7 +2392,7 @@
 	},
 	{
 		"id": 182,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "R",
 		"naturalAnalog": "R",
 		"name": "Ribose",
@@ -2425,7 +2425,7 @@
 	},
 	{
 		"id": 183,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "RGNA",
 		"naturalAnalog": "R",
 		"name": "R Propanetriol (GNA sugar)",
@@ -2458,7 +2458,7 @@
 	},
 	{
 		"id": 116,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "S",
 		"naturalAnalog": "S",
 		"name": "Serine",
@@ -2484,7 +2484,7 @@
 	},
 	{
 		"id": 184,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "SGNA",
 		"naturalAnalog": "R",
 		"name": "S Propanetriol (GNA sugar)",
@@ -2517,7 +2517,7 @@
 	},
 	{
 		"id": 9,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "SMCC",
 		"naturalAnalog": "null",
 		"name": "SMCC linker from Pierce",
@@ -2543,7 +2543,7 @@
 	},
 	{
 		"id": 10,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "SMPEG2",
 		"naturalAnalog": "null",
 		"name": "SM(PEG)2 linker from Pierce",
@@ -2569,7 +2569,7 @@
 	},
 	{
 		"id": 11,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "SS3",
 		"naturalAnalog": "null",
 		"name": "Dipropanol-disulfide",
@@ -2595,7 +2595,7 @@
 	},
 	{
 		"id": 117,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Sar",
 		"naturalAnalog": "G",
 		"name": "sarcosine (N-methylglycine)",
@@ -2621,7 +2621,7 @@
 	},
 	{
 		"id": 119,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Spg",
 		"naturalAnalog": "X",
 		"name": "1-amino-1-carboxycyclopentane",
@@ -2647,7 +2647,7 @@
 	},
 	{
 		"id": 120,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Sta",
 		"naturalAnalog": "X",
 		"name": "statin (4-amino-3-hydroxy-6-methylheptanoic acid)",
@@ -2673,7 +2673,7 @@
 	},
 	{
 		"id": 121,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "T",
 		"naturalAnalog": "T",
 		"name": "Threonine",
@@ -2699,7 +2699,7 @@
 	},
 	{
 		"id": 186,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "T",
 		"naturalAnalog": "T",
 		"name": "Thymine",
@@ -2718,7 +2718,7 @@
 	},
 	{
 		"id": 122,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Thi",
 		"naturalAnalog": "A",
 		"name": "3-thienylalanine",
@@ -2744,7 +2744,7 @@
 	},
 	{
 		"id": 123,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Tic",
 		"naturalAnalog": "X",
 		"name": "1,2,3,4-tetrahydro-3-isoquinolinecarboxylic acid",
@@ -2770,7 +2770,7 @@
 	},
 	{
 		"id": 124,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Tle",
 		"naturalAnalog": "V",
 		"name": "3-methylvaline",
@@ -2796,7 +2796,7 @@
 	},
 	{
 		"id": 125,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Tml",
 		"naturalAnalog": "K",
 		"name": "epsilon-N-trimethyllysine",
@@ -2822,7 +2822,7 @@
 	},
 	{
 		"id": 126,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Tza",
 		"naturalAnalog": "A",
 		"name": "3-thiazolylalanine",
@@ -2848,7 +2848,7 @@
 	},
 	{
 		"id": 188,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "U",
 		"naturalAnalog": "U",
 		"name": "Uracil",
@@ -2867,7 +2867,7 @@
 	},
 	{
 		"id": 189,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "UNA",
 		"naturalAnalog": "R",
 		"name": "2'-3'-Unlocked-ribose",
@@ -2900,7 +2900,7 @@
 	},
 	{
 		"id": 127,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "V",
 		"naturalAnalog": "V",
 		"name": "Valine",
@@ -2926,7 +2926,7 @@
 	},
 	{
 		"id": 128,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "W",
 		"naturalAnalog": "W",
 		"name": "Tryptophan",
@@ -2952,7 +2952,7 @@
 	},
 	{
 		"id": 129,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Wil",
 		"naturalAnalog": "X",
 		"name": "alpha-amino-2,4-dioxopyrimidinepropanoic acid",
@@ -2978,7 +2978,7 @@
 	},
 	{
 		"id": 130,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "Y",
 		"naturalAnalog": "Y",
 		"name": "Tyrosine",
@@ -3004,7 +3004,7 @@
 	},
 	{
 		"id": 147,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "aFR",
 		"naturalAnalog": "R",
 		"name": "alpha-FANA",
@@ -3037,7 +3037,7 @@
 	},
 	{
 		"id": 150,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "aR",
 		"naturalAnalog": "R",
 		"name": "3-Amino-Ribose",
@@ -3070,7 +3070,7 @@
 	},
 	{
 		"id": 15,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "ac",
 		"naturalAnalog": "X",
 		"name": "N-Terminal Acetic Acid",
@@ -3089,7 +3089,7 @@
 	},
 	{
 		"id": 18,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "am",
 		"naturalAnalog": "X",
 		"name": "C-Terminal amine",
@@ -3108,7 +3108,7 @@
 	},
 	{
 		"id": 148,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "am12",
 		"naturalAnalog": "R",
 		"name": "5'-12-amino-dodecanol",
@@ -3134,7 +3134,7 @@
 	},
 	{
 		"id": 149,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "am6",
 		"naturalAnalog": "R",
 		"name": "5'-6-amino-hexanol",
@@ -3160,7 +3160,7 @@
 	},
 	{
 		"id": 152,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "bP",
 		"naturalAnalog": "P",
 		"name": "Boranophosphate",
@@ -3186,7 +3186,7 @@
 	},
 	{
 		"id": 151,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "baA",
 		"naturalAnalog": "A",
 		"name": "N-benzyl-adenine",
@@ -3205,7 +3205,7 @@
 	},
 	{
 		"id": 154,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "cdaC",
 		"naturalAnalog": "C",
 		"name": "5-cyclopropyl-4-dimethylamino-cytosine",
@@ -3224,7 +3224,7 @@
 	},
 	{
 		"id": 155,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "clA",
 		"naturalAnalog": "A",
 		"name": "T-clamp OMe",
@@ -3243,7 +3243,7 @@
 	},
 	{
 		"id": 156,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "cpC",
 		"naturalAnalog": "C",
 		"name": "5-cyclopropyl-cytosine",
@@ -3262,7 +3262,7 @@
 	},
 	{
 		"id": 158,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "cpU",
 		"naturalAnalog": "U",
 		"name": "5-cyclopropyl-uracil",
@@ -3281,7 +3281,7 @@
 	},
 	{
 		"id": 157,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "cpmA",
 		"naturalAnalog": "A",
 		"name": "N-cyclopropylmethyl-adenine",
@@ -3300,7 +3300,7 @@
 	},
 	{
 		"id": 32,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dA",
 		"naturalAnalog": "A",
 		"name": "D-Alanine",
@@ -3326,7 +3326,7 @@
 	},
 	{
 		"id": 34,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dC",
 		"naturalAnalog": "C",
 		"name": "D-Cysteine",
@@ -3359,7 +3359,7 @@
 	},
 	{
 		"id": 35,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dD",
 		"naturalAnalog": "D",
 		"name": "D-Aspartic acid",
@@ -3392,7 +3392,7 @@
 	},
 	{
 		"id": 36,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dE",
 		"naturalAnalog": "E",
 		"name": "D-Glutamic acid",
@@ -3425,7 +3425,7 @@
 	},
 	{
 		"id": 37,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dF",
 		"naturalAnalog": "F",
 		"name": "D-Phenylalanine",
@@ -3451,7 +3451,7 @@
 	},
 	{
 		"id": 38,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dH",
 		"naturalAnalog": "H",
 		"name": "D-Histidine",
@@ -3477,7 +3477,7 @@
 	},
 	{
 		"id": 39,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dK",
 		"naturalAnalog": "K",
 		"name": "D-Lysine",
@@ -3510,7 +3510,7 @@
 	},
 	{
 		"id": 40,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dL",
 		"naturalAnalog": "L",
 		"name": "D-Leucine",
@@ -3536,7 +3536,7 @@
 	},
 	{
 		"id": 41,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dM",
 		"naturalAnalog": "M",
 		"name": "D-Methionine",
@@ -3562,7 +3562,7 @@
 	},
 	{
 		"id": 42,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dN",
 		"naturalAnalog": "N",
 		"name": "D-Asparagine",
@@ -3588,7 +3588,7 @@
 	},
 	{
 		"id": 43,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dP",
 		"naturalAnalog": "P",
 		"name": "D-Proline",
@@ -3614,7 +3614,7 @@
 	},
 	{
 		"id": 46,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dQ",
 		"naturalAnalog": "Q",
 		"name": "D-Glutamine",
@@ -3640,7 +3640,7 @@
 	},
 	{
 		"id": 47,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dR",
 		"naturalAnalog": "R",
 		"name": "D-Arginine",
@@ -3666,7 +3666,7 @@
 	},
 	{
 		"id": 163,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dR",
 		"naturalAnalog": "R",
 		"name": "Deoxy-Ribose",
@@ -3699,7 +3699,7 @@
 	},
 	{
 		"id": 48,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dS",
 		"naturalAnalog": "S",
 		"name": "D-Serine",
@@ -3725,7 +3725,7 @@
 	},
 	{
 		"id": 50,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dV",
 		"naturalAnalog": "V",
 		"name": "D-Valine",
@@ -3751,7 +3751,7 @@
 	},
 	{
 		"id": 51,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dW",
 		"naturalAnalog": "W",
 		"name": "D-Tryptophan",
@@ -3777,7 +3777,7 @@
 	},
 	{
 		"id": 52,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dY",
 		"naturalAnalog": "Y",
 		"name": "D-Tyrosine",
@@ -3803,7 +3803,7 @@
 	},
 	{
 		"id": 159,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "daA",
 		"naturalAnalog": "A",
 		"name": "N,N-dimethyl-Adenine",
@@ -3822,7 +3822,7 @@
 	},
 	{
 		"id": 160,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dabA",
 		"naturalAnalog": "A",
 		"name": "7-deaza-8-aza-7-bromo-2-amino-Adenine",
@@ -3841,7 +3841,7 @@
 	},
 	{
 		"id": 161,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dfB",
 		"naturalAnalog": "X",
 		"name": "2,4-Difluoro-Benzene",
@@ -3860,7 +3860,7 @@
 	},
 	{
 		"id": 162,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "dier",
 		"naturalAnalog": "R",
 		"name": "5- 1,2-Dierucyl-rac-glycerol (Genzyme)",
@@ -3879,7 +3879,7 @@
 	},
 	{
 		"id": 165,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "eR",
 		"naturalAnalog": "R",
 		"name": "2'-O,4'-ethylene bridged Ribose",
@@ -3912,7 +3912,7 @@
 	},
 	{
 		"id": 164,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "eaA",
 		"naturalAnalog": "A",
 		"name": "N-ethyl-adenine",
@@ -3931,7 +3931,7 @@
 	},
 	{
 		"id": 167,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "fR",
 		"naturalAnalog": "R",
 		"name": "2'-Flu0ro-Ribose",
@@ -3964,7 +3964,7 @@
 	},
 	{
 		"id": 56,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "fmoc",
 		"naturalAnalog": "X",
 		"name": "fmoc N-Terminal Protection Group",
@@ -3983,7 +3983,7 @@
 	},
 	{
 		"id": 169,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "hx",
 		"naturalAnalog": "R",
 		"name": "hexitol",
@@ -4016,7 +4016,7 @@
 	},
 	{
 		"id": 5,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "hxy",
 		"naturalAnalog": "null",
 		"name": "Hexynyl alcohol",
@@ -4035,7 +4035,7 @@
 	},
 	{
 		"id": 171,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "lLR",
 		"naturalAnalog": "R",
 		"name": "2,'4'-locked-Ribose (alpha-L-LNA)",
@@ -4068,7 +4068,7 @@
 	},
 	{
 		"id": 176,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "mR",
 		"naturalAnalog": "R",
 		"name": "2'-O-Methyl-Ribose",
@@ -4101,7 +4101,7 @@
 	},
 	{
 		"id": 79,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meA",
 		"naturalAnalog": "A",
 		"name": "N-Methyl-Alanine",
@@ -4127,7 +4127,7 @@
 	},
 	{
 		"id": 173,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meA",
 		"naturalAnalog": "A",
 		"name": "N-Methyl-Adenine",
@@ -4146,7 +4146,7 @@
 	},
 	{
 		"id": 80,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meC",
 		"naturalAnalog": "C",
 		"name": "N-Methyl-Cysteine",
@@ -4179,7 +4179,7 @@
 	},
 	{
 		"id": 81,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meD",
 		"naturalAnalog": "D",
 		"name": "N-Methyl-Aspartic acid",
@@ -4212,7 +4212,7 @@
 	},
 	{
 		"id": 82,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meE",
 		"naturalAnalog": "E",
 		"name": "N-Methyl-Glutamic acid",
@@ -4245,7 +4245,7 @@
 	},
 	{
 		"id": 83,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meF",
 		"naturalAnalog": "F",
 		"name": "N-Methyl-Phenylalanine",
@@ -4271,7 +4271,7 @@
 	},
 	{
 		"id": 84,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meH",
 		"naturalAnalog": "H",
 		"name": "N-Methyl-Histidine",
@@ -4297,7 +4297,7 @@
 	},
 	{
 		"id": 85,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meI",
 		"naturalAnalog": "I",
 		"name": "N-Methyl-Isoleucine",
@@ -4323,7 +4323,7 @@
 	},
 	{
 		"id": 86,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meK",
 		"naturalAnalog": "K",
 		"name": "N-Methyl-Lysine",
@@ -4356,7 +4356,7 @@
 	},
 	{
 		"id": 87,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meL",
 		"naturalAnalog": "L",
 		"name": "N-Methyl-Leucine",
@@ -4382,7 +4382,7 @@
 	},
 	{
 		"id": 88,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meM",
 		"naturalAnalog": "M",
 		"name": "N-Methyl-Methionine",
@@ -4408,7 +4408,7 @@
 	},
 	{
 		"id": 89,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meN",
 		"naturalAnalog": "N",
 		"name": "N-Methyl-Asparagine",
@@ -4434,7 +4434,7 @@
 	},
 	{
 		"id": 90,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meQ",
 		"naturalAnalog": "Q",
 		"name": "N-Methyl-Glutamine",
@@ -4460,7 +4460,7 @@
 	},
 	{
 		"id": 91,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meR",
 		"naturalAnalog": "R",
 		"name": "N-Methyl-Arginine",
@@ -4486,7 +4486,7 @@
 	},
 	{
 		"id": 92,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meS",
 		"naturalAnalog": "S",
 		"name": "N-Methyl-Serine",
@@ -4512,7 +4512,7 @@
 	},
 	{
 		"id": 93,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meT",
 		"naturalAnalog": "T",
 		"name": "N-Methyl-Threonine",
@@ -4538,7 +4538,7 @@
 	},
 	{
 		"id": 94,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meV",
 		"naturalAnalog": "V",
 		"name": "N-Methyl-Valine",
@@ -4564,7 +4564,7 @@
 	},
 	{
 		"id": 95,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meW",
 		"naturalAnalog": "W",
 		"name": "N-Methyl-Tryptophan",
@@ -4590,7 +4590,7 @@
 	},
 	{
 		"id": 96,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "meY",
 		"naturalAnalog": "Y",
 		"name": "N-Methyl-Tyrosine",
@@ -4616,7 +4616,7 @@
 	},
 	{
 		"id": 175,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "mph",
 		"naturalAnalog": "R",
 		"name": "morpholino",
@@ -4649,7 +4649,7 @@
 	},
 	{
 		"id": 109,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "pnA",
 		"naturalAnalog": "X",
 		"name": "PNA Adenine",
@@ -4675,7 +4675,7 @@
 	},
 	{
 		"id": 110,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "pnC",
 		"naturalAnalog": "X",
 		"name": "PNA Cytosine",
@@ -4701,7 +4701,7 @@
 	},
 	{
 		"id": 111,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "pnG",
 		"naturalAnalog": "X",
 		"name": "PNA Guanine",
@@ -4727,7 +4727,7 @@
 	},
 	{
 		"id": 112,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "pnT",
 		"naturalAnalog": "X",
 		"name": "PNA Thymine",
@@ -4753,7 +4753,7 @@
 	},
 	{
 		"id": 179,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "prpC",
 		"naturalAnalog": "C",
 		"name": "5-Propynyl-Cytosine",
@@ -4772,7 +4772,7 @@
 	},
 	{
 		"id": 180,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "prpU",
 		"naturalAnalog": "U",
 		"name": "5-propynyl Uracil",
@@ -4791,7 +4791,7 @@
 	},
 	{
 		"id": 181,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "qR",
 		"naturalAnalog": "R",
 		"name": "2-O-beta-hydroxy-ethoxy-methyl Ribose (Qiagen)",
@@ -4824,7 +4824,7 @@
 	},
 	{
 		"id": 8,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "sDBL",
 		"naturalAnalog": "null",
 		"name": "Symmetric Doubler",
@@ -4857,7 +4857,7 @@
 	},
 	{
 		"id": 185,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "sP",
 		"naturalAnalog": "P",
 		"name": "Phosporothioate",
@@ -4883,7 +4883,7 @@
 	},
 	{
 		"id": 118,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "seC",
 		"naturalAnalog": "C",
 		"name": "SelenoCysteine",
@@ -4909,7 +4909,7 @@
 	},
 	{
 		"id": 187,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "tR",
 		"naturalAnalog": "R",
 		"name": "Ribose",
@@ -4942,7 +4942,7 @@
 	},
 	{
 		"id": 191,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "test1",
 		"naturalAnalog": "null",
 		"name": "6'amino-hexanol",
@@ -4968,7 +4968,7 @@
 	},
 	{
 		"id": 190,
-		"author": "unknownAuthor",
+		"author": "Pistoia Alliance",
 		"symbol": "test3",
 		"naturalAnalog": "null",
 		"name": "7'amino-hexanol",

@@ -270,15 +270,15 @@ public class SQLiteMonomers {
 
 			stmt = c.createStatement();
 			String sql = "INSERT INTO RULES (CATEGORY,NAME,AUTHOR,DESCRIPTION,SCRIPT) "
-					+ "VALUES ('Demo','Replace base A with U','Nobody','null','function(plugin){var n = plugin.replaceMonomer(org.helm.webeditor.HELM.BASE, ''A'',''U'');return n>0;}');";
+					+ "VALUES ('General','Replace base A with U','Pistoia Alliance','Replace base A with U','function(plugin){var n = plugin.replaceMonomer(org.helm.webeditor.HELM.BASE, ''A'',''U'');return n>0;}');";
 			stmt.executeUpdate(sql);
 
 			sql = "INSERT INTO RULES (CATEGORY,NAME,AUTHOR,DESCRIPTION,SCRIPT) "
-					+ "VALUES ('Demo','Replace base A with G','Nobody','null','function(plugin){var n = plugin.replaceMonomer(org.helm.webeditor.HELM.BASE, ''A'',''G'');return n>0;}');";
+					+ "VALUES ('General','Replace base A with G','Pistoia Alliance','Replace base A with G','function(plugin){var n = plugin.replaceMonomer(org.helm.webeditor.HELM.BASE, ''A'',''G'');return n>0;}');";
 			stmt.executeUpdate(sql);
 
 			sql = "INSERT INTO RULES (CATEGORY,NAME,AUTHOR,DESCRIPTION,SCRIPT) "
-					+ "VALUES ('Test','Replace base A with T','Nobody','null','function(plugin){var n = plugin.replaceMonomer(org.helm.webeditor.HELM.BASE, ''A'',''T'');return n>0;}');";
+					+ "VALUES ('General','Replace base A with T','Pistoia Alliance','Replace base A with T','function(plugin){var n = plugin.replaceMonomer(org.helm.webeditor.HELM.BASE, ''A'',''T'');return n>0;}');";
 			stmt.executeUpdate(sql);
 
 			stmt.close();
