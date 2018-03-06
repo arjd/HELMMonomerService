@@ -4,3 +4,9 @@ loader.monomers=org.helm.monomerservice.MonomerLibrarySQLite
 loader.hostname=localhost
 loader.port=27017
 loader.database=local
+
+
+
+
+
+SQLite vs MongoDB

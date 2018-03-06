@@ -40,7 +40,7 @@ public class RuleLibraryMongoDB implements IRuleLibrary {
 	private static final Logger LOG = LoggerFactory.getLogger(MonomerLibraryMongoDB.class);
 
 	@Override
-	public void deleteRule(int id) throws Exception {
+	public int deleteRule(int id) throws Exception {
 		MongoClient mongoClient = new MongoClient(LibraryManager.getHostname(),
 				Integer.parseInt(LibraryManager.getPort()));
 		MongoDatabase database = mongoClient.getDatabase(LibraryManager.getDatabase());
@@ -52,7 +52,9 @@ public class RuleLibraryMongoDB implements IRuleLibrary {
 			try (MongoCursor<Document> cur = collection.find(mQuery).iterator()) {
 				if (cur.hasNext()) {
 					collection.deleteOne(mQuery);
+					return id;
 				}
+				return -1;
 			}
 		} catch (Exception e) {
 			LOG.error("Deleting of rule failed.");
@@ -61,7 +63,6 @@ public class RuleLibraryMongoDB implements IRuleLibrary {
 			mongoClient.close();
 			LOG.info("Closed database.");
 		}
-		
 	}
 
 	@Override
@@ -121,24 +122,53 @@ public class RuleLibraryMongoDB implements IRuleLibrary {
 	}
 
 	@Override
-	public Rule insertOrUpdateRule(Rule rule) throws Exception {
+	public int insertOrUpdateRule(Rule rule) throws Exception {
+		
+		//Check rule
+		if(checkRule(rule) != 0) {
+			return checkRule(rule);
+		}
+		
 		JsonConverter converter = new JsonConverter();
 		String ruleName = rule.getName();
+		int ruleID = rule.getId();
 		MongoClient mongoClient = new MongoClient(LibraryManager.getHostname(),
 				Integer.parseInt(LibraryManager.getPort()));
 		MongoDatabase database = mongoClient.getDatabase(LibraryManager.getDatabase());
+		
 		try {
 			MongoCollection<Document> collection = database.getCollection("rules");
 			BasicDBObject mQuery = new BasicDBObject();
-			mQuery = mQuery.append("name", ruleName);
+			mQuery = mQuery.append("id", ruleID);
 			Document newDoc = Document.parse(converter.encodeRule(rule));
 			
 			try (MongoCursor<Document> cur = collection.find(mQuery).iterator()) {
 				if (cur.hasNext()) {
 					//update
+					
+					mQuery = new BasicDBObject();
+					mQuery = mQuery.append("name", ruleName);
+					MongoCursor<Document> cur1 = collection.find(mQuery).iterator();
+					while(cur1.hasNext()) {
+						Document doc = cur1.tryNext();
+						Rule ruleDB = converter.decodeRule(doc.toJson());
+						if(ruleDB.getId() != ruleID) {
+							LOG.info("Name of rule already exists with ID: " + ruleDB.getId());
+							return -1;
+						}
+					}
 					collection.replaceOne(mQuery, newDoc);
 				} else {
 					//insert
+					
+					mQuery = new BasicDBObject();
+					mQuery = mQuery.append("name", ruleName);
+					MongoCursor<Document> cur1 = collection.find(mQuery).iterator();
+					if(cur1.hasNext()) {
+						LOG.info("Name of rule already exists");
+						return -1;
+					}
+					
 					//new ID
 					// if we have an empty database, we will start with 1
 					int id = 0;
@@ -155,7 +185,7 @@ public class RuleLibraryMongoDB implements IRuleLibrary {
 					collection.insertOne(newDoc2);
 				}
 			}
-		return rule;	
+		return 0;	
 		} catch (Exception e) {
 			LOG.error("Reading of rule failed.");
 			throw e;
@@ -163,6 +193,36 @@ public class RuleLibraryMongoDB implements IRuleLibrary {
 			mongoClient.close();
 			LOG.info("Closed database.");
 		}
+	}
+	
+	private int checkRule(Rule rule) {
+		if(rule.getScript() == null || rule.getScript().isEmpty()) {
+			LOG.info("Rule has no Script");
+			LOG.info("LOLOLOL");
+			return -1000;
+		}
+		
+		if(rule.getScript() == null || rule.getCategory().isEmpty()) {
+			LOG.info("Rule has no category");
+			return -2000;
+		}
+		
+		if(rule.getId() == null || rule.getId().toString().isEmpty()) {
+			LOG.info("Rule has no ID");
+			return -3000;
+		}
+		
+		if(rule.getAuthor() == null || rule.getAuthor().isEmpty()) {
+			rule.setAuthor("unknownAuthor");
+			LOG.info("Rule has no Author; Author is set to 'unkownAuthor'");
+		}
+		
+		if(rule.getDescription() == null || rule.getDescription().isEmpty()) {
+			rule.setDescription("no description");
+			LOG.info("Rule has no description; Description is set to 'no description'");
+		}
+		
+		return 0;
 	}
 
 }

@@ -32,8 +32,9 @@ public interface IRuleLibrary {
 	   * 
 	   * @param id
 	   * 			ID of rule which should be deleted
+	 * @return 
 	   */
-	public void deleteRule(int id) throws Exception;
+	public int deleteRule(int id) throws Exception;
 	
 	/**
 	   * method to show the information of one rule; selected by ID
@@ -54,5 +55,5 @@ public interface IRuleLibrary {
 	   * @param rule
 	   * 			rule that should be added
 	   */
-	public Rule insertOrUpdateRule(Rule rule) throws Exception;
+	public int insertOrUpdateRule(Rule rule) throws Exception;
 }

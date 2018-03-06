@@ -22,6 +22,9 @@
 
 package org.helm.monomerservice;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -30,30 +33,87 @@ import java.util.List;
 import java.util.Map;
 
 import org.helm.notation2.Attachment;
+import org.helm.notation2.Chemistry;
 import org.helm.notation2.Monomer;
 import org.helm.notation2.MonomerFactory;
 import org.helm.notation2.MonomerStore;
+import org.helm.notation2.tools.SMILES;
 
+import io.swagger.models.Path;
 
 /**
- * This creates the database MonomerLib2.0.db 
- * Run "Main" to create the database
+ * This creates the database MonomerLib2.0.db Run "Main" to create the database
  * 
  * To use the database, copy it from the project-folder into the resource-folder
  *
  */
 
 public class SQLiteMonomers {
-	
+
 	private static String forname = "org.sqlite.JDBC";
 	private static String connection;
-	
-	public void buildDB() throws Exception {
-		connection = "jdbc:sqlite:" + System.getProperty("user.dir") + "/MonomerLib2.0.db";
+
+	public void buildDB() throws Exception {		
+		renewDB();
 		
+		/*
+		String path = System.getProperty("user.dir")
+				+ "/src/test/resources/org/helm/monomerservice/resources/MonomerLib2.0.db";
+		File file = new File(path);
+		file.delete();
+		connection = "jdbc:sqlite:" + path;
+
 		buildMonomers();
 		loadMonomersFromStore();
 		insertRules();
+		
+		String path2 = System.getProperty("user.dir")
+				+ "/src/main/resources/org/helm/monomerservice/resources/MonomerLib2.0.db";
+		
+		File file2 = new File(path2);
+		file2.delete();
+		
+		Files.copy(file.toPath(),file2.toPath(),StandardCopyOption.REPLACE_EXISTING);
+		*/
+	}
+	
+	private void renewDB() throws Exception{
+		String path = System.getProperty("user.dir")
+				+ "/src/main/resources/org/helm/monomerservice/resources/BackupOriginalFromMonomerStoreMonomerLib2.0.db";
+		File file = new File(path);
+		
+		String path1 = System.getProperty("user.dir")
+				+ "/src/main/resources/org/helm/monomerservice/resources/MonomerLib2.0.db";
+		File file1 = new File(path1);
+		file1.delete();
+		
+		String path2 = System.getProperty("user.dir")
+				+ "/src/test/resources/org/helm/monomerservice/resources/MonomerLib2.0.db";
+		File file2 = new File(path2);
+		file2.delete();
+		
+		Files.copy(file.toPath(),file1.toPath(),StandardCopyOption.REPLACE_EXISTING);
+		Files.copy(file.toPath(),file2.toPath(),StandardCopyOption.REPLACE_EXISTING);
+	}
+	
+	public void buildDBForTesting() throws Exception{
+		String path = System.getProperty("user.dir")
+				+ "/src/main/resources/org/helm/monomerservice/resources/BackupOriginalFromMonomerStoreMonomerLib2.0.db";
+		File file = new File(path);
+		
+		String path1 = System.getProperty("user.dir")
+				+ "/src/test/resources/org/helm/monomerservice/resources/MonomerLib2.0.db";
+		File file1 = new File(path1);
+		file1.delete();
+		
+		
+		Files.copy(file.toPath(),file1.toPath(),StandardCopyOption.REPLACE_EXISTING);
+		/*
+		connection = "jdbc:sqlite:" + path;
+		buildMonomers();
+		loadMonomersFromStore();
+		insertRules();	
+		*/	
 	}
 
 	private void buildMonomers() {
@@ -76,14 +136,14 @@ public class SQLiteMonomers {
 					+ "CREATEDATE		TEXT							,"
 					+ "AUTHOR			TEXT					NOT NULL)";
 			stmt.executeUpdate(sql);
-		
+
 			sql = "CREATE TABLE ATTACHMENT " + "(ID			INTEGER	 PRIMARY KEY AUTOINCREMENT,"
 					+ "ALTERNATEID			TEXT							,"
 					+ "LABEL				TEXT     				NOT NULL,"
 					+ "CAPGROUPNAME			TEXT 			 	 	NOT NULL, "
 					+ "CAPGROUPSMILES		TEXT					)";
 			stmt.executeUpdate(sql);
-			
+
 			sql = "CREATE TABLE MONOMER_ATTACHMENT " + "(ID			INTEGER	 PRIMARY KEY AUTOINCREMENT,"
 					+ "MONOMER_ID			INTEGER			NOT NULL," + "ATTACHMENT_ID		INTEGER			NOT NULL)";
 			stmt.executeUpdate(sql);
@@ -96,7 +156,7 @@ public class SQLiteMonomers {
 					+ "DESCRIPTION	TEXT     				NOT NULL, "
 					+ "SCRIPT      TEXT 					NOT NULL)";
 			stmt.executeUpdate(sql);
-			
+
 			stmt.close();
 			c.commit();
 			c.close();
@@ -109,6 +169,16 @@ public class SQLiteMonomers {
 	private void insertMonomer(LWMonomer monomer) throws Exception {
 		Connection c = null;
 		Statement stmt = null;
+
+		try {
+			String smiles = SMILES.convertMolToSMILESWithAtomMapping(monomer.getMolfile(), monomer.getRgroups());
+			//smiles = Chemistry.getInstance().getManipulator().convertExtendedSmiles(smiles);
+			
+			smiles = smiles.replaceAll("\\s+", "");
+			monomer.setSmiles(smiles);
+		} catch (Exception e) {
+
+		}
 
 		try {
 			c = getConnection();
@@ -127,7 +197,7 @@ public class SQLiteMonomers {
 				stmt.close();
 				c.commit();
 				c.close();
-				
+
 				attachment = list.get(i);
 				int attachmentID = insertAttachment(attachment);
 
@@ -208,9 +278,9 @@ public class SQLiteMonomers {
 			System.out.println(attachment.getCapGroupName());
 
 			ResultSet rs = stmt.executeQuery("SELECT ID from ATTACHMENT where LABEL = \'" + attachment.getLabel()
-					+ "\'and CAPGROUPNAME = \'" + attachment.getCapGroupName() + "\';"
-					+ "\'and ALTERNATEID = \'" + attachment.getAlternateId() + "\';"
-					+ "\'and CAPGROUPSMILES = \'" + attachment.getCapGroupSMILES() + "\';");
+					+ "\'and CAPGROUPNAME = \'" + attachment.getCapGroupName() + "\';" + "\'and ALTERNATEID = \'"
+					+ attachment.getAlternateId() + "\';" + "\'and CAPGROUPSMILES = \'" + attachment.getCapGroupSMILES()
+					+ "\';");
 
 			if (rs.next()) {
 				result = rs.getInt(1);
@@ -219,8 +289,9 @@ public class SQLiteMonomers {
 				if (capGroupName != null && capGroupName.contains("\'"))
 					capGroupName = capGroupName.replaceAll("\'", "\'\'");
 
-				String sql = "INSERT INTO ATTACHMENT (ALTERNATEID, LABEL, CAPGROUPNAME, CAPGROUPSMILES)" + "VALUES('" + attachment.getAlternateId() + "','" + attachment.getLabel() + "','"
-						+ capGroupName + "','" + attachment.getCapGroupSMILES() + "');";
+				String sql = "INSERT INTO ATTACHMENT (ALTERNATEID, LABEL, CAPGROUPNAME, CAPGROUPSMILES)" + "VALUES('"
+						+ attachment.getAlternateId() + "','" + attachment.getLabel() + "','" + capGroupName + "','"
+						+ attachment.getCapGroupSMILES() + "');";
 				stmt.execute(sql);
 				rs = stmt.getGeneratedKeys();
 				rs.next();
@@ -290,7 +361,7 @@ public class SQLiteMonomers {
 		}
 		System.out.println("Records created successfully");
 	}
-	
+
 	private Connection getConnection() throws Exception {
 		Connection c = null;
 		try {

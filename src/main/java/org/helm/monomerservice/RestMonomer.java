@@ -47,7 +47,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-import org.helm.chemtoolkit.AbstractChemistryManipulator;
 import org.helm.notation2.Chemistry;
 
 /**
@@ -67,7 +66,7 @@ public class RestMonomer {
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Delete a Monomer", notes = "Delete a Monomer",response = Response.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Monomer successfully deleted"),
-			@ApiResponse(code = 404, message = "Monomer was not deleted") })
+			@ApiResponse(code = 404, message = "Monomer not found") })
 	public Response deleteMonomer(@PathParam("polymertype") String polymerType, @PathParam("symbol") String symbol) {
 		try {
 			int i = LibraryManager.getInstance().getMonomerLibrary().deleteMonomer(polymerType, symbol);
@@ -88,14 +87,14 @@ public class RestMonomer {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Show details of monomer", httpMethod = "GET", response = Response.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Details successesfully generated"),
-			@ApiResponse(code = 400, message = "Error input") })
+			@ApiResponse(code = 404, message = "Monomer was not found") })
 	public Response monomerDetail(@PathParam("polymertype") String polymerType, @PathParam("symbol") String symbol) {
 		LWMonomer monomer;
 		try {
 			monomer = LibraryManager.getInstance().getMonomerLibrary().monomerDetail(polymerType, symbol);
 			return Response.status(Response.Status.OK).entity(wrapMonomer(monomer)).build();
 		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
 		}
 	}
 
@@ -141,19 +140,40 @@ public class RestMonomer {
 			String SMILESStr = monomer.getSmiles();
 			if(SMILESStr == null || SMILESStr.isEmpty()) {
 				SMILESStr = Chemistry.getInstance().getManipulator().convertMolIntoSmilesWithAtomMapping(monomer.getMolfile());
+				//SMILESStr = Chemistry.getInstance().getManipulator().convertExtendedSmiles(monomer.getSmiles());
 				monomer.setSmiles(SMILESStr);
 			}
-				
 			
 			int id = LibraryManager.getInstance().getMonomerLibrary().insertOrUpdateMonomer(polymerType,
 					symbol, monomer);
-			if (id == -1000) {
-				return Response.status(Response.Status.CONFLICT).entity("Monomer with this structure is already registered: " + monomer.getSmiles()).build();	
-			}
-			if (id == -2000) {
+			switch (id) {
+			case -1000:
+				return Response.status(Response.Status.CONFLICT).entity("Monomer with this structure is already registered: " + monomer.getSymbol()).build();	
+			case -2000:
 				return Response.status(Response.Status.CONFLICT).entity("Monomer with this symbol is already registered: " + monomer.getSymbol()).build();	
+			case -3000:
+				return Response.status(Response.Status.CONFLICT).entity("(Update Monomer)Monomer with this symbol is not registered: " + monomer.getSymbol()).build();	
+			case -5100:
+				return Response.status(Response.Status.CONFLICT).entity("Monomer has no Molfile").build();
+			case -5200:
+				return Response.status(Response.Status.CONFLICT).entity("Monomer has no Smiles; Smiles could not be generated from Molfile and R-Groups").build();
+			case -5300:
+				return Response.status(Response.Status.CONFLICT).entity("Monomer has wrong R-Groups").build();
+			case 5400:
+				//return Response.status(Response.Status.CONFLICT).entity("Molfile and Smiles do not equal").build();
+			case -6000:
+				return Response.status(Response.Status.CONFLICT).entity("Monomer has no Name").build();
+			case -6100:
+				return Response.status(Response.Status.CONFLICT).entity("Monomer has no Polymertype").build();
+			case -6200:
+				return Response.status(Response.Status.CONFLICT).entity("Monomer has no Symbol").build();
+			case -6300:
+				return Response.status(Response.Status.CONFLICT).entity("Monomer has no Monomertype").build();
+			case -6400:
+				//return Response.status(Response.Status.CONFLICT).entity("Monomer has no Natural Analog").build();
+			default:
+				break;
 			}
-
 			return Response.status(Response.Status.OK).entity(wrapMonomer(monomer)).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();

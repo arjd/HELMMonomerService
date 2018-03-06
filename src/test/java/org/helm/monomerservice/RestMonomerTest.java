@@ -22,7 +22,10 @@
 
 package org.helm.monomerservice;
 
+import java.io.File;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -30,7 +33,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
+import org.helm.notation2.Attachment;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -38,11 +43,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class RestMonomerTest extends StandaloneServer{
 
-	/**
-	 * Before testing run "Main" to create a new database
-	 * copy the created database from the project-folder into the resource-folder
-	 */
-	
+	@BeforeClass
+	  public void setUp() throws Exception {
+	    // code that will be invoked when this test is instantiated
+		SQLiteMonomers sqLiteMonomers = new SQLiteMonomers();
+		sqLiteMonomers.buildDBForTesting();
+		
+		File file = new File(System.getProperty("user.dir") + "/src/test/resources/org/helm/monomerservice/resources/configSQLite.txt");
+		File file2 = new File(System.getProperty("user.dir") + "/src/test/resources/org/helm/monomerservice/resources/config.txt");
+				
+		Files.copy(file.toPath(),file2.toPath(),StandardCopyOption.REPLACE_EXISTING);
+	  }  
 	
 	@Test
 	public void testDeleteMonomer() {
@@ -224,6 +235,8 @@ public class RestMonomerTest extends StandaloneServer{
 				"");
 		monomer.setPolymerType("CHEM");
 		monomer.setSmiles("");
+		monomer.addAttachment(new Attachment());
+		monomer.addAttachment(new Attachment());
 		JsonConverter converter = new JsonConverter();
 		try {
 			retMonomer = converter.encodeMonomer(monomer);
@@ -231,7 +244,7 @@ public class RestMonomerTest extends StandaloneServer{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.print(retMonomer);
+		System.out.print("RetMonomer: " + retMonomer);
 		
 		UriBuilder builder2 = UriBuilder.fromUri(BASE_URI);
 		builder2.path("monomer").path("CHEM").path("Foo");
@@ -240,7 +253,7 @@ public class RestMonomerTest extends StandaloneServer{
 		response = client.target(uri2).request().put(Entity.entity(retMonomer, MediaType.APPLICATION_JSON), Response.class);
 		retMonomer = response.readEntity(String.class);
 		System.out.print(retMonomer);
-		Assert.assertEquals(response.getStatus(), 200);
+		Assert.assertEquals(response.getStatus(), 409);
 		
 		//check duplicate SMILES register
 		monomer.setSymbol("Foo2");
@@ -260,9 +273,7 @@ public class RestMonomerTest extends StandaloneServer{
 		response = client.target(uri3).request().put(Entity.entity(retMonomer, MediaType.APPLICATION_JSON), Response.class);
 		System.out.println(response.readEntity(String.class));
 		Assert.assertEquals(response.getStatus(), 409);
-		
-	}
-	
+	}	
 
 	@Test
 	public void testJSON() {
@@ -290,7 +301,6 @@ public class RestMonomerTest extends StandaloneServer{
 				"		\"capGroupName\": \"H\"\r\n" + 
 				"	}]\r\n" + 
 				"}";
-		
 		
 		
 		UriBuilder builder2 = UriBuilder.fromUri(BASE_URI);

@@ -23,10 +23,15 @@
 package org.helm.monomerservice;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotEquals;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helm.notation2.Attachment;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -38,6 +43,11 @@ public class MongoDBTest {
 	  public void setUp() throws Exception {
 	    // code that will be invoked when this test is instantiated
 		MyLibrary = LibraryManager.getInstance();
+		
+		File file = new File(System.getProperty("user.dir") + "/src/test/resources/org/helm/monomerservice/resources/configMongoDB.txt");
+		File file2 = new File(System.getProperty("user.dir") + "/src/test/resources/org/helm/monomerservice/resources/config.txt");
+				
+		Files.copy(file.toPath(),file2.toPath(),StandardCopyOption.REPLACE_EXISTING);
 	  }  
 	
 	@Test
@@ -63,8 +73,8 @@ public class MongoDBTest {
 	@Test
 	public void testDeleteMonomer() throws Exception {
 		IMonomerLibrary MyLoaderLibrary = MyLibrary.getMonomerLibrary();
-		int i = MyLoaderLibrary.deleteMonomer("RNA", "5eU");
-		assertEquals(i,0);
+		int i = MyLoaderLibrary.deleteMonomer("RNA", "25R");
+		//assertEquals(i,132);
 	}
 
 	@Test
@@ -80,6 +90,7 @@ public class MongoDBTest {
 	
 	@Test
 	public void testInsertMonomer() throws Exception {
+		/*
 		IMonomerLibrary MyLoaderLibrary = MyLibrary.getMonomerLibrary();
 		LWMonomer existingMonomer = MyLoaderLibrary.monomerDetail("RNA", "5A6");
 		existingMonomer.setSmiles("ccccc");
@@ -91,6 +102,63 @@ public class MongoDBTest {
 		
 		existingMonomer.setSmiles("ccccc");
 		assertEquals(MyLoaderLibrary.insertMonomer(existingMonomer) > 100, true);
+		*/
+		
+		
+		
+		LWMonomer monomer = new LWMonomer();
+		IMonomerLibrary MyLoaderLibrary = MyLibrary.getMonomerLibrary();
+		
+		MyLoaderLibrary.deleteMonomer("PEPTIDE", "Foo");
+		MyLoaderLibrary.deleteMonomer("PEPTIDE", "ac");
+
+		
+		LWMonomer m = new LWMonomer();
+		assertEquals(MyLoaderLibrary.insertMonomer(monomer),-5100);
+		monomer.setMolfile("xxxx");
+		assertEquals(MyLoaderLibrary.insertMonomer(monomer),-5200);
+		monomer.setMolfile("\n" + 
+				"  Marvin  06151012162D          \n" + 
+				"\n" + 
+				"  4  3  0  0  0  0            999 V2000\n" + 
+				"   -6.8962    2.3258    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
+				"   -6.4837    1.6114    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
+				"   -6.8962    0.8969    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
+				"   -5.6587    1.6114    0.0000 R#  0  0  0  0  0  0  0  0  0  0  0  0\n" + 
+				"  1  2  1  0  0  0  0\n" + 
+				"  2  3  2  0  0  0  0\n" + 
+				"  2  4  1  0  0  0  0\n" + 
+				"M  RGP  1   4   2\n" + 
+				"M  END\n" + 
+				"\n" + 
+				"$$$$");
+		
+		monomer.setSmiles("CC[OH:1]CC([OH:2])=O");
+		assertEquals(MyLoaderLibrary.insertMonomer(monomer),-5300);
+		Attachment attachment = new Attachment("R2", "OH");
+		attachment.setAlternateId("R2-OH");
+		attachment.setCapGroupSMILES("O[*:2]");
+		monomer.addAttachment(attachment);
+		monomer.setSmiles("CC[OH:1]CC");
+		//assertEquals(MyLoaderLibrary.insertMonomer(monomer),-5400);
+		monomer.setSmiles("CC([OH:2])=O");
+		assertEquals(MyLoaderLibrary.insertMonomer(monomer),-6000);
+		monomer.setName("Bar");
+		assertEquals(MyLoaderLibrary.insertMonomer(monomer),-6100);
+		monomer.setPolymerType("PEPTIDE");
+		assertEquals(MyLoaderLibrary.insertMonomer(monomer),-6200);
+		monomer.setSymbol("Foo");
+		assertEquals(MyLoaderLibrary.insertMonomer(monomer),-6300);
+		monomer.setMonomerType("Undefinded");
+		assertEquals(MyLoaderLibrary.insertMonomer(monomer),-6400);
+		monomer.setNaturalAnalog("X");
+		
+		MyLoaderLibrary.deleteMonomer("PEPTIDE", "Foo");
+		
+		assertNotEquals(MyLoaderLibrary.insertMonomer(monomer), -1000);
+		assertEquals(MyLoaderLibrary.insertMonomer(monomer), -1000);
+		
+		
 	}
 	
 	@Test
@@ -99,6 +167,7 @@ public class MongoDBTest {
 		LWMonomer existingMonomer = MyLoaderLibrary.monomerDetail("RNA", "5A6");
 		existingMonomer.setAuthor("John Doe");
 		int id = MyLoaderLibrary.insertOrUpdateMonomer("RNA","5A6",existingMonomer);
+		System.err.println(id);
 		assertEquals((id > 0), true);
 	}
 	
@@ -115,6 +184,38 @@ public class MongoDBTest {
 		
 		id = MyLoaderLibrary.updateMonomer("RNA","5A6",existingMonomer);
 		assertEquals((id > 0), true);
+	}
+	
+	@Test
+	public void testUniqueSmiles() throws Exception {
+		IMonomerLibrary MyLoaderLibrary = MyLibrary.getMonomerLibrary();
+		LWMonomer existingMonomer = MyLoaderLibrary.monomerDetail("RNA", "5A6");
+		existingMonomer.setSymbol("6A6");
+		assertEquals(MyLoaderLibrary.insertMonomer(existingMonomer), -1000);
+		assertEquals(MyLoaderLibrary.updateMonomer("RNA", "MOE", existingMonomer), -1000);
+		assertEquals(MyLoaderLibrary.updateMonomer("RNA", "5A6", existingMonomer), 137);
+	}
+	
+	//you can run this test only once, because rule with ID = 4 is deleted and won't be found
+	@Test
+	public void testDeleteRule() throws Exception {
+		IRuleLibrary MyLoaderLibrary = MyLibrary.getRulesLibrary();
+		int id = MyLoaderLibrary.deleteRule(3);
+		assertEquals(id, 3);
+	}
+	
+	@Test void testErrorCodesRules() throws Exception{
+		Rule rule = new Rule();
+		IRuleLibrary MyLoaderLibrary = MyLibrary.getRulesLibrary();
+		
+		rule.setScript(null);
+		assertEquals(MyLoaderLibrary.insertOrUpdateRule(rule), -1000);
+		rule.setScript("here is a Script");
+		rule.setCategory("");
+		assertEquals(MyLoaderLibrary.insertOrUpdateRule(rule), -2000);
+		rule.setCategory("TestIt");
+		rule.setId(null);
+		assertEquals(MyLoaderLibrary.insertOrUpdateRule(rule), -3000);
 	}
 	
 	@Test
@@ -146,8 +247,9 @@ public class MongoDBTest {
 		rule = MyLoaderLibrary.showRule(2);
 		rule.setAuthor("John Doe");
 		MyLoaderLibrary.insertOrUpdateRule(rule);
-
-		assertEquals(rule.getAuthor(),"John Doe");
+		assertEquals(MyLoaderLibrary.insertOrUpdateRule(rule), 0);
+		rule.setName("Replace base A with U");
+		assertEquals(MyLoaderLibrary.insertOrUpdateRule(rule), -1);
 	  }	
 	
 	@Test
@@ -156,8 +258,9 @@ public class MongoDBTest {
 		IRuleLibrary MyLoaderLibrary = MyLibrary.getRulesLibrary();
 		rule = MyLoaderLibrary.showRule(2);
 		rule.setName("New rule");
-		MyLoaderLibrary.insertOrUpdateRule(rule);
-
-		assertEquals(rule.getName(),"New rule");
+		rule.setId(5);
+		assertEquals(MyLoaderLibrary.insertOrUpdateRule(rule), 0);
+		rule.setName("Replace base A with U");
+		assertEquals(MyLoaderLibrary.insertOrUpdateRule(rule), -1);
 	  }	
 }

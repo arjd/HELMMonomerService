@@ -22,8 +22,11 @@
 
 package org.helm.monomerservice;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -32,6 +35,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -40,6 +44,31 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class RestRuleTest extends StandaloneServer {
 
+	
+	@BeforeClass
+	  public void setUp() throws Exception {
+	    // code that will be invoked when this test is instantiated
+		SQLiteMonomers sqLiteMonomers = new SQLiteMonomers();
+		sqLiteMonomers.buildDBForTesting();
+		
+		File file = new File(System.getProperty("user.dir") + "/src/test/resources/org/helm/monomerservice/resources/configSQLite.txt");
+		File file2 = new File(System.getProperty("user.dir") + "/src/test/resources/org/helm/monomerservice/resources/config.txt");
+				
+		Files.copy(file.toPath(),file2.toPath(),StandardCopyOption.REPLACE_EXISTING);
+	  }  
+	
+	
+	@Test
+	public void testDeleteRule() {
+		Client client = createClient();
+		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
+		builder.path("rule").path("2");
+		URI uri = builder.build();
+		Response response = client.target(uri).request().delete();
+		String retRule = response.readEntity(String.class);
+		System.out.println(retRule);
+		Assert.assertEquals(response.getStatus(),Response.Status.OK.getStatusCode());
+	}
 	
 	@Test
 	public void testShowRule() {
@@ -84,29 +113,42 @@ public class RestRuleTest extends StandaloneServer {
 		
 		Response response2 = client.target(uri2).request().put(Entity.entity(retRule, MediaType.APPLICATION_JSON), Response.class);
 		String retRule2 = response2.readEntity(String.class);
+		System.out.println(retRule2);
 		Assert.assertEquals(response2.getStatus(), 200);
 	}
 	
 	@Test
-	public void testAddRule() {
+	public void testAddAndDeleteRule() {
 		///testAddRule + DeleteNewRule
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
 	    builder.path("rule");
 	    URI uri = builder.build();
 	    Rule rule = new Rule();
+	    rule.setAuthor("Author");
+	    rule.setCategory("Test");
+	    rule.setDescription("description");
+	    rule.setId(4);
+	    rule.setName("Name");
+	    rule.setScript("Script");
 	    Response response = client.target(uri).request().put(Entity.entity(rule,MediaType.APPLICATION_JSON), Response.class);
 	    String retRule = response.readEntity(String.class);
 		Assert.assertTrue(retRule.contains(rule.getName()) && retRule.contains(rule.getCategory()));
 		
 		builder = UriBuilder.fromUri(BASE_URI);
-		builder.path("rule").path("0");
+		builder.path("rule").path("1");
 		uri = builder.build();
 		response = client.target(uri).request().delete();
 		Assert.assertEquals(response.getStatus(), 200);
 		
-		
-		
+		builder = UriBuilder.fromUri(BASE_URI);
+	    builder.path("rule");
+	    uri = builder.build();
+	    rule.setName("Name1");
+	    rule.setId(1);
+	    response = client.target(uri).request().put(Entity.entity(rule,MediaType.APPLICATION_JSON), Response.class);
+	    retRule = response.readEntity(String.class);
+		Assert.assertTrue(retRule.contains(rule.getName()) && retRule.contains(rule.getCategory()));
 	}
 	
 }

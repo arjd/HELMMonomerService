@@ -29,9 +29,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.helm.chemtoolkit.CTKException;
+import org.helm.chemtoolkit.CTKSmilesException;
 import org.helm.notation2.Attachment;
+import org.helm.notation2.Chemistry;
+import org.helm.notation2.exception.ChemistryException;
+import org.helm.notation2.tools.SMILES;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +54,8 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 	private static final Logger LOG = LoggerFactory.getLogger(MonomerLibrarySQLite.class);
 
 	private static String forname = "org.sqlite.JDBC";
-	private static String connection = "jdbc:sqlite:" + MonomerLibrarySQLite.class.getResource("resources/MonomerLib2.0.db").toString();
+	private static String connection = "jdbc:sqlite:"
+			+ MonomerLibrarySQLite.class.getResource("resources/MonomerLib2.0.db").toString();
 	private static int totalCount = 0;
 
 	public int deleteMonomer(String polymerType, String symbol) throws Exception {
@@ -57,9 +66,11 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 		try {
 			c = getConnection();
 			stmt = c.createStatement();
-			
-			ResultSet rs = stmt.executeQuery("SELECT * from MONOMERS where POLYMERTYPE = \'" + polymerType
-					+ "\' and SYMBOL = \'" + symbol + "\';");
+
+			PreparedStatement pstmt = c.prepareStatement("SELECT * from MONOMERS where POLYMERTYPE = ? and SYMBOL = ?;");
+			pstmt.setString(1, polymerType);
+			pstmt.setString(2, symbol);
+			ResultSet rs = pstmt.executeQuery();
 
 			if (rs.next()) {
 				id = rs.getInt("ID");
@@ -69,12 +80,14 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 						+ symbol + "\';");
 
 				LOG.info("Monomer with polymertype = " + polymerType + " and symbol = " + symbol + " deleted");
-				
+
 			} else {
 				LOG.info("Monomer with polymertype = " + polymerType + " and symbol = " + symbol + " was not found");
+				return -1;
 			}
 
 			try {
+				pstmt.close();
 				stmt.close();
 				c.commit();
 			} catch (Exception e1) {
@@ -91,51 +104,112 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 
 	}
 
-
-	public List<LWMonomer> showMonomerList(String polymerType, String monomerType, String filter,String filterField, int offset, int limit) throws Exception {
+	public List<LWMonomer> showMonomerList(String polymerType, String monomerType, String filter, String filterField,
+			int offset, int limit) throws Exception {
 		Connection c = null;
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
+		int countClauses = 0;
+		boolean polymerTypeBoolean = false;
+		boolean monomerTyoeBoolean = false;
+		boolean filterBoolean = false;
+		boolean filterFieldBoolean = false;
+		boolean limitclauseBoolean = false;
 		LWMonomer monomer = null;
 		ArrayList<LWMonomer> list = new ArrayList<LWMonomer>();
 
 		try {
 			c = getConnection();
-			stmt = c.createStatement();
-			
-			//where clause: certain polymer type or all?
+
+			// where clause: certain polymer type or all?
 			String whereClause = "";
 			if (polymerType.equals("ALL")) {
 				whereClause = " where polymertype is not null";
 			} else {
-				whereClause = " where polymertype = \'"  + polymerType + "\'";
+				whereClause = " where polymertype = ?";
+				polymerTypeBoolean = true;
 			}
-			
-			//monomerType
+
+			// monomerType
 			if (monomerType != null && !monomerType.isEmpty()) {
-				whereClause = whereClause + " and monomertype = \'" + monomerType + "\' ";
+				whereClause = whereClause + " and monomertype = ?";
+				monomerTyoeBoolean = true;
 			}
-			
-			//filter clause
+
+			// filter clause
 			if (filter != null && !filter.isEmpty()) {
 				if (filterField != null && !filterField.isEmpty()) {
-				whereClause = whereClause + " and " + filterField + " like \'%" + filter + "%\' ";
+					whereClause = whereClause + " and ? like ?";
+					filterBoolean = true;
 				} else {
-					whereClause = whereClause + " and (symbol like \'%" + filter + "%\' or name like \'%" + filter + "%\') ";
+					whereClause = whereClause + " and (symbol like ? or name like ?) ";
+					filterFieldBoolean = true;
 				}
 			}
-			
-			//total count
-			ResultSet rs = stmt.executeQuery("select count(*) from monomers " + whereClause);
+
+			// total count
+			pstmt = c.prepareStatement("select count(*) from monomers " + whereClause);
+			if (polymerTypeBoolean) {
+				countClauses++;
+				pstmt.setString(countClauses, polymerType);
+			}
+			if (monomerTyoeBoolean) {
+				countClauses++;
+				pstmt.setString(countClauses, monomerType);
+			}
+			if (filterBoolean) {
+				countClauses++;
+				pstmt.setString(countClauses, filterField);
+				countClauses++;
+				pstmt.setString(countClauses, "%" + filter + "%");
+			}
+			if (filterFieldBoolean) {
+				countClauses++;
+				pstmt.setString(countClauses, "%" + filter + "%");
+				countClauses++;
+				pstmt.setString(countClauses, "%" + filter + "%");
+			}
+
+			ResultSet rs = pstmt.executeQuery();
 			rs.next();
 			totalCount = rs.getInt(1);
-			
+
 			String limitclause = "";
 			if (limit > 0) {
-				limitclause = " limit " + String.valueOf(limit) + " offset " + String.valueOf(offset);
+				limitclause = " limit ? offset ?";
+				limitclauseBoolean = true;
 			}
-			
-			rs = stmt.executeQuery("SELECT * from (SELECT * from MONOMERS " + whereClause + 
-					" order by symbol) " + limitclause);
+
+			pstmt = c.prepareStatement(
+					"SELECT * from (SELECT * from MONOMERS " + whereClause + " order by symbol) " + limitclause);
+			countClauses = 0;
+			if (polymerTypeBoolean) {
+				countClauses++;
+				pstmt.setString(countClauses, polymerType);
+			}
+			if (monomerTyoeBoolean) {
+				countClauses++;
+				pstmt.setString(countClauses, monomerType);
+			}
+			if (filterBoolean) {
+				countClauses++;
+				pstmt.setString(countClauses, filterField);
+				countClauses++;
+				pstmt.setString(countClauses, "%" + filter + "%");
+			}
+			if (filterFieldBoolean) {
+				countClauses++;
+				pstmt.setString(countClauses, "%" + filter + "%");
+				countClauses++;
+				pstmt.setString(countClauses, "%" + filter + "%");
+			}
+			if (limitclauseBoolean) {
+				countClauses++;
+				pstmt.setString(countClauses, String.valueOf(limit));
+				countClauses++;
+				pstmt.setString(countClauses, String.valueOf(offset));
+			}
+
+			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				monomer = new LWMonomer(rs.getString("AUTHOR"), rs.getString("SYMBOL"), rs.getString("POLYMERTYPE"),
@@ -153,7 +227,7 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			}
 
 			try {
-				stmt.close();
+				pstmt.close();
 			} catch (Exception e1) {
 				throw e1;
 			}
@@ -219,16 +293,16 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 
 	public LWMonomer monomerDetail(String polymerType, String symbol) throws Exception {
 		Connection c = null;
-		Statement stmt = null;
 		LWMonomer monomer = null;
 
 		try {
 			c = getConnection();
-			stmt = c.createStatement();
 
-			String sql = "SELECT * from MONOMERS where POLYMERTYPE = '" + polymerType + "' and SYMBOL = '" + symbol
-					+ "';";
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement pstmt = c
+					.prepareStatement("SELECT * from MONOMERS where POLYMERTYPE = ? and SYMBOL = ?;");
+			pstmt.setString(1, polymerType);
+			pstmt.setString(2, symbol);
+			ResultSet rs = pstmt.executeQuery();
 
 			if (rs.next()) {
 				monomer = new LWMonomer(rs.getString("AUTHOR"), rs.getString("SYMBOL"), rs.getString("POLYMERTYPE"),
@@ -243,7 +317,7 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			}
 
 			try {
-				stmt.close();
+				pstmt.close();
 			} catch (Exception e1) {
 				throw e1;
 			}
@@ -257,20 +331,18 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 		return monomer;
 	}
 
-	
-
-
 	public int insertOrUpdateMonomer(String polymerType, String symbol, LWMonomer monomer) throws Exception {
 		Connection c = null;
-		Statement stmt = null;
 		boolean inDatabase = false;
 
 		try {
 			c = getConnection();
-			stmt = c.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT * from MONOMERS where POLYMERTYPE = \'" + polymerType
-					+ "\'and SYMBOL = \'" + symbol + "\';");
+			PreparedStatement pstmt = c
+					.prepareStatement("SELECT * from MONOMERS where POLYMERTYPE = ? and SYMBOL = ?;");
+			pstmt.setString(1, polymerType);
+			pstmt.setString(2, symbol);
+			ResultSet rs = pstmt.executeQuery();
 
 			if (rs.next())
 				inDatabase = true;
@@ -278,7 +350,7 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			LOG.info("InsertOrUpdateMonomer - Monomer in database: " + inDatabase);
 
 			try {
-				stmt.close();
+				pstmt.close();
 				c.commit();
 			} catch (Exception e1) {
 				throw e1;
@@ -294,57 +366,70 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 		if (inDatabase) {
 			return updateMonomer(polymerType, symbol, monomer);
 		} else {
-			int id = insertMonomer(monomer);
-			monomer = monomerDetail(polymerType, symbol);
-			return id;
+			return insertMonomer(monomer);
 		}
 	}
 
 	public int insertMonomer(LWMonomer monomer) throws Exception {
 		Connection c = null;
-		Statement stmt = null;
 		int id = -1;
 
 		try {
 			c = getConnection();
-			stmt = c.createStatement();
-			
-			//check if structur is already registered
-			ResultSet rs = stmt.executeQuery("SELECT Symbol from MONOMERS where POLYMERTYPE = \'" + monomer.getPolymerType()
-					+ "\' and SMILES = \'" + monomer.getSmiles() + "\';");
 
+			// check if Monomer is correct
+			if (checkMonomer(monomer) != 0) {
+				return checkMonomer(monomer);
+			}
+			// check if structure is already registered
+			PreparedStatement pstmt = c.prepareStatement("SELECT Symbol from MONOMERS where SMILES = ?;");
+			pstmt.setString(1, monomer.getSmiles());
+
+			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
-				LOG.info("Monomer with this structure isalready registered with ID: " + rs.getString("SYMBOL"));
+				LOG.info("Monomer with this structure isalready registered with Symbol: " + rs.getString("SYMBOL"));
 				return -1000;
 			}
-			
-			//check if symbol is already used
-			rs = stmt.executeQuery("SELECT Symbol from MONOMERS where POLYMERTYPE = \'" + monomer.getPolymerType()
-					+ "\' and SYMBOL = \'" + monomer.getSymbol() + "\';");
 
+			// check if symbol is already used
+			pstmt = c.prepareStatement("SELECT Symbol from MONOMERS where POLYMERTYPE = ? and SYMBOL = ?;");
+			pstmt.setString(1, monomer.getPolymerType());
+			pstmt.setString(2, monomer.getSymbol());
+			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				LOG.info("Monomer with this id is already registered");
 				return -2000;
 			}
 
-			String sql = "INSERT INTO MONOMERS (SYMBOL, MONOMERTYPE, NAME, NATURALANALOG, MOLFILE, POLYMERTYPE, SMILES, CREATEDATE, AUTHOR) "
-					+ "VALUES('" + monomer.getSymbol() + "','" + monomer.getMonomerType() + "',?"
-					+ ",'" + monomer.getNaturalAnalog() + "','" + monomer.getMolfile() + "','"
-					+ monomer.getPolymerType() + "','" + monomer.getSmiles() + "','" + monomer.getCreateDate() + "','"
-					+ monomer.getAuthor() + "')";
-			PreparedStatement preparedStatement = c.prepareStatement(sql);
-			preparedStatement.setString(1, monomer.getName());
-			preparedStatement.execute();
-			rs = preparedStatement.getGeneratedKeys();
-			//stmt.execute(sql);
-			//rs = stmt.getGeneratedKeys();
+			pstmt = c.prepareStatement(
+					"INSERT INTO MONOMERS (SYMBOL, MONOMERTYPE, NAME, NATURALANALOG, MOLFILE, POLYMERTYPE, SMILES, CREATEDATE, AUTHOR) "
+							+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			pstmt.setString(1, monomer.getSymbol());
+			pstmt.setString(2, monomer.getMonomerType());
+			pstmt.setString(3, monomer.getName());
+			pstmt.setString(4, monomer.getNaturalAnalog());
+			pstmt.setString(5, monomer.getMolfile());
+			pstmt.setString(6, monomer.getPolymerType());
+			pstmt.setString(7, monomer.getSmiles());
+			pstmt.setString(8, monomer.getCreateDate());
+			pstmt.setString(9, monomer.getAuthor());
+
+			pstmt.execute();
+			rs = pstmt.getGeneratedKeys();
 			rs.next();
 			id = rs.getInt(1);
 
+			try {
+				pstmt.close();
+			} catch (Exception e1) {
+				throw e1;
+			}
+
 			List<Attachment> list = monomer.getRgroups();
 			Attachment attachment;
+			String sql;
+			Statement stmt = null;
 			for (int i = 0; i < list.size(); i++) {
-				stmt.close();
 				c.commit();
 				c.close();
 
@@ -380,29 +465,64 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 
 	public int updateMonomer(String polymerType, String symbol, LWMonomer monomer) throws Exception {
 		Connection c = null;
-		Statement stmt = null;
 		int id = -1;
 
 		try {
 			c = getConnection();
-			stmt = c.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT * from MONOMERS where POLYMERTYPE = \'" + polymerType
-					+ "\'and SYMBOL = \'" + symbol + "\';");
-			rs.next();
+			PreparedStatement pstmt = c
+					.prepareStatement("SELECT * from MONOMERS where POLYMERTYPE = ? and SYMBOL = ?;");
+			pstmt.setString(1, polymerType);
+			pstmt.setString(2, symbol);
+			ResultSet rs = pstmt.executeQuery();
+
+			// check if Monomer is registered
+			if (!rs.next()) {
+				LOG.info("Monomer not in database");
+				return -3000;
+			}
+
 			id = rs.getInt(1);
 
-			
-			String sql = "UPDATE MONOMERS set  MONOMERTYPE = \'"
-					+ monomer.getMonomerType() + "\', NAME = ?, NATURALANALOG = \'"
-					+ monomer.getNaturalAnalog() + "\', MOLFILE = \'" + monomer.getMolfile() + "\', POLYMERTYPE = \'"
-					+ monomer.getPolymerType() + "\', SMILES = \'" + monomer.getSmiles() + "\', CREATEDATE = \'"
-					+ monomer.getCreateDate() + "\', AUTHOR = \'" + monomer.getAuthor() + "\' where ID = " + id;
-			PreparedStatement preparedStatement = c.prepareStatement(sql);
-			preparedStatement.setString(1, monomer.getName());
-			preparedStatement.executeUpdate();
-			
-			
+			// check if Monomer is correct
+			if (checkMonomer(monomer) != 0) {
+				return checkMonomer(monomer);
+			}
+
+			// check if Smiles is unique
+			pstmt = c.prepareStatement("SELECT * from MONOMERS where SMILES = ?;");
+			pstmt.setString(1, monomer.getSmiles());
+			rs = pstmt.executeQuery();
+
+			LOG.info(monomer.getSmiles());
+
+			while (rs.next()) {
+				LOG.info(rs.getString("SYMBOL"));
+				if (!rs.getString("SYMBOL").equals(symbol)) {
+					LOG.info("Smiles already excists with ID: " + rs.getString("ID"));
+					return -1000;
+				}
+			}
+
+			pstmt = c.prepareStatement(
+					"UPDATE MONOMERS set  MONOMERTYPE = ?, NAME = ?, NATURALANALOG = ?, MOLFILE = ?, POLYMERTYPE = ?, SMILES = ?, CREATEDATE = ?, AUTHOR = ? where ID = ?");
+			pstmt.setString(1, monomer.getMonomerType());
+			pstmt.setString(2, monomer.getName());
+			pstmt.setString(3, monomer.getNaturalAnalog());
+			pstmt.setString(4, monomer.getMolfile());
+			pstmt.setString(5, monomer.getPolymerType());
+			pstmt.setString(6, monomer.getSmiles());
+			pstmt.setString(7, monomer.getCreateDate());
+			pstmt.setString(8, monomer.getAuthor());
+			pstmt.setInt(9, id);
+			pstmt.executeUpdate();
+			try {
+				pstmt.close();
+			} catch (Exception e1) {
+				throw e1;
+			}
+
+			Statement stmt = c.createStatement();
 			stmt.executeUpdate("DELETE from MONOMER_ATTACHMENT where MONOMER_ID = " + id);
 
 			List<Attachment> list = monomer.getRgroups();
@@ -444,15 +564,16 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 
 	private int insertAttachment(Attachment attachment) throws Exception {
 		Connection c = null;
-		Statement stmt = null;
 		int result;
 
 		try {
 			c = getConnection();
-			stmt = c.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ID from ATTACHMENT where LABEL = \'" + attachment.getLabel()
-					+ "\'and CAPGROUPNAME = \'" + attachment.getCapGroupName() + "\';");
+			PreparedStatement pstmt = c
+					.prepareStatement("SELECT ID from ATTACHMENT where LABEL = ? and CAPGROUPNAME = ?;");
+			pstmt.setString(1, attachment.getLabel());
+			pstmt.setString(2, attachment.getCapGroupName());
+			ResultSet rs = pstmt.executeQuery();
 
 			if (rs.next()) {
 				result = rs.getInt(1);
@@ -461,16 +582,20 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 				if (capGroupName != null && capGroupName.contains("\'"))
 					capGroupName = capGroupName.replaceAll("\'", "\'\'");
 
-				String sql = "INSERT INTO ATTACHMENT (LABEL, CAPGROUPNAME, CAPGROUPSMILES, ALTERNATEID)" + "VALUES('" + attachment.getLabel() + "','"
-						+ capGroupName + "','" + attachment.getCapGroupSMILES() + "','" + attachment.getAlternateId() + "');";
-				stmt.execute(sql);
-				rs = stmt.getGeneratedKeys();
+				pstmt = c.prepareStatement(
+						"INSERT INTO ATTACHMENT (LABEL, CAPGROUPNAME, CAPGROUPSMILES, ALTERNATEID) VALUES(?, ?, ?, ?);");
+				pstmt.setString(1, attachment.getLabel());
+				pstmt.setString(2, capGroupName);
+				pstmt.setString(3, attachment.getCapGroupSMILES());
+				pstmt.setString(4, attachment.getAlternateId());
+				pstmt.execute();
+				rs = pstmt.getGeneratedKeys();
 				rs.next();
 				result = rs.getInt(1);
 			}
 
 			try {
-				stmt.close();
+				pstmt.close();
 				c.commit();
 			} catch (Exception e1) {
 				throw e1;
@@ -490,6 +615,7 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 		List<Attachment> rgroups = new ArrayList<Attachment>();
 		Attachment attachment;
 		Statement stmt = c.createStatement();
+
 		rs = stmt.executeQuery(
 				"SELECT * from ATTACHMENT INNER JOIN MONOMER_ATTACHMENT ON MONOMER_ATTACHMENT.ATTACHMENT_ID = ATTACHMENT.ID "
 						+ "WHERE MONOMER_ATTACHMENT.MONOMER_ID = " + id);
@@ -498,7 +624,6 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			attachment = new Attachment(rs.getString("LABEL"), rs.getString("CAPGROUPNAME"));
 			attachment.setAlternateId(rs.getString("ALTERNATEID"));
 			attachment.setCapGroupSMILES(rs.getString("CAPGROUPSMILES"));
-			//System.out.println(rs.getString("CAPGROUPSMILES"));
 			rgroups.add(attachment);
 			if (rs.next()) {
 				attachment = new Attachment(rs.getString("LABEL"), rs.getString("CAPGROUPNAME"));
@@ -529,7 +654,107 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 		}
 		return c;
 	}
-	
+
+	private int checkMonomer(LWMonomer monomer) {
+
+		// chekc if Molfile exists
+		if (monomer.getMolfile().isEmpty() || monomer.getMolfile() == null) {
+			LOG.info("Monomer has no Molfile");
+			return -5100;
+		}
+		// check if SMILES exists
+		/*
+		 * if(monomer.getSmiles().isEmpty()) { LOG.info("Monomer has no SMILES"); try {
+		 * String smiles =
+		 * SMILES.convertMolToSMILESWithAtomMapping(monomer.getMolfile(),
+		 * monomer.getRgroups()); monomer.setSmiles(smiles);
+		 * LOG.info("Generate SMILES form Molfile"); } catch (Exception e) {
+		 * LOG.info("SMILES could not be generated from Molfile"); return -5200; } }
+		 */
+
+		// generate Smiles from Molfile
+		try {
+			String smiles = SMILES.convertMolToSMILESWithAtomMapping(monomer.getMolfile(), monomer.getRgroups());
+			//smiles = Chemistry.getInstance().getManipulator().convertExtendedSmiles(smiles);
+			smiles = smiles.replaceAll("\\s+", "");
+			monomer.setSmiles(smiles);
+			LOG.info("Generate SMILES form Molfile: " + smiles);
+		} catch (Exception e) {
+			LOG.info("SMILES could not be generated from Molfile");
+			return -5200;
+		}
+
+		// check R-group
+		if (!checkRGroup(monomer.getSmiles(), monomer.getRgroups())) {
+			LOG.info("Monomer has wrong R-Groups");
+			return -5300;
+		}
+
+		// check if Molfile and SMILES match
+		/*
+		 * try { String smilesMolfile =
+		 * SMILES.convertMolToSMILESWithAtomMapping(monomer.getMolfile(),
+		 * monomer.getRgroups()); String smilesMolfileUnique =
+		 * Chemistry.getInstance().getManipulator().canonicalize(smilesMolfile); String
+		 * smilesUnique =
+		 * Chemistry.getInstance().getManipulator().canonicalize(monomer.getSmiles());
+		 * if(!smilesMolfileUnique.equals(smilesUnique)) {
+		 * LOG.info("Smiles and Molfile do not equal");
+		 * LOG.info(SMILES.convertMolToSMILESWithAtomMapping(monomer.getMolfile(),
+		 * monomer.getRgroups())); LOG.info(monomer.getSmiles()); return -5400; } }
+		 * catch (Exception e) { LOG.info("SMILES could not be generated from Molfile");
+		 * return -5200; }
+		 */
+
+		if (monomer.getName().isEmpty() || monomer.getName() == null) {
+			LOG.info("Monomer has no Name");
+			return -6000;
+		}
+		if (monomer.getPolymerType().isEmpty() || monomer.getPolymerType() == null) {
+			LOG.info("Monomer has no Polymertype");
+			return -6100;
+		}
+		if (monomer.getSymbol().isEmpty() || monomer.getSymbol() == null) {
+			LOG.info("Monomer has no Symbol");
+			return -6200;
+		}
+		if (monomer.getMonomerType().isEmpty() || monomer.getMonomerType() == null) {
+			LOG.info("Monomer has no Monomertype");
+			return -6300;
+		}
+		if (monomer.getNaturalAnalog().isEmpty() || monomer.getNaturalAnalog() == null) {
+			LOG.info("Monomer has no Natural Analog");
+			return -6400;
+		}
+		if (monomer.getCreateDate().isEmpty() || monomer.getCreateDate() == null) {
+			Date date = new Date();
+			monomer.setCreateDate(date.toString());
+			LOG.info("Monomer has no CreateDate: current date is used");
+		}
+		if (monomer.getAuthor().isEmpty() || monomer.getAuthor() == null) {
+			LOG.info("Monomer has no Author: Author is set to 'unknownAuthor'");
+			monomer.setAuthor("unknownAuthor");
+		}
+		return 0;
+	}
+
+	private boolean checkRGroup(String smiles, List<Attachment> attachment) {
+		int numberGivenAttachment = attachment.size();
+		int numberAttachmentInSmiles = 0;
+
+		Pattern pattern = Pattern.compile("\\[\\*:([1-9]\\d*)\\]|\\[\\w+:([1-9]\\d*)\\]");
+		Matcher matcher = pattern.matcher(smiles);
+		
+		while (matcher.find()) {
+			numberAttachmentInSmiles++;
+		}
+		
+		if (numberAttachmentInSmiles == numberGivenAttachment)
+			return true;
+		else
+			return false;
+	}
+
 	public int getTotalCount() {
 		return totalCount;
 	}

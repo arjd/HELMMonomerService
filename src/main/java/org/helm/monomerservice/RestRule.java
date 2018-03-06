@@ -35,6 +35,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -56,14 +58,19 @@ public class RestRule {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Delete rule", httpMethod = "DELETE", response = Response.class)
-	@ApiResponses(value = {@ApiResponse(code = 200, message = "Rule deleted"), @ApiResponse(code = 400, message = "Error input")})
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Rule successfully deleted"), @ApiResponse(code = 404, message = "Rule not found")})
 	public Response deleteRule(@PathParam ("id") int id) {
 		try {
-			LibraryManager.getInstance().getRulesLibrary().deleteRule(id);
-			return Response.ok().build();
+			int ret = LibraryManager.getInstance().getRulesLibrary().deleteRule(id);
+			if(ret == -1) {
+				return Response.status(Response.Status.NOT_FOUND).entity("Rule not found in database; ID of rule = " + id).build();
+			}
+			else {
+				return Response.ok().build();
+			}
 		}
 		catch(Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
 		}
 	}
 	
@@ -72,14 +79,14 @@ public class RestRule {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Show rule", httpMethod = "GET", response = Response.class)
-	@ApiResponses(value = {@ApiResponse(code = 200, message = "Rule showed"), @ApiResponse(code = 400, message = "Error input")})
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Rule showed"), @ApiResponse(code = 404, message = "Rule not found")})
 	public Response showRule(@PathParam("id") int id) {
 		try {
 			Rule rule = LibraryManager.getInstance().getRulesLibrary().showRule(id);
 			return Response.status(Response.Status.OK).entity(rule).build();
 		}
 		catch(Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
 		}
 	}
 	
@@ -109,11 +116,32 @@ public class RestRule {
 		JsonConverter converter = new JsonConverter();
 		try {
 			Rule rule = converter.decodeRule(ruleString);
-			Rule ruleRtn = LibraryManager.getInstance().getRulesLibrary().insertOrUpdateRule(rule);
-			return Response.ok().entity(ruleRtn).build();
+			int status = LibraryManager.getInstance().getRulesLibrary().insertOrUpdateRule(rule);
+			
+			if(status == 0) {
+				return Response.status(Response.Status.OK).entity(wrapRule(rule)).build();
+			}else {
+				switch(status) {
+				case -1: return Response.status(Response.Status.CONFLICT).entity("Rule already exists with an other ID").build();
+				case -1000: return Response.status(Response.Status.CONFLICT).entity("Rule has no Script").build();
+				case -2000: return Response.status(Response.Status.CONFLICT).entity("Rule has no Category").build();
+				case -3000: return Response.status(Response.Status.CONFLICT).entity("Rule has no ID").build();
+				default: return Response.status(Response.Status.BAD_REQUEST).entity("Error input").build();
+				}
+			}
 		}
 		catch(Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		}
 	}
+	
+	private String wrapRule(Rule rule) throws JsonProcessingException {
+		JsonConverter converter = new JsonConverter();
+		try {
+			return converter.encodeRule(rule);
+		} catch (JsonProcessingException e) {
+			throw e;
+		}
+	}
+	
 }
