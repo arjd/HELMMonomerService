@@ -144,8 +144,19 @@ public class RestMonomer {
 				monomer.setSmiles(SMILESStr);
 			}
 			
-			int id = LibraryManager.getInstance().getMonomerLibrary().insertOrUpdateMonomer(polymerType,
+			int id = -1;
+			String MonomerType = monomer.getMonomerType(); 
+			if (MonomerType.equals("Undefined") && !polymerType.equals("CHEM")) {
+				id = -7000;
+			} else if (!MonomerType.equals("Undefined") && polymerType.equals("CHEM")) {
+				id = -7100;
+			} else {			
+				id = LibraryManager.getInstance().getMonomerLibrary().insertOrUpdateMonomer(polymerType,
 					symbol, monomer);
+			}
+			
+			
+			
 			switch (id) {
 			case -1000:
 				return Response.status(Response.Status.CONFLICT).entity("Monomer with this structure is already registered: " + monomer.getSymbol()).build();	
@@ -169,6 +180,10 @@ public class RestMonomer {
 				return Response.status(Response.Status.CONFLICT).entity("Monomer has no Symbol").build();
 			case -6300:
 				return Response.status(Response.Status.CONFLICT).entity("Monomer has no Monomertype").build();
+			case -7000:
+				return Response.status(Response.Status.CONFLICT).entity("Undefined monomertype only allowed for CHEM monomers").build();
+			case -7100:
+				return Response.status(Response.Status.CONFLICT).entity("CHEM monomers must have an undefined monomertype").build();
 			case -6400:
 				//return Response.status(Response.Status.CONFLICT).entity("Monomer has no Natural Analog").build();
 			default:
