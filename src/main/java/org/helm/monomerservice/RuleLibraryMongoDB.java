@@ -39,6 +39,10 @@ public class RuleLibraryMongoDB implements IRuleLibrary {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(MonomerLibraryMongoDB.class);
 
+	private final Validation validation = new Validation(LOG);
+
+
+
 	@Override
 	public int deleteRule(int id) throws Exception {
 		MongoClient mongoClient = new MongoClient(LibraryManager.getHostname(),
@@ -125,8 +129,8 @@ public class RuleLibraryMongoDB implements IRuleLibrary {
 	public int insertOrUpdateRule(Rule rule) throws Exception {
 		
 		//Check rule
-		if(checkRule(rule) != 0) {
-			return checkRule(rule);
+		if(validation.checkRule(rule) != 0) {
+			return validation.checkRule(rule);
 		}
 		
 		JsonConverter converter = new JsonConverter();
@@ -193,36 +197,6 @@ public class RuleLibraryMongoDB implements IRuleLibrary {
 			mongoClient.close();
 			LOG.info("Closed database.");
 		}
-	}
-	
-	private int checkRule(Rule rule) {
-		if(rule.getScript() == null || rule.getScript().isEmpty()) {
-			LOG.info("Rule has no Script");
-			LOG.info("LOLOLOL");
-			return -1000;
-		}
-		
-		if(rule.getScript() == null || rule.getCategory().isEmpty()) {
-			LOG.info("Rule has no category");
-			return -2000;
-		}
-		
-		if(rule.getId() == null || rule.getId().toString().isEmpty()) {
-			LOG.info("Rule has no ID");
-			return -3000;
-		}
-		
-		if(rule.getAuthor() == null || rule.getAuthor().isEmpty()) {
-			rule.setAuthor("unknownAuthor");
-			LOG.info("Rule has no Author; Author is set to 'unkownAuthor'");
-		}
-		
-		if(rule.getDescription() == null || rule.getDescription().isEmpty()) {
-			rule.setDescription("no description");
-			LOG.info("Rule has no description; Description is set to 'no description'");
-		}
-		
-		return 0;
 	}
 
 }

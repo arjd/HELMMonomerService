@@ -29,6 +29,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.sun.javafx.tools.packager.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +46,9 @@ public class RuleLibrarySQLite implements IRuleLibrary {
 	private static String forname = "org.sqlite.JDBC";
 	private static String connection = "jdbc:sqlite:"
 			+ MonomerLibrarySQLite.class.getResource("resources/MonomerLib2.0.db").toString();
+
+	private final Validation validation = new Validation(LOG);
+
 
 	public int deleteRule(int id) throws Exception {
 		Connection c = null;
@@ -161,8 +165,8 @@ public class RuleLibrarySQLite implements IRuleLibrary {
 			c = getConnection();
 
 			// Check rule
-			if (checkRule(rule) != 0) {
-				return checkRule(rule);
+			if (validation.checkRule(rule) != 0) {
+				return validation.checkRule(rule);
 			}
 
 			// check if rule already exists
@@ -229,35 +233,6 @@ public class RuleLibrarySQLite implements IRuleLibrary {
 		} finally {
 			c.close();
 			LOG.info("Closed database ..");
-		}
-
-		return 0;
-	}
-
-	private int checkRule(Rule rule) {
-		if (rule.getScript() == null || rule.getScript().isEmpty()) {
-			LOG.info("Rule has no Script");
-			return -1000;
-		}
-
-		if (rule.getScript() == null || rule.getCategory().isEmpty()) {
-			LOG.info("Rule has no category");
-			return -2000;
-		}
-
-		if (rule.getId() == null || rule.getId().toString().isEmpty()) {
-			LOG.info("Rule has no ID");
-			return -3000;
-		}
-
-		if (rule.getAuthor() == null || rule.getAuthor().isEmpty()) {
-			rule.setAuthor("unknownAuthor");
-			LOG.info("Rule has no Author; Author is set to 'unkownAuthor'");
-		}
-
-		if (rule.getDescription() == null || rule.getDescription().isEmpty()) {
-			rule.setDescription("no description");
-			LOG.info("Rule has no description; Description is set to 'no description'");
 		}
 
 		return 0;

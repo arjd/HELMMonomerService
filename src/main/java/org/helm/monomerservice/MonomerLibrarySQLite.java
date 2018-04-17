@@ -58,6 +58,9 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			+ MonomerLibrarySQLite.class.getResource("resources/MonomerLib2.0.db").toString();
 	private static int totalCount = 0;
 
+	private final Validation validation = new Validation(LOG);
+
+
 	public int deleteMonomer(String polymerType, String symbol) throws Exception {
 		Connection c = null;
 		Statement stmt = null;
@@ -378,8 +381,8 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			c = getConnection();
 
 			// check if Monomer is correct
-			if (checkMonomer(monomer) != 0) {
-				return checkMonomer(monomer);
+			if (validation.checkMonomer(monomer) != 0) {
+				return validation.checkMonomer(monomer);
 			}
 			// check if structure is already registered
 			PreparedStatement pstmt = c.prepareStatement("SELECT Symbol from MONOMERS where SMILES = ?;");
@@ -485,8 +488,8 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			id = rs.getInt(1);
 
 			// check if Monomer is correct
-			if (checkMonomer(monomer) != 0) {
-				return checkMonomer(monomer);
+			if (validation.checkMonomer(monomer) != 0) {
+				return validation.checkMonomer(monomer);
 			}
 
 			// check if Smiles is unique
@@ -653,106 +656,6 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			throw e;
 		}
 		return c;
-	}
-
-	private int checkMonomer(LWMonomer monomer) {
-
-		// chekc if Molfile exists
-		if (monomer.getMolfile().isEmpty() || monomer.getMolfile() == null) {
-			LOG.info("Monomer has no Molfile");
-			return -5100;
-		}
-		// check if SMILES exists
-		/*
-		 * if(monomer.getSmiles().isEmpty()) { LOG.info("Monomer has no SMILES"); try {
-		 * String smiles =
-		 * SMILES.convertMolToSMILESWithAtomMapping(monomer.getMolfile(),
-		 * monomer.getRgroups()); monomer.setSmiles(smiles);
-		 * LOG.info("Generate SMILES form Molfile"); } catch (Exception e) {
-		 * LOG.info("SMILES could not be generated from Molfile"); return -5200; } }
-		 */
-
-		// generate Smiles from Molfile
-		try {
-			String smiles = SMILES.convertMolToSMILESWithAtomMapping(monomer.getMolfile(), monomer.getRgroups());
-			//smiles = Chemistry.getInstance().getManipulator().convertExtendedSmiles(smiles);
-			smiles = smiles.replaceAll("\\s+", "");
-			monomer.setSmiles(smiles);
-			LOG.info("Generate SMILES form Molfile: " + smiles);
-		} catch (Exception e) {
-			LOG.info("SMILES could not be generated from Molfile");
-			return -5200;
-		}
-
-		// check R-group
-		if (!checkRGroup(monomer.getSmiles(), monomer.getRgroups())) {
-			LOG.info("Monomer has wrong R-Groups");
-			return -5300;
-		}
-
-		// check if Molfile and SMILES match
-		/*
-		 * try { String smilesMolfile =
-		 * SMILES.convertMolToSMILESWithAtomMapping(monomer.getMolfile(),
-		 * monomer.getRgroups()); String smilesMolfileUnique =
-		 * Chemistry.getInstance().getManipulator().canonicalize(smilesMolfile); String
-		 * smilesUnique =
-		 * Chemistry.getInstance().getManipulator().canonicalize(monomer.getSmiles());
-		 * if(!smilesMolfileUnique.equals(smilesUnique)) {
-		 * LOG.info("Smiles and Molfile do not equal");
-		 * LOG.info(SMILES.convertMolToSMILESWithAtomMapping(monomer.getMolfile(),
-		 * monomer.getRgroups())); LOG.info(monomer.getSmiles()); return -5400; } }
-		 * catch (Exception e) { LOG.info("SMILES could not be generated from Molfile");
-		 * return -5200; }
-		 */
-
-		if (monomer.getName().isEmpty() || monomer.getName() == null) {
-			LOG.info("Monomer has no Name");
-			return -6000;
-		}
-		if (monomer.getPolymerType().isEmpty() || monomer.getPolymerType() == null) {
-			LOG.info("Monomer has no Polymertype");
-			return -6100;
-		}
-		if (monomer.getSymbol().isEmpty() || monomer.getSymbol() == null) {
-			LOG.info("Monomer has no Symbol");
-			return -6200;
-		}
-		if (monomer.getMonomerType().isEmpty() || monomer.getMonomerType() == null) {
-			LOG.info("Monomer has no Monomertype");
-			return -6300;
-		}
-		if (monomer.getNaturalAnalog().isEmpty() || monomer.getNaturalAnalog() == null) {
-			LOG.info("Monomer has no Natural Analog");
-			return -6400;
-		}
-		if (monomer.getCreateDate().isEmpty() || monomer.getCreateDate() == null) {
-			Date date = new Date();
-			monomer.setCreateDate(date.toString());
-			LOG.info("Monomer has no CreateDate: current date is used");
-		}
-		if (monomer.getAuthor().isEmpty() || monomer.getAuthor() == null) {
-			LOG.info("Monomer has no Author: Author is set to 'unknownAuthor'");
-			monomer.setAuthor("unknownAuthor");
-		}
-		return 0;
-	}
-
-	private boolean checkRGroup(String smiles, List<Attachment> attachment) {
-		int numberGivenAttachment = attachment.size();
-		int numberAttachmentInSmiles = 0;
-
-		Pattern pattern = Pattern.compile("\\[\\*:([1-9]\\d*)\\]|\\[\\w+:([1-9]\\d*)\\]");
-		Matcher matcher = pattern.matcher(smiles);
-		
-		while (matcher.find()) {
-			numberAttachmentInSmiles++;
-		}
-		
-		if (numberAttachmentInSmiles == numberGivenAttachment)
-			return true;
-		else
-			return false;
 	}
 
 	public int getTotalCount() {
