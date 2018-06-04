@@ -36,6 +36,7 @@ import org.helm.monomerservice.LWMonomer;
 import org.helm.monomerservice.LibraryManager;
 import org.helm.notation2.Attachment;
 import org.helm.monomerservice.JsonConverter;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -241,8 +242,18 @@ public void insertOrUpdateMonomer() throws Exception {
   public void testFilterMonomers() throws Exception {
 	List<LWMonomer> monomerList;
 	IMonomerLibrary MyLoaderLibrary = MyLibrary.getMonomerLibrary();
-	monomerList = MyLoaderLibrary.showMonomerList("RNA","Backbone", "LR", "", 0, 10);
+	monomerList = MyLoaderLibrary.showMonomerList("RNA","", "25R", "symbol", 0, 100);
 	System.out.println(monomerList.size());
+	Assert.assertTrue(monomerList.size() > 0);
+}
+
+@Test
+public void testFilterMonomers2() throws Exception {
+	List<LWMonomer> monomerList;
+	IMonomerLibrary MyLoaderLibrary = MyLibrary.getMonomerLibrary();
+	monomerList = MyLoaderLibrary.showMonomerList("RNA","", "Adenine", "", 0, 100);
+	System.out.println(monomerList.size());
+	Assert.assertTrue(monomerList.size() > 0);
 }
   
 }

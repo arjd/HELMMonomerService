@@ -103,7 +103,7 @@ public class RestMonomerTest extends StandaloneServer{
 		Response response = client.target(uri).request().get();
 		String retMonomerList = response.readEntity(String.class);
 		System.out.println(retMonomerList);
-		Assert.assertTrue(!retMonomerList.contains("Alexa") && retMonomerList.contains("SMCC"));
+		Assert.assertTrue(!retMonomerList.contains("Adenine") && retMonomerList.contains("SMCC"));
 	}
 
 	@Test
@@ -116,7 +116,7 @@ public class RestMonomerTest extends StandaloneServer{
 		Response response = client.target(uri).request().get();
 		String retMonomerList = response.readEntity(String.class);
 		System.out.println(retMonomerList);
-		Assert.assertTrue(retMonomerList.contains("5fU"));
+		Assert.assertTrue(retMonomerList.contains("Adenine"));
 	}
 	
 	@Test
@@ -124,14 +124,28 @@ public class RestMonomerTest extends StandaloneServer{
 		Client client = createClient();
 		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
 		builder.path("monomer").path("RNA");
-		builder.queryParam("filter", "ddR");
+		builder.queryParam("filter", "Adenine");
 		//builder.queryParam("filterField", "symbol");
 		URI uri = builder.build();
 		Response response = client.target(uri).request().get();
 		String retMonomerList = response.readEntity(String.class);
 		System.out.println(retMonomerList);
 		Assert.assertTrue(retMonomerList.contains("name"));
-	}	
+	}
+	
+	@Test
+	public void testShowFilteredMonomersWithType() {
+		Client client = createClient();
+		UriBuilder builder = UriBuilder.fromUri(BASE_URI);
+		builder.path("monomer").path("RNA");
+		builder.queryParam("filter", "25r");
+		builder.queryParam("filterField", "symbol");
+		URI uri = builder.build();
+		Response response = client.target(uri).request().get();
+		String retMonomerList = response.readEntity(String.class);
+		System.out.println(retMonomerList);
+		Assert.assertTrue(retMonomerList.contains("25R"));
+	}
 
 	@Test
 	public void testMonomerPagination() {

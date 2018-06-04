@@ -141,11 +141,13 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			// filter clause
 			if (filter != null && !filter.isEmpty()) {
 				if (filterField != null && !filterField.isEmpty()) {
-					whereClause = whereClause + " and ? like ?";
-					filterBoolean = true;
+					whereClause = whereClause + " and " + filterField + " like ?";
+					filterBoolean = false;
+					filterFieldBoolean = true;
 				} else {
 					whereClause = whereClause + " and (symbol like ? or name like ?) ";
-					filterFieldBoolean = true;
+					filterBoolean = true;
+					filterFieldBoolean = false;
 				}
 			}
 
@@ -161,13 +163,11 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			}
 			if (filterBoolean) {
 				countClauses++;
-				pstmt.setString(countClauses, filterField);
+				pstmt.setString(countClauses, "%" + filter + "%");
 				countClauses++;
 				pstmt.setString(countClauses, "%" + filter + "%");
 			}
 			if (filterFieldBoolean) {
-				countClauses++;
-				pstmt.setString(countClauses, "%" + filter + "%");
 				countClauses++;
 				pstmt.setString(countClauses, "%" + filter + "%");
 			}
@@ -195,23 +195,23 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			}
 			if (filterBoolean) {
 				countClauses++;
-				pstmt.setString(countClauses, filterField);
+				pstmt.setString(countClauses, "%" + filter + "%");
 				countClauses++;
 				pstmt.setString(countClauses, "%" + filter + "%");
 			}
 			if (filterFieldBoolean) {
 				countClauses++;
 				pstmt.setString(countClauses, "%" + filter + "%");
-				countClauses++;
-				pstmt.setString(countClauses, "%" + filter + "%");
 			}
 			if (limitclauseBoolean) {
 				countClauses++;
-				pstmt.setString(countClauses, String.valueOf(limit));
+				pstmt.setInt(countClauses, limit);
 				countClauses++;
-				pstmt.setString(countClauses, String.valueOf(offset));
+				pstmt.setInt(countClauses, offset);
+				
 			}
 
+			System.out.println(pstmt);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
