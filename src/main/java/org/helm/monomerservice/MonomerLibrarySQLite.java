@@ -391,6 +391,7 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				LOG.info("Monomer with this structure isalready registered with Symbol: " + rs.getString("SYMBOL"));
+				monomer.setSymbol(rs.getString("SYMBOL"));
 				return -1000;
 			}
 
