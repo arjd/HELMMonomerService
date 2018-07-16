@@ -2,28 +2,16 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="876" started-at="2018-06-04T12:16:25Z" finished-at="2018-06-04T12:16:26Z">
+  <suite name="Default suite" duration-ms="169" started-at="2018-07-12T15:38:05Z" finished-at="2018-07-12T15:38:05Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="876" started-at="2018-06-04T12:16:25Z" finished-at="2018-06-04T12:16:26Z">
-      <class name="org.helm.monomerservice.RestMonomerTest">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:org.helm.monomerservice.RestMonomerTest@37918c79]" name="setUp" is-config="true" duration-ms="0" started-at="2018-06-04T14:16:25Z" finished-at="2018-06-04T14:16:25Z">
+    <test name="Default test" duration-ms="169" started-at="2018-07-12T15:38:05Z" finished-at="2018-07-12T15:38:05Z">
+      <class name="org.helm.monomerservice.MonomerLibrarySQLiteTest">
+        <test-method status="PASS" signature="testSymbolInDatabase()[pri:0, instance:org.helm.monomerservice.MonomerLibrarySQLiteTest@57536d79]" name="testSymbolInDatabase" duration-ms="153" started-at="2018-07-12T17:38:05Z" finished-at="2018-07-12T17:38:05Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="startServer()[pri:0, instance:org.helm.monomerservice.RestMonomerTest@37918c79]" name="startServer" is-config="true" duration-ms="441" started-at="2018-06-04T14:16:25Z" finished-at="2018-06-04T14:16:26Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- startServer -->
-        <test-method status="PASS" signature="testShowFilteredMonomersWithType()[pri:0, instance:org.helm.monomerservice.RestMonomerTest@37918c79]" name="testShowFilteredMonomersWithType" duration-ms="401" started-at="2018-06-04T14:16:26Z" finished-at="2018-06-04T14:16:26Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- testShowFilteredMonomersWithType -->
-        <test-method status="PASS" signature="stopServer()[pri:0, instance:org.helm.monomerservice.RestMonomerTest@37918c79]" name="stopServer" is-config="true" duration-ms="18" started-at="2018-06-04T14:16:26Z" finished-at="2018-06-04T14:16:26Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- stopServer -->
-      </class> <!-- org.helm.monomerservice.RestMonomerTest -->
+        </test-method> <!-- testSymbolInDatabase -->
+      </class> <!-- org.helm.monomerservice.MonomerLibrarySQLiteTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

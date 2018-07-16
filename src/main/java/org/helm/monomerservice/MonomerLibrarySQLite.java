@@ -60,7 +60,6 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 
 	private final Validation validation = new Validation(LOG);
 
-
 	public int deleteMonomer(String polymerType, String symbol) throws Exception {
 		Connection c = null;
 		Statement stmt = null;
@@ -70,7 +69,8 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			c = getConnection();
 			stmt = c.createStatement();
 
-			PreparedStatement pstmt = c.prepareStatement("SELECT * from MONOMERS where POLYMERTYPE = ? and SYMBOL = ?;");
+			PreparedStatement pstmt = c
+					.prepareStatement("SELECT * from MONOMERS where POLYMERTYPE = ? and SYMBOL = ?;");
 			pstmt.setString(1, polymerType);
 			pstmt.setString(2, symbol);
 			ResultSet rs = pstmt.executeQuery();
@@ -208,7 +208,7 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 				pstmt.setInt(countClauses, limit);
 				countClauses++;
 				pstmt.setInt(countClauses, offset);
-				
+
 			}
 
 			System.out.println(pstmt);
@@ -334,7 +334,7 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 		return monomer;
 	}
 
-	public int insertOrUpdateMonomer(String polymerType, String symbol, LWMonomer monomer) throws Exception {
+	public boolean symbolInDatabase(String polymerType, String symbol) throws Exception {
 		Connection c = null;
 		boolean inDatabase = false;
 
@@ -365,8 +365,44 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 			c.close();
 			LOG.info("Closed database ..");
 		}
+		return inDatabase;
+	}
 
-		if (inDatabase) {
+	public boolean structureInDatabase(String polymerType, LWMonomer monomer) throws Exception {
+		Connection c = null;
+		boolean inDatabase = false;
+
+		try {
+			c = getConnection();
+			// check if structure is already registered
+			PreparedStatement pstmt = c.prepareStatement("SELECT Symbol from MONOMERS where MOLFILE = ?;");
+			pstmt.setString(1, monomer.getMolfile()); // .getSmiles());
+
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				LOG.info("Monomer with this structure isalready registered with Symbol: " + rs.getString("SYMBOL"));
+				monomer.setSymbol(rs.getString("SYMBOL"));
+				
+			}
+
+			try {
+				pstmt.close();
+				c.commit();
+			} catch (Exception e1) {
+				throw e1;
+			}
+		} catch (Exception e2) {
+			c.rollback();
+			throw e2;
+		} finally {
+			c.close();
+			LOG.info("Closed database ..");
+		}
+		return inDatabase;
+	}
+
+	public int insertOrUpdateMonomer(String polymerType, String symbol, LWMonomer monomer) throws Exception {
+		if (symbolInDatabase(polymerType, symbol)) {
 			return updateMonomer(polymerType, symbol, monomer);
 		} else {
 			return insertMonomer(monomer);
