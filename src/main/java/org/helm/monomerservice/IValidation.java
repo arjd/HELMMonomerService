@@ -1,6 +1,7 @@
 package org.helm.monomerservice;
 
 import org.helm.notation2.Attachment;
+
 import java.util.List;
 
 public interface IValidation {
@@ -9,5 +10,5 @@ public interface IValidation {
 
     int checkMonomer(LWMonomer monomer);
 
-    boolean checkRGroup(String smiles, List<Attachment> attachment);
+    int checkRGroup(String smiles, List<Attachment> attachment);
 }

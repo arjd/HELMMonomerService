@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright C 2017, The Pistoia Alliance
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
  * without limitation the rights to use, copy, modify, merge, publish,
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -22,20 +22,17 @@
 
 package org.helm.monomerservice;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-
-//import com.sun.javafx.tools.packager.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.*;
+import java.util.ArrayList;
+
+//import com.sun.javafx.tools.packager.Log;
+
 /**
  * Provides access to SQLite database
- * 
+ * <p>
  * Description of methods in IConfigLoaderRulesLibrary
  */
 
@@ -48,7 +45,6 @@ public class RuleLibrarySQLite implements IRuleLibrary {
 			+ MonomerLibrarySQLite.class.getResource("resources/MonomerLib2.0.db").toString();
 
 	private final Validation validation = new Validation(LOG);
-
 
 	public int deleteRule(int id) throws Exception {
 		Connection c = null;
@@ -192,7 +188,7 @@ public class RuleLibrarySQLite implements IRuleLibrary {
 				pstmt.setString(2, rule.getName());
 				pstmt.setString(3, rule.getAuthor());
 				pstmt.setString(4, rule.getDescription());
-				pstmt.setString(5, rule.getScript().replaceAll("'", "''"));
+				pstmt.setString(5, rule.getScript());// .replaceAll("'", "''"));
 				pstmt.setInt(6, rule.getId());
 				pstmt.execute();
 			} else {
@@ -212,7 +208,7 @@ public class RuleLibrarySQLite implements IRuleLibrary {
 				pstmt.setString(2, rule.getName());
 				pstmt.setString(3, rule.getAuthor());
 				pstmt.setString(4, rule.getDescription());
-				pstmt.setString(5, rule.getScript().replaceAll("'", "''"));
+				pstmt.setString(5, rule.getScript());// .replaceAll("'", "''"));
 				pstmt.setInt(6, rule.getId());
 				pstmt.execute();
 				rs = pstmt.getGeneratedKeys();
