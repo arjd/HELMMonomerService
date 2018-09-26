@@ -203,13 +203,13 @@ public class RuleLibrarySQLite implements IRuleLibrary {
 				}
 
 				pstmt = c.prepareStatement(
-						"INSERT INTO RULES (CATEGORY,NAME,AUTHOR,DESCRIPTION,SCRIPT,ID) " + "VALUES(?,?,?,?,?,?)");
+						"INSERT INTO RULES (CATEGORY,NAME,AUTHOR,DESCRIPTION,SCRIPT) " + "VALUES(?,?,?,?,?)"); //"INSERT INTO RULES (CATEGORY,NAME,AUTHOR,DESCRIPTION,SCRIPT,ID) " + "VALUES(?,?,?,?,?,?)");
 				pstmt.setString(1, rule.getCategory());
 				pstmt.setString(2, rule.getName());
 				pstmt.setString(3, rule.getAuthor());
 				pstmt.setString(4, rule.getDescription());
 				pstmt.setString(5, rule.getScript());// .replaceAll("'", "''"));
-				pstmt.setInt(6, rule.getId());
+				//pstmt.setInt(6, rule.getId());
 				pstmt.execute();
 				rs = pstmt.getGeneratedKeys();
 				rs.next();
