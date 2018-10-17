@@ -23,20 +23,23 @@
 package org.helm.monomerservice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.helm.notation2.Attachment;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
-import java.io.File;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import org.apache.commons.io.FileUtils;
+import org.helm.notation2.Attachment;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 public class RestMonomerTest extends StandaloneServer {
 
@@ -670,5 +673,28 @@ public class RestMonomerTest extends StandaloneServer {
         response = client.target(uri).request().put(Entity.entity(deleted, MediaType.APPLICATION_JSON), Response.class);
         retMonomer = response.readEntity(String.class);
         
+    }
+
+    @Test
+    public void testInsertMonomer() throws URISyntaxException, IOException {
+        Client client = createClient();
+        String monomerJson = FileUtils.readFileToString(new File(RestMonomerTest.class.getResource(
+            "resources/ExampleMonomer.json").toURI()));
+
+        UriBuilder builder = UriBuilder.fromUri(BASE_URI);
+        builder.path("monomer").path("CHEM").path("Foo");
+        URI uri = builder.build();
+        Response response = client.target(uri).request().put(
+            Entity.entity(monomerJson, MediaType.APPLICATION_JSON_TYPE), Response.class);
+        String retMonomer = response.readEntity(String.class);
+        System.out.print(retMonomer);
+        Assert.assertEquals(response.getStatus(), 200);
+
+        //delete insertet Monomer
+        builder = UriBuilder.fromUri(BASE_URI);
+        builder.path("monomer").path("CHEM").path("Foo");
+        uri = builder.build();
+        response = client.target(uri).request().delete();
+        Assert.assertEquals(response.getStatus(), 200);
     }
 }
