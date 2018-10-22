@@ -44,8 +44,6 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.result.DeleteResult;
 
-import javassist.bytecode.Mnemonic;
-
 public class MonomerLibraryMongoDB implements IMonomerLibrary {
 
 	private static int totalCount = 0;
