@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.pistoiaalliance.helm</groupId>
     <artifactId>helm2-monomerservice</artifactId>
-    <version>1.1.4</version>
+    <version>1.1.5</version>
     <packaging>war</packaging>
 
     <name>HELM2MonomerService</name>
@@ -104,9 +104,9 @@
                             <host></host>
                             <basePath>/HELM2MonomerService/rest</basePath>
                             <info>
-                                <title>JAX-RS 2.0 sample application</title>
-                                <version>v1</version>
-                                <description>JAX-RS 2.0 sample application</description>
+                                <title>HELM2 monomer service</title>
+                                <version>${project.version}</version>
+                                <description>${project.description}</description>
                             </info>
                             <swaggerDirectory>${project.build.directory}/generated/swagger-ui</swaggerDirectory>
                             <attachSwaggerArtifact>true</attachSwaggerArtifact>

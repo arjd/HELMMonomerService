@@ -202,33 +202,15 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                monomer = new LWMonomer(rs.getString("AUTHOR"), rs.getString("SYMBOL"), rs.getString("POLYMERTYPE"),
-                        rs.getString("NAME"), rs.getString("NATURALANALOG"), rs.getString("MOLFILE"),
-                        rs.getString("SMILES"), rs.getString("MONOMERTYPE"), null);
-                int id = rs.getInt("ID");
-                monomer.setId(id);
-
-                monomer.setRgroups(buildAttachmentList(c, id));
-
-                //for testing a DB
-                //validation.checkMonomer(monomer);
-                //validation.smilesComp(monomer);
-                
+                monomer = buildMonomerFromRs(rs, c);
                 list.add(monomer);
-
-                LOG.info("Monomer with ID = " + id + " shown");
-
             }
 
-            try {
-                pstmt.close();
-            } catch (Exception e1) {
-                throw e1;
-            }
-        } catch (Exception e2) {
+        } catch (Exception e) {
             c.rollback();
-            throw e2;
+            throw e;
         } finally {
+            if (pstmt != null) pstmt.close();
             c.close();
             LOG.info("Closed database ..");
         }
@@ -239,7 +221,7 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
     public List<LWMonomer> showAllMonomers() throws Exception {
         Connection c = null;
         Statement stmt = null;
-        LWMonomer monomer = null;
+        LWMonomer monomer;
         ArrayList<LWMonomer> list = new ArrayList<LWMonomer>();
         int a = 0;
 
@@ -250,17 +232,8 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
             ResultSet rs = stmt.executeQuery("SELECT * from MONOMERS;");
 
             while (rs.next()) {
-                monomer = new LWMonomer(rs.getString("AUTHOR"), rs.getString("SYMBOL"), rs.getString("POLYMERTYPE"),
-                        rs.getString("NAME"), rs.getString("NATURALANALOG"), rs.getString("MOLFILE"),
-                        rs.getString("SMILES"), rs.getString("MONOMERTYPE"), null);
-                int id = rs.getInt("ID");
-                monomer.setId(id);
-
-                monomer.setRgroups(buildAttachmentList(c, id));
-
+                monomer = buildMonomerFromRs(rs, c);
                 list.add(monomer);
-
-                LOG.info("Monomer with ID = " + id + " shown");
 
                 rs = stmt.executeQuery("SELECT * from MONOMERS;");
 
@@ -269,18 +242,13 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
                 }
                 a++;
             }
-
-            try {
-                stmt.close();
-            } catch (Exception e1) {
-                throw e1;
-            }
-        } catch (Exception e2) {
+        } catch (Exception e) {
             c.rollback();
-            throw e2;
+            throw e;
         } finally {
+            if (stmt != null) stmt.close();
             c.close();
-            LOG.info("Closed database ..");
+            LOG.info("Closed connection to database ..");
         }
         return list;
     }
@@ -289,39 +257,40 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
         Connection c = null;
         LWMonomer monomer = null;
 
+        PreparedStatement pstmt = null;
         try {
             c = getConnection();
 
-            PreparedStatement pstmt = c
-                    .prepareStatement("SELECT * from MONOMERS where POLYMERTYPE = ? and SYMBOL = ?;");
+            pstmt = c
+                .prepareStatement("SELECT * from MONOMERS where POLYMERTYPE = ? and SYMBOL = ?;");
             pstmt.setString(1, polymerType);
             pstmt.setString(2, symbol);
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                monomer = new LWMonomer(rs.getString("AUTHOR"), rs.getString("SYMBOL"), rs.getString("POLYMERTYPE"),
-                        rs.getString("NAME"), rs.getString("NATURALANALOG"), rs.getString("MOLFILE"),
-                        rs.getString("SMILES"), rs.getString("MONOMERTYPE"), null);
-                int id = rs.getInt("ID");
-                monomer.setId(id);
-
-                monomer.setRgroups(buildAttachmentList(c, id));
-
-                LOG.info("Monomer with ID = " + id + " shown");
+                monomer = buildMonomerFromRs(rs, c);
             }
-
-            try {
-                pstmt.close();
-            } catch (Exception e1) {
-                throw e1;
-            }
-        } catch (Exception e2) {
+        } catch (Exception e) {
             c.rollback();
-            throw e2;
+            throw e;
         } finally {
+            if (pstmt != null)  pstmt.close();
             c.close();
-            LOG.info("Closed database ..");
+            LOG.info("Closed connection to database ..");
         }
+        return monomer;
+    }
+
+    private LWMonomer buildMonomerFromRs(ResultSet rs, Connection c) throws SQLException {
+        int id = rs.getInt("ID");
+        LWMonomer monomer = new LWMonomer(rs.getString("AUTHOR"), rs.getString("SYMBOL"), rs.getString("POLYMERTYPE"),
+              rs.getString("NAME"), rs.getString("NATURALANALOG"), rs.getString("MOLFILE"),
+              rs.getString("SMILES"), rs.getString("MONOMERTYPE"), null);
+        monomer.setId(id);
+        monomer.setCreateDate(rs.getString("CREATEDATE"));
+
+        monomer.setRgroups(buildAttachmentList(c, id));
+        LOG.info("Monomer with ID = " + id + " shown");
         return monomer;
     }
 
@@ -329,29 +298,26 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
         Connection c = null;
         boolean inDatabase = false;
 
+        PreparedStatement pstmt = null;
         try {
             c = getConnection();
 
-            PreparedStatement pstmt = c.prepareStatement("SELECT * from MONOMERS where POLYMERTYPE = ? and SYMBOL = ?;");
+            pstmt = c.prepareStatement("SELECT * from MONOMERS where POLYMERTYPE = ? and SYMBOL = ?;");
             pstmt.setString(1, polymerType);
             pstmt.setString(2, symbol);
             ResultSet rs = pstmt.executeQuery();
 
-            if (rs.next())
+            if (rs.next()) {
                 inDatabase = true;
+            }
 
             LOG.info("InsertOrUpdateMonomer - Monomer in database: " + inDatabase);
-
-            try {
-                pstmt.close();
-                c.commit();
-            } catch (Exception e1) {
-                throw e1;
-            }
+            c.commit();
         } catch (Exception e2) {
             c.rollback();
             throw e2;
         } finally {
+            if (pstmt != null) pstmt.close();
             c.close();
             LOG.info("Closed database ..");
         }
@@ -417,7 +383,8 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                LOG.info("Monomer with this structure is already registered with Symbol: " + rs.getString("SYMBOL"));
+                LOG.info("Monomer with this structure is already registered with Symbol: "
+                    + rs.getString("SYMBOL"));
                 monomer.setSymbol(rs.getString("SYMBOL"));
                 return -1000;
             }
@@ -658,27 +625,6 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
              attachment.setCapGroupSMILES(rs.getString("CAPGROUPSMILES"));
              rgroups.add(attachment);
         }
-        
-        /*
-        if (rs.next()) {
-            attachment = new Attachment(rs.getString("LABEL"), rs.getString("CAPGROUPNAME"));
-            attachment.setAlternateId(rs.getString("ALTERNATEID"));
-            attachment.setCapGroupSMILES(rs.getString("CAPGROUPSMILES"));
-            rgroups.add(attachment);
-            if (rs.next()) {
-                attachment = new Attachment(rs.getString("LABEL"), rs.getString("CAPGROUPNAME"));
-                attachment.setAlternateId(rs.getString("ALTERNATEID"));
-                attachment.setCapGroupSMILES(rs.getString("CAPGROUPSMILES"));
-                rgroups.add(attachment);
-                if (rs.next()) {
-                    attachment = new Attachment(rs.getString("LABEL"), rs.getString("CAPGROUPNAME"));
-                    attachment.setAlternateId(rs.getString("ALTERNATEID"));
-                    attachment.setCapGroupSMILES(rs.getString("CAPGROUPSMILES"));
-                    rgroups.add(attachment);
-                }
-            }
-        }*/
-
         return rgroups;
     }
 

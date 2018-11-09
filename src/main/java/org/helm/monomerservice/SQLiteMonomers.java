@@ -37,6 +37,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This creates the database MonomerLib2.0.db Run "Main" to create the database
@@ -46,6 +48,7 @@ import java.util.Map;
 
 public class SQLiteMonomers {
 
+    private static final Logger LOG = LoggerFactory.getLogger(MonomerLibrarySQLite.class);
     private static String forname = "org.sqlite.JDBC";
     private static String connection;
 
@@ -94,7 +97,7 @@ public class SQLiteMonomers {
 
     public void buildDBForTesting() throws Exception {
         String path = System.getProperty("user.dir")
-                + "/src/main/resources/org/helm/monomerservice/resources/BackupOriginalFromMonomerStoreMonomerLib2.0.db";
+                + "/src/main/resources/org/helm/monomerservice/resources/MonomerLib2.0.db";
         File file = new File(path);
 
         String path1 = System.getProperty("user.dir")
@@ -230,12 +233,12 @@ public class SQLiteMonomers {
             stmt.close();
             c.commit();
             c.close();
+            System.out.println("Records created successfully");
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             stmt.close();
             c.close();
         }
-        System.out.println("Records created successfully");
     }
 
     private String generateInsertStringForLWMonomer(LWMonomer monomer) {
@@ -276,6 +279,7 @@ public class SQLiteMonomers {
         ret = "INSERT INTO MONOMERS (SYMBOL, MONOMERTYPE, NAME, NATURALANALOG, MOLFILE, POLYMERTYPE, SMILES, CREATEDATE, AUTHOR)"
                 + "VALUES ('" + symbol + "','" + monomerType + "','" + name + "','" + naturalAnalog + "','" + molFile
                 + "','" + polymerType + "','" + smiles + "','" + createDate + "','" + author + "');";
+        LOG.info("Insertion string: " + ret);
         return ret;
     }
 
@@ -287,13 +291,13 @@ public class SQLiteMonomers {
         try {
             try {
                 c = getConnection();
-                System.out.println("Opened database successfully");
+                LOG.info("Opened database successfully");
             } catch (Exception e) {
                 throw e;
             }
 
             stmt = c.createStatement();
-            System.out.println(attachment.getCapGroupName());
+            LOG.info(attachment.getCapGroupName());
 
             ResultSet rs = stmt.executeQuery("SELECT ID from ATTACHMENT where LABEL = \'" + attachment.getLabel()
                     + "\'and CAPGROUPNAME = \'" + attachment.getCapGroupName() + "\';" + "\'and ALTERNATEID = \'"
@@ -336,10 +340,10 @@ public class SQLiteMonomers {
         MonomerStore store = MonomerFactory.getInstance().getMonomerStore();
         Map<String, Map<String, Monomer>> mon = store.getMonomerDB();
         for (Map.Entry<String, Map<String, Monomer>> entry : mon.entrySet()) {
-            System.out.println(entry.getKey());
+            LOG.debug(entry.getKey());
             Map<String, Monomer> map = entry.getValue();
             for (Map.Entry<String, Monomer> entry1 : map.entrySet()) {
-                System.out.println(entry1.getKey());
+                LOG.debug(entry1.getKey());
                 Monomer monomer = entry1.getValue();
 
                 LWMonomer lwMonomer = MonomerConverter.convertMonomerToLWMonomer(monomer);
@@ -355,7 +359,7 @@ public class SQLiteMonomers {
 
         try {
             c = getConnection();
-            System.out.println("Opened database successfully");
+            LOG.info("Opened database successfully");
 
             stmt = c.createStatement();
             String sql = "INSERT INTO RULES (CATEGORY,NAME,AUTHOR,DESCRIPTION,SCRIPT) "
@@ -377,7 +381,7 @@ public class SQLiteMonomers {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        System.out.println("Records created successfully");
+        LOG.info("Records created successfully");
     }
 
     private Connection getConnection() throws Exception {
