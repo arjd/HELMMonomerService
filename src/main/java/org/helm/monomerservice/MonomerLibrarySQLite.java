@@ -86,10 +86,11 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
             return id;
         } catch (Exception e2) {
             c.rollback();
+            LOG.error("Error during I/O operations on database.", e2);
             throw e2;
         } finally {
             c.close();
-            LOG.info("Closed database ..");
+            LOG.debug("Closed database ..");
         }
 
     }
@@ -208,11 +209,12 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 
         } catch (Exception e) {
             c.rollback();
+            LOG.error("Error during I/O operations on database.", e);
             throw e;
         } finally {
             if (pstmt != null) pstmt.close();
             c.close();
-            LOG.info("Closed database ..");
+            LOG.debug("Closed database ..");
         }
         return list;
     }
@@ -244,11 +246,12 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
             }
         } catch (Exception e) {
             c.rollback();
+            LOG.error("Error during I/O operations on database.", e);
             throw e;
         } finally {
             if (stmt != null) stmt.close();
             c.close();
-            LOG.info("Closed connection to database ..");
+            LOG.debug("Closed connection to database ..");
         }
         return list;
     }
@@ -272,11 +275,12 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
             }
         } catch (Exception e) {
             c.rollback();
+            LOG.error("Error during I/O operations on database.", e);
             throw e;
         } finally {
             if (pstmt != null)  pstmt.close();
             c.close();
-            LOG.info("Closed connection to database ..");
+            LOG.debug("Closed connection to database ..");
         }
         return monomer;
     }
@@ -315,11 +319,12 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
             c.commit();
         } catch (Exception e2) {
             c.rollback();
+            LOG.error("Error during I/O operations on database.", e2);
             throw e2;
         } finally {
             if (pstmt != null) pstmt.close();
             c.close();
-            LOG.info("Closed database ..");
+            LOG.debug("Closed database ..");
         }
         return inDatabase;
     }
@@ -349,10 +354,11 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
             }
         } catch (Exception e2) {
             c.rollback();
+            LOG.error("Error during I/O operations on database.", e2);
             throw e2;
         } finally {
             c.close();
-            LOG.info("Closed database ..");
+            LOG.debug("Closed database ..");
         }
         return inDatabase;
     }
@@ -453,10 +459,11 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
             }
         } catch (Exception e2) {
             c.rollback();
+            LOG.error("Error during I/O operations on database.", e2);
             throw e2;
         } finally {
             c.close();
-            LOG.info("Closed database ..");
+            LOG.debug("Closed database ..");
         }
         return id;
     }
@@ -553,10 +560,11 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 
         } catch (Exception e2) {
             c.rollback();
+            LOG.error("Error during I/O operations on database.", e2);
             throw e2;
         } finally {
             c.close();
-            LOG.info("Closed database ..");
+            LOG.debug("Closed database ..");
         }
         return id;
     }
@@ -602,9 +610,11 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
 
         } catch (Exception e2) {
             c.rollback();
+            LOG.error("Error during I/O operations on database.", e2);
             throw e2;
         } finally {
             c.close();
+            LOG.debug("Closed database ..");
         }
         return result;
     }
@@ -634,8 +644,9 @@ public class MonomerLibrarySQLite implements IMonomerLibrary {
             Class.forName(forname);
             c = DriverManager.getConnection(connection);
             c.setAutoCommit(false);
-            LOG.info("Opened database ..");
+            LOG.debug("Opened database ..");
         } catch (Exception e) {
+            LOG.error("Error when trying to establish connection with database.", e);
             throw e;
         }
         return c;

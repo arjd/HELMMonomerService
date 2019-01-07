@@ -35,9 +35,9 @@ public class Validation implements IValidation {
 
 			smiles = smiles.replaceAll("\\s+", "");
 			monomer.setSmiles(smiles);
-			Log.info("Generate SMILES form Molfile: " + smiles);
+			Log.info("Generate SMILES from Molfile: " + smiles);
 		} catch (Exception e) {
-			Log.info("SMILES could not be generated from Molfile");
+			Log.info("SMILES could not be generated from Molfile because of " + e.getMessage(), e);
 			return -5200;
 		}
 
@@ -141,7 +141,7 @@ public class Validation implements IValidation {
 		try {
 			validationToolkit = paser.validateMonomer(converter.convertLWMonomerToMonomer(monomer));
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug("Toolkit does not validate Monomer because of " + e.getMessage(), e);
 		}
 		if (validationToolkit) {
 			Log.info("Toolkit validates Monomer");
@@ -150,40 +150,6 @@ public class Validation implements IValidation {
 			Log.info("Toolkit does not validate Monomer");
 			return 1;
 		}
-
-		// TESTTING
-		/*
-		 * try { Log.info("Hash of Monomer: " +
-		 * SMILES.monomerHash(monomer.getMolfile()));
-		 * System.out.println(SMILES.monomerHash(monomer.getMolfile())); } catch
-		 * (Exception e) { e.printStackTrace(); }
-		 */
-
-		// check if Molfile and SMILES match
-		/*
-		 * try { String smilesMolfile =
-		 * SMILES.convertMolToSMILESWithAtomMapping(monomer.getMolfile(),
-		 * monomer.getRgroups()); String smilesMolfileUnique =
-		 * Chemistry.getInstance().getManipulator().canonicalize(smilesMolfile); String
-		 * smilesUnique =
-		 * Chemistry.getInstance().getManipulator().canonicalize(monomer.getSmiles());
-		 * if(!smilesMolfileUnique.equals(smilesUnique)) {
-		 * LOG.info("Smiles and Molfile do not equal");
-		 * LOG.info(SMILES.convertMolToSMILESWithAtomMapping(monomer.getMolfile(),
-		 * monomer.getRgroups())); LOG.info(monomer.getSmiles()); return -5400; } }
-		 * catch (Exception e) { LOG.info("SMILES could not be generated from Molfile");
-		 * return -5200; }
-		 */
-
-		// check if SMILES exists
-		/*
-		 * if(monomer.getSmiles().isEmpty()) { LOG.info("Monomer has no SMILES"); try {
-		 * String smiles =
-		 * SMILES.convertMolToSMILESWithAtomMapping(monomer.getMolfile(),
-		 * monomer.getRgroups()); monomer.setSmiles(smiles);
-		 * LOG.info("Generate SMILES form Molfile"); } catch (Exception e) {
-		 * LOG.info("SMILES could not be generated from Molfile"); return -5200; } }
-		 */
 	}
 
 	@Override
@@ -280,25 +246,5 @@ public class Validation implements IValidation {
 		}
 
 		return 0;
-	}
-
-	HashSet<Long> set = new HashSet<>();
-	int p = 0;
-
-	// for testing a DB
-	String[] smilesA = new String[1000];
-	int v = 0;
-
-	public void smilesComp(LWMonomer monomer) {
-		for (int i = 0; i < v; i++) {
-			if (smilesA[i].equals(monomer.getSmiles())) {
-				Log.info("Damm Damm ------------------------------------------Damm Damm" + i);
-				// Log.info("Same structure is already in DB!!!");
-			}
-		}
-
-		smilesA[v] = monomer.getSmiles();
-
-		v++;
 	}
 }
