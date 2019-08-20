@@ -173,15 +173,6 @@ public class Validation implements IValidation {
 			numberAttachmentInSmiles++;
 		}
 
-		// check if Numbers start by 1
-		for (int i = 0; i < numberGivenAttachment; i++) {
-			int num = Integer.valueOf(attachment.get(i).getLabel().substring(1, 2));
-			if (num > numberGivenAttachment) {
-				Log.info("Number of RGroups does not start by one or does not raise correctly");
-				return -9100;
-			}
-		}
-
 		// get Labels from Attachmentlist
 		for (int i = 0; i < numberAttachmentInSmiles; i++) {
 			int num = Integer.valueOf(attachment.get(i).getLabel().substring(1, 2));
