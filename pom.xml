@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.pistoiaalliance.helm</groupId>
     <artifactId>helm2-monomerservice</artifactId>
-    <version>1.1.8</version>
+    <version>1.1.9</version>
     <packaging>war</packaging>
 
     <name>HELM2MonomerService</name>
