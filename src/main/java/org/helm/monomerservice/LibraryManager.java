@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public final class LibraryManager {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(LibraryManager.class);
-	private static final String CONFIG_FILE_PATH = LibraryManager.class.getResource("resources/config.txt").toString();
+	private static final String CONFIG_FILE_PATH = LibraryManager.class.getResource("resources/config.txt").getPath();
 	private static final String RULES = "loader.rules";
 	private static final String MONOMERS = "loader.monomers";
 	private static final String HOSTNAME = "loader.hostname";
@@ -116,6 +116,8 @@ public final class LibraryManager {
 	public static LibraryManager getInstance() throws Exception {
 		if (_instance == null) {
 			_instance = new LibraryManager();
+		} else {
+			_instance.refresh();
 		}
 		return _instance;
 	}
@@ -144,7 +146,7 @@ public final class LibraryManager {
 
 			} catch (Exception e) {
 				setDefaultSetting();
-				LOG.info("Could not create config-file");
+				LOG.error("Could not create config-file");
 			} finally {
 				try {
 					if (writer != null) {
