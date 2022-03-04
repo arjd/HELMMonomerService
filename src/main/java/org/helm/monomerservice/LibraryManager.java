@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public final class LibraryManager {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(LibraryManager.class);
-	private static final String CONFIG_FILE_PATH = LibraryManager.class.getResource("/conf/config.txt").getPath();
+	private static final String CONFIG_FILE_PATH = LibraryManager.class.getResource("resources/config.txt").getPath();
 	private static final String RULES = "loader.rules";
 	private static final String MONOMERS = "loader.monomers";
 	private static final String HOSTNAME = "loader.hostname";
